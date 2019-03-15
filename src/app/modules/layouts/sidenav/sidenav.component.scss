@@ -1,0 +1,92 @@
+$colors:(
+  body-background: #eceff6,
+  SideMenu-backgorund: #2C3E50,
+  menu-background: #455867,
+  add-button:#2C3E50,
+  delete-button:red
+);
+
+.SideMenu {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: map-get($colors, SideMenu-backgorund);
+  color: map-get($colors, SideMenu-color);
+  overflow-x: hidden;
+  padding-top: 0px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+
+  a{
+    padding: 2px 2px 2px 2px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #ffffff;
+    right: 0;
+    display: block;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+  }
+
+  a:hover, a:focus {
+    color: #f1f1f1;
+    text-decoration: none;
+  }
+
+  .closebtn {
+    right: -10px;
+    position: relative;
+    font-size: 35px;
+    // margin-left: 0px;
+  }
+
+  ul{
+    list-style-type: none;
+    float: right;
+    width: 100%;
+    padding: 5px 0px;
+    display: -ms-grid;
+    display: grid;
+  
+    a{
+      list-style-type: none;
+      float: right;
+      margin: 0px;
+    }
+  }
+}
+
+.openMenu {
+  // width: 70px;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: map-get($colors, SideMenu-backgorund);
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  font-size: 35px;
+  padding: 10px;
+  border-radius: 10px 0 0 10px;
+  box-shadow: 0px 0px 5px black;
+  cursor: pointer;
+}
+
+.line {
+  color: white;
+  margin: 10px;
+}
+
+.downmenu {
+  background-color: map-get($colors, menu-background);
+  box-shadow: 0 0 10px black inset;
+
+  a {
+    padding-right: 10px;
+    font-size: 15px;
+  }
+}

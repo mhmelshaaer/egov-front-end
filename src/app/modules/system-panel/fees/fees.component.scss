@@ -1,0 +1,126 @@
+header{
+    padding: 20px 20px;
+    background: red;
+  
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr;
+  
+    .logo{
+      padding: 20px;
+      background: yellow;
+      grid-column: 1 / span 1;
+      grid-row: 1; 
+    }
+    
+    .breadcrumb{
+      padding: 20px;
+      background: blue;
+      grid-column: 3 / span 1;
+      grid-row: 1;
+    }
+}
+
+main{
+    padding: 20px 20px;
+    background: green;
+    margin: 0;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(3vh, 6vh) minmax(3vh, 5vh) minmax(3vh, 5vh) minmax(25vh, 50vh);
+    grid-row-gap: 10px;
+
+    div{
+        padding: 10px;
+        background: #ececec;
+    }
+}
+
+.main-header{
+    justify-self: end;
+    h1{margin: 0;}
+}
+.add-fee{
+    form{
+        display: grid;
+        grid-template-columns: 1fr 2fr 4fr;
+        grid-column-gap: 10px;
+    }
+
+    input{direction: rtl;}
+
+    input[name="fee_type"]{
+        grid-column: 3;
+        grid-row: 1;
+    }
+    input[name="fee_value"]{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    input[type="submit"]{
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center;
+    }
+    
+}
+.search-fees{
+    display: grid;
+    grid-template-columns: 1fr 2fr 4fr;
+    grid-column-gap: 10px;
+
+    input{
+        grid-column: 3/span 1;
+    }
+}
+.list-fees{
+    display: grid;
+    grid-template-columns: 1fr; 
+    overflow-y: scroll;
+
+    table{
+        display: grid;
+        grid-template-columns: 1fr;
+
+        tr{
+            display: grid;
+            grid-template-columns: 1fr 1fr 5fr;
+            grid-column-gap: 10px;
+            justify-items: end;
+
+            td{
+            width: 100%;
+            direction: rtl;
+            }
+
+            td:nth-child(1){
+            grid-column: 3;
+            grid-row: 1;
+            }
+            td:nth-child(2){
+            grid-column: 2;
+            grid-row: 1;
+            }
+            td:nth-child(3){
+            grid-column: 1;
+            grid-row: 1;
+            text-align: center;
+            }
+
+            a{
+            text-decoration: none;
+            color: black;
+            }
+        }
+    }
+    #add-fee-table td, #add-fee-table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        box-sizing: border-box;
+    }
+    #add-fee-table tr:nth-child(even){background-color: #f2f2f2;}
+    #add-fee-table tr:hover {background-color: #ddd;}
+}
+  
+  
+  

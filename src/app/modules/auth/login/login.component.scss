@@ -1,0 +1,107 @@
+
+
+body{
+    background: #ececec;
+    margin: 0;
+}    
+    .login-container{
+        display: grid;
+        grid-template-columns: 3fr 1px 4fr;
+        grid-template-rows: 100vh; 
+        box-sizing: border-box;
+        // grid-gap: 10px;
+        // padding: 20px;
+    }
+    .login-logo{
+        justify-self: center;
+        align-self: center;
+        // outline: 1px solid red;
+        position: relative;
+
+        display: grid;
+        grid-template-columns: 1fr;
+
+        h1{
+            font-size: 130px;
+            margin: 0px;
+
+            span{
+                color: #47b191;
+            }
+        }
+        p{
+            margin: 0px;
+            font-size: 50px;
+            position: absolute;
+            top:120px;
+            right: -2px;
+        }
+    }
+    .separator{
+        border: 1px solid black;
+        background: #000;
+        align-self: center;
+
+        height: 400px;
+    }
+    .login-form{
+        justify-self: center;
+        align-self: center;
+        padding: 10px;
+        padding: 100px 20px;
+        box-shadow: 0 0 50px 10px grey;
+        background: white;
+        border-radius: 5px;
+
+        display: grid;
+        grid-template-columns: 1fr;
+
+
+        .form-group{
+
+            position: relative;
+
+            input{
+                width: 250px;
+                box-sizing: border-box;
+                border: 1px solid #47b191;
+                line-height: 3em;
+                border-radius: 3px;
+                padding-left: 40px;
+                padding-top: 5px;
+            }
+
+            input[type="submit"]{
+                width: 100px;
+                text-align: center;
+                padding: 0px 2px;
+                background: #47b191;
+                color: white;
+                font-weight: bold;
+                font-size: 25px;
+                line-height: 1.5em;
+                border-radius: 10px;
+                display: block;
+                margin: 0 auto;
+                cursor: pointer;
+            }
+
+            input::placeholder{
+                font-weight: bold;
+                font-size: 20px;
+                opacity: 0.5;
+            }
+
+            i{
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                font-size: 25px;
+            }
+            
+        }
+
+        .form-group + .form-group{
+            margin-top: 30px;
+        }
+    }

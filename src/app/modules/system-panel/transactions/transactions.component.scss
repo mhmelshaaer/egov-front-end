@@ -1,0 +1,305 @@
+
+  
+  header{
+    padding: 10px 20px;
+    background: red;
+  
+    display: grid;
+    grid-template-columns: 2fr 4fr 2fr;
+  
+    .logo{
+      padding: 10px;
+      background: yellow;
+      grid-column: 1 / span 1;
+      grid-row: 1; 
+    }
+    
+    .breadcrumb{
+      padding: 10px;
+      background: blue;
+      grid-column: 3 / span 1;
+      grid-row: 1;
+    }
+  }
+  
+  main{
+    padding: 20px 20px;
+    background: green;
+  
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(3vh, 8vh) minmax(3vh, 8vh) minmax(25vh, auto) auto;
+    grid-row-gap: 10px;
+  
+    div{
+      padding: 10px;
+      background: #ececec;
+    }
+  }
+  
+    .main-header{
+      justify-self: end;
+      h1{margin: 0;}
+    }
+    .add-transaction{
+      form{
+        display: grid;
+        grid-template-columns: 1fr 2fr 4fr;
+        grid-column-gap: 10px;
+      }
+  
+      select{
+        direction: rtl;
+        option{direction: rtl;}
+      }
+  
+      input{
+        direction: rtl;
+      }
+  
+      input[name="transaction_name"]{
+        grid-column: 3 / span 1;
+        grid-row: 1;
+      }
+      select[name="administration"]{
+        grid-column: 2 / span 1;
+        grid-row: 1;
+      }
+      input[type="submit"]{
+        grid-column: 1 / span 1;
+        grid-row: 1;
+        justify-self: center;
+      }
+      
+    }
+    
+    .list-steps{
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      
+    }
+  
+    .additional-options{
+      padding: 20px;
+      background: white;
+  
+    }
+  
+    #step-group-management{
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+  
+      h3{
+        grid-column: 1 / span 2;
+        grid-row: 1;
+  
+        direction: rtl;
+      }
+  
+      button{
+        grid-column: 1 / span 2;
+        grid-row: 3;
+        justify-self: center;
+        margin-top: 15px;
+      }
+    }
+  
+    #add-new-group{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto minmax(140px, 140px) auto;
+      grid-row-gap: 10px;
+  
+      h3{
+        grid-column: 1 / span 2;
+        grid-row:1;
+      }
+      input[name="search_users"]{
+        grid-column: 1 / span 2;
+        grid-row:2;
+        direction: rtl;
+      }
+      table{
+        grid-column: 1 / span 2;
+        grid-row:3;
+        overflow-y: scroll;
+      }
+      input[name="group_name"]{
+        grid-column: 2 / span 1;
+        grid-row: 4;
+        direction: rtl;
+      }
+      input[name="create_group"]{
+        grid-column: 1 / span 1;
+        grid-row: 4;
+        direction: rtl;
+      }
+    }
+  
+  #step-order{
+  
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
+  
+    button{
+      justify-self: center;
+    }
+  
+    select[name="available_step_order"]{
+      justify-self: center;
+      width: 30%;
+      margin-top: 20px;
+    }
+    
+  }
+  
+   
+  .additionalOptionsTablinks{
+      padding: 2px;
+  }
+  
+  /* Style the tab */
+  .tab {
+    // float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 100%;
+    // height: 300px;
+    box-sizing: border-box;
+    order: 2;
+  }
+  
+  /* Style the tab content */
+  .listStepsTabcontent, .additionalOptionsTabcontent, .groupManagementTabcontent {
+    // float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 100%;
+    border-left: none;
+    // height: 300px;
+    box-sizing: border-box;
+    order: 1;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: right;
+    // direction: rtl;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+    
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    background-color: #ddd;
+  }
+  
+  /* Create an active/current "tab button" class */
+  .tab button.active {
+    background-color: #ccc;
+  }
+  
+  
+  /* Table styling */
+table{
+    display: grid;
+    grid-template-columns: 1fr;
+  
+    tr{
+      display: grid;
+      grid-template-columns: 5fr 1fr 2fr;
+      grid-column-gap: 10px;
+      // justify-items: end;
+    
+      td{
+          width: 100%;
+          direction: rtl;
+      }
+      td:nth-child(1){
+        grid-column: 1 / span 2;
+        grid-row: 1;
+      }
+      td:nth-child(2){
+        grid-column: 3;
+        grid-row: 1;
+        text-align: center;
+      }
+  
+      a{
+        text-decoration: none;
+        color: black;
+      }
+    }
+  }
+  
+  table td, table th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      box-sizing: border-box;
+  }
+  table tr:nth-child(even){background-color: #f2f2f2;}
+  table tr:hover {background-color: #ddd;}
+
+  
+ /* checkbox styling */
+ .styled-checkbox {
+    position: absolute; // take it out of document flow
+    opacity: 0; // hide it
+  
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding: 0;
+    }
+  
+    // Box.
+    & + label:before {
+      content: '';
+      margin-right: 10px;
+      display: inline-block;
+      vertical-align: text-top;
+      width: 15px;
+      height: 15px;
+      background: silver;
+      border-radius: 10px;
+    }
+  
+    // Box hover
+    &:hover + label:before {
+      background: #47b191;
+    }
+    
+    // Box focus
+    &:focus + label:before {
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+    }
+  
+    // Box checked
+    &:checked + label:before {
+      background: #47b191;
+    }
+    
+    // Disabled state label.
+    &:disabled + label {
+      color: #b8b8b8;
+      cursor: auto;
+    }
+  
+    // Disabled box.
+    &:disabled + label:before {
+      box-shadow: none;
+      background: #ddd;
+    }
+  
+  }
+  

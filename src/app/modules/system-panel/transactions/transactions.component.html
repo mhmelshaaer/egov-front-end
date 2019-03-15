@@ -1,0 +1,250 @@
+
+
+<header>
+    <div class="logo">logo</div>
+    <div class="breadcrumb">breadcrumb</div>
+</header>
+<main>
+    <div class="main-header"><h1>إضافة معاملة</h1></div>
+    <div class="add-transaction">
+        <form action="">
+            <input type="text" name="transaction_name" placeholder="اسم المعاملة">
+            <select name="administration" id="">
+                <option value="" selected disabled>الإدارة</option>
+                <option value="">option</option>
+                <option value="">option</option>
+                <option value="">option</option>
+                <option value="">option</option>
+                <option value="">option</option>
+            </select>
+            <input type="submit" value="إضافة">
+        </form>
+    </div>
+    <div class="list-steps">
+        <div class="tab">
+            <button class="listStepsTablinks" (click)="openTab($event, 'listStepsTabcontent', 'listStepsTablinks', 'required-steps')" id="requiredStepsDefaultOpen">الإجرائات المطلوبة</button>
+            <button class="listStepsTablinks" (click)="openTab($event, 'listStepsTabcontent', 'listStepsTablinks', 'required-documents')">المستندات المطلوبة</button>
+            <button class="listStepsTablinks" (click)="openTab($event, 'listStepsTabcontent', 'listStepsTablinks', 'required-fees')">تحديد الرسوم</button>
+        </div>
+            
+        <div id="required-steps" class="listStepsTabcontent">
+            <table id="required-steps-table">
+                <tr>
+                    <td>step</td>
+                    <td>
+
+                        <input class="styled-checkbox" id="required-steps-checkbox-1" type="checkbox" value="value1">
+                        <label for="required-steps-checkbox-1" title="تحديد"></label>
+
+                        <a  class="additionalOptionsTablinks"
+                            (click)="openTab($event,
+                                            'additionalOptionsTabcontent',
+                                            'additionalOptionsTablinks',
+                                            'step-group-management',
+                                            'grid')"
+                            title="إدارة المجموعات">
+                            <fa-icon [icon]="faUsers"></fa-icon>
+                        </a>
+
+                        <a  class="additionalOptionsTablinks"
+                            (click)="openTab($event,
+                                            'additionalOptionsTabcontent',
+                                            'additionalOptionsTablinks',
+                                            'step-order',
+                                            'grid')"
+                            title="ترتيب الخطوة">
+                            <fa-icon [icon]="faListOl"></fa-icon>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>step</td>
+                    <td>
+
+                        <input class="styled-checkbox" id="required-steps-checkbox-2" type="checkbox" value="value1">
+                        <label for="required-steps-checkbox-2" title="تحديد"></label>
+
+                        <a  class="additionalOptionsTablinks"
+                            (click)="openTab($event,
+                                            'additionalOptionsTabcontent',
+                                            'additionalOptionsTablinks',
+                                            'step-group-management',
+                                            'grid')"
+                            title="إدارة المجموعات">
+                            <fa-icon [icon]="faUsers"></fa-icon>
+                        </a>
+
+                        <a  class="additionalOptionsTablinks"
+                            (click)="openTab($event,
+                                            'additionalOptionsTabcontent',
+                                            'additionalOptionsTablinks',
+                                            'step-order',
+                                            'grid')"
+                            title="ترتيب الخطوة">
+                            <fa-icon [icon]="faListOl"></fa-icon>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+            
+        <div id="required-documents" class="listStepsTabcontent">
+            <table id="required-documents-table">
+                <tr>
+                    <td>document</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-documents-checkbox-1" type="checkbox" value="value1">
+                        <label for="required-documents-checkbox-1" title="تحديد"></label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>document</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-documents-checkbox-2" type="checkbox" value="value1">
+                        <label for="required-documents-checkbox-2" title="تحديد"></label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>document</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-documents-checkbox-3" type="checkbox" value="value1">
+                        <label for="required-documents-checkbox-3" title="تحديد"></label>    
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="required-fees" class="listStepsTabcontent">
+            <table id="required-fees-table">
+                <tr>
+                    <td>fee</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-fees-checkbox-1" type="checkbox" value="value1">
+                        <label for="required-fees-checkbox-1" title="تحديد"></label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>fee</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-fees-checkbox-2" type="checkbox" value="value1">
+                        <label for="required-fees-checkbox-2" title="تحديد"></label>    
+                    </td>
+                </tr>
+                <tr>
+                    <td>fee</td>
+                    <td>
+                        <input class="styled-checkbox" id="required-fees-checkbox-3" type="checkbox" value="value1">
+                        <label for="required-fees-checkbox-3" title="تحديد"></label>    
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="additional-options">
+        <div style="display:none" id="step-group-management" class="additionalOptionsTabcontent">
+            <h3>step</h3>
+            <div class="tab">
+                <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'existing-groups', 'grid')" id="groupManagementDefaultOpen">إضافة الى مجموعة</button>
+                <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button>
+            </div>
+
+            <div id="existing-groups" class="groupManagementTabcontent">
+                <table id="required-documents-table">
+                    <tr>
+                        <td>group1</td>
+                        <td>
+                            <input class="styled-checkbox" id="existing-groups-checkbox-1" type="checkbox" value="value1">
+                            <label for="existing-groups-checkbox-1" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>group2</td>
+                        <td>
+                            <input class="styled-checkbox" id="existing-groups-checkbox-2" type="checkbox" value="value1">
+                            <label for="existing-groups-checkbox-2" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>group3</td>
+                        <td>
+                            <input class="styled-checkbox" id="existing-groups-checkbox-3" type="checkbox" value="value1">
+                            <label for="existing-groups-checkbox-3" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="add-new-group" class="groupManagementTabcontent">
+                <h3>اعضاء المجموعة</h3>
+                <input type="text" name="search_users" id="" placeholder="بحث">
+                <table id="required-documents-table">
+                    <tr>
+                        <td>user1</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-1" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-1" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user2</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-2" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-2" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user3</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-3" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-3" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user4</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-4" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-4" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user5</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-5" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-5" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user6</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-6" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-6" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>user7</td>
+                        <td>
+                            <input class="styled-checkbox" id="add-new-group-checkbox-7" type="checkbox" value="value1">
+                            <label for="add-new-group-checkbox-7" title="تحديد"></label>    
+                        </td>
+                    </tr>
+                </table>
+                <input type="text" name="group_name" placeholder="اسم المجموعة">
+                <input type="submit" name="create_group" value="إضافة">
+            </div>
+
+            <button (click)="closeTab('step-group-management')">close</button>
+        </div>
+            
+        <div style="display:none" id="step-order" class="additionalOptionsTabcontent">
+            <select name="available_step_order" id="">
+                <option value="" selected disabled>available orders</option>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="7">7</option>
+                <option value="10">10</option>
+            </select>
+            <button (click)="closeTab('step-order')">close</button>
+        </div>
+    </div>
+</main>

@@ -1,11 +1,16 @@
+//Core Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+//External Modules
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
+//App Modules
 import { AppRoutingModule } from './app-routing.module';
-import { ServicesModule } from './modules/services/services.module';
-import { TemplatesModule } from './templates/templates.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { SystemPanelModule } from './modules/system-panel/system-panel.module';
 
-
+//Components
 import { AppComponent } from './app.component';
 
 
@@ -16,8 +21,9 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ServicesModule,
-    TemplatesModule
+    FontAwesomeModule,
+    AuthModule,
+    SystemPanelModule
   ],
   providers: [],
   bootstrap: [AppComponent]
