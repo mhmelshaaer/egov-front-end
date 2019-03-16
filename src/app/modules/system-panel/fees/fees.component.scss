@@ -27,7 +27,7 @@ main{
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(3vh, 6vh) minmax(3vh, 5vh) minmax(3vh, 5vh) minmax(25vh, 50vh);
+    grid-template-rows: minmax(3vh, 8vh) minmax(3vh, 8vh) minmax(3vh, 8vh) minmax(25vh, 40vh);
     grid-row-gap: 10px;
 
     div{
@@ -89,27 +89,33 @@ main{
             justify-items: end;
 
             td{
-            width: 100%;
-            direction: rtl;
+                width: 100%;
+                direction: rtl;
+
+                input{
+                    width: 100%;
+                }
             }
 
             td:nth-child(1){
-            grid-column: 3;
-            grid-row: 1;
+                grid-column: 3;
+                grid-row: 1;
             }
             td:nth-child(2){
-            grid-column: 2;
-            grid-row: 1;
+                grid-column: 2;
+                grid-row: 1;
             }
             td:nth-child(3){
-            grid-column: 1;
-            grid-row: 1;
-            text-align: center;
+                grid-column: 1;
+                grid-row: 1;
+                text-align: center;
             }
 
             a{
-            text-decoration: none;
-            color: black;
+                text-decoration: none;
+                color: black;
+                margin: 3px;
+                cursor: pointer;
             }
         }
     }

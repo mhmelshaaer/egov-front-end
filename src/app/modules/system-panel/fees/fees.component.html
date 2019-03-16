@@ -5,214 +5,23 @@
 <main>
   <div class="main-header"><h1>إضافة رسوم</h1></div>
   <div class="add-fee">
-      <form action="">
-          <input type="text" name="fee_type" placeholder="الاسم">
-          <input type="text" name="fee_value" placeholder="القيمة">
+      <form action="" (ngSubmit)="add()">
+          <input type="text" [(ngModel)]="newFee.name" name="fee_type" placeholder="الاسم">
+          <input type="text" [(ngModel)]="newFee.value" name="fee_value" placeholder="القيمة">
           <input type="submit" value="إضافة">
       </form>
   </div>
   <div class="search-fees"><input dir="rtl" type="text" placeholder="بحث"></div>
   <div class="list-fees">
       <table id="add-fee-table">
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
-          </tr>
-          <tr>
-              <td>name</td>
-              <td>value</td>
-              <td>
-                  <a href="#">
-                      <i class="fas fa-trash-alt"></i>
-                      <i class="fas fa-edit"></i>
-                  </a>
-              </td>
+          <tr *ngFor="let feeControl of feeControls; let i = index">
+            <td><input type="text" [(ngModel)]="feeControl.fee.name" [disableControl]="feeControl.disableInput"></td>
+            <td><input type="text" [(ngModel)]="feeControl.fee.value" [disableControl]="feeControl.disableInput"></td>
+            <td>
+                <a (click)="delete(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+                <a (click)="enableEdit(feeControl)" [ngStyle]="{'display' : feeControl.diplayEdit}"><fa-icon [icon]="faEdit"></fa-icon></a>
+                <a (click)="saveEdit(feeControl)" [ngStyle]="{'display' : feeControl.diplaySave}"><fa-icon [icon]="faSave"></fa-icon></a>
+            </td>
           </tr>
       </table>
   </div>

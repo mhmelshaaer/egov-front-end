@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 //External Modules
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,6 +12,7 @@ import { SidenavComponent } from './../layouts/sidenav/sidenav.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { FeesComponent } from './fees/fees.component';
 import { TransactionsComponent } from './transactions/transactions.component';
+import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
 
 @NgModule({
   declarations: [
@@ -18,10 +20,12 @@ import { TransactionsComponent } from './transactions/transactions.component';
     SidenavComponent,
     DocumentsComponent,
     FeesComponent,
-    TransactionsComponent
+    TransactionsComponent,
+    DisableControlDirective
   ],
   imports: [
     CommonModule,
+    FormsModule,
     SystemPanelRoutingModule,
     FontAwesomeModule
   ]
