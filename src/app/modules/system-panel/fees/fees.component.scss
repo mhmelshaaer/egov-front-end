@@ -27,7 +27,7 @@ main{
 
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(3vh, 8vh) minmax(3vh, 8vh) minmax(3vh, 8vh) minmax(25vh, 40vh);
+    grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, 40vh);
     grid-row-gap: 10px;
 
     div{

@@ -1,8 +1,13 @@
+import { DocumentsService } from './../../../shared/documents-service/documents.service';
 import { Component, OnInit } from '@angular/core';
 
 import { Document } from './../../../models/documents/document';
 
 import { MOCK_DOCUMENTS } from 'src/app/models/documents/documents-mockup';
+
+import {
+  faTrashAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-documents',
@@ -11,15 +16,38 @@ import { MOCK_DOCUMENTS } from 'src/app/models/documents/documents-mockup';
 })
 export class DocumentsComponent implements OnInit {
 
-  documents:Document[]
+  //Fontawesome icons
+  faTrashAlt = faTrashAlt;
 
-  constructor() { }
+  documents:Document[]
+  newDocument: Document;
+
+  constructor(private documentsService: DocumentsService) { }
 
   ngOnInit() {
 
-    this.documents = MOCK_DOCUMENTS;
+    this.documents = this.documentsService.getDocuments();
+    this.newDocument = new Document("");
     console.log(this.documents);
 
+  }
+
+  ngOnDestroy(){
+    
+    this.documentsService.saveDocuments(this.documents);
+  }
+
+  add(){
+    if(this.newDocument.name != ""){
+      this.documents.push(this.newDocument);
+      this.newDocument = new Document("");
+    }else{
+      console.log('fuck you');
+    }
+  }
+
+  delete(index: number){
+    this.documents.splice(index, 1);
   }
 
 }

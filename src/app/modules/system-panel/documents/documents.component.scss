@@ -26,7 +26,7 @@ header{
   
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(3vh, 6vh) minmax(3vh, 5vh) minmax(25vh, 50vh);
+    grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, 50vh);
     grid-row-gap: 10px;
   
     div{
@@ -94,6 +94,7 @@ header{
           a{
             text-decoration: none;
             color: black;
+            cursor: pointer;
           }
         }
       }

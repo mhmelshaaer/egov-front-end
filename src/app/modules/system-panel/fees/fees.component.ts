@@ -1,7 +1,11 @@
+import { FeesService } from './../../../shared/fees-service/fees.service';
+//Core
 import { Component, OnInit } from '@angular/core';
 
+//Models
 import { Fee } from './../../../models/fees/fee';
 
+//Mockups
 import { MOCK_FEES } from 'src/app/models/fees/fees-mockup';
 
 import {
@@ -22,21 +26,30 @@ export class FeesComponent implements OnInit {
   faEdit = faEdit;
   faSave = faSave;
 
-  fees: Fee[];
-  feeControls: FeeControl[];
-  newFee: Fee;
+  //Fees business logic variables
+  fees: Fee[]; //array of all fees retrieved from web service
+  feeControls: FeeControl[]; //the modified version of fees arrat
+  newFee: Fee; //the newly added fee temporary holder
 
-  constructor() { }
+  constructor(private feesService: FeesService) { }
 
   ngOnInit() {
-    this.fees = MOCK_FEES;
+    this.fees = this.feesService.getFees();
     this.feeControls = [];
     this.newFee = new Fee("");
 
+    //Wrapping the each Fee object in fees array in a FeeControl Object to
+    //add other attributes that control the Fee object in the view
     this.fees.forEach(function(fee){
       this.push(new FeeControl(fee));
     },this.feeControls);
 
+  }
+
+  ngOnDestroy(){
+    let modified_fees = [];
+    this.feeControls.forEach(feeControl =>  modified_fees.push(feeControl.fee));
+    this.feesService.saveFees(this.fees,  modified_fees);
   }
 
   add(){
@@ -48,7 +61,7 @@ export class FeesComponent implements OnInit {
     }
   }
 
-  delete(index){
+  delete(index: number){
     this.feeControls.splice(index, 1);
   }
 
