@@ -12,6 +12,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { SystemPanelModule } from './modules/system-panel/system-panel.module';
 
 //App Services
+import { TransactionsService } from './shared/transactions-service/transactions.service';
+import { DocumentsService } from './shared/documents-service/documents.service';
 import { FeesService } from './shared/fees-service/fees.service';
 
 //Components
@@ -31,7 +33,9 @@ import { AppComponent } from './app.component';
     SystemPanelModule
   ],
   providers: [
-    FeesService
+    FeesService,
+    DocumentsService,
+    TransactionsService
   ],
   bootstrap: [AppComponent]
 })

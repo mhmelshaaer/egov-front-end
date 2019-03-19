@@ -1,3 +1,6 @@
+import { MOCK_FORMS } from './../../models/forms/forms-mockup';
+import { Form } from './../../models/forms/form';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +8,12 @@ import { Injectable } from '@angular/core';
 })
 export class TransactionsService {
 
-  constructor() { }
+  constructor(private http:Http) { }
+
+  saveTransaction() {
+  }
+
+  getForms():Form[]{ //return type when using http will be Observable<any[]>
+    return MOCK_FORMS;
+  }
 }

@@ -28,7 +28,7 @@
   
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, auto) auto;
+    grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(35vh, 45vh) auto;
     grid-row-gap: 10px;
   
     div{
@@ -75,8 +75,8 @@
     
     .list-steps{
       display: grid;
-      grid-template-columns: 2fr 1fr;
-      
+      grid-template-columns: 5fr 2fr;
+      grid-template-rows: minmax(35vh, 45vh);
     }
   
     .additional-options{
@@ -169,8 +169,10 @@
     // height: 300px;
     box-sizing: border-box;
     order: 2;
+    overflow-y: scroll;
   }
   
+
   /* Style the tab content */
   .listStepsTabcontent, .additionalOptionsTabcontent, .groupManagementTabcontent {
     // float: left;
@@ -181,6 +183,7 @@
     // height: 300px;
     box-sizing: border-box;
     order: 1;
+    overflow-y: scroll;
   }
   
   /* Style the buttons inside the tab */

@@ -29,57 +29,31 @@
             
         <div id="required-steps" class="listStepsTabcontent">
             <table id="required-steps-table">
-                <tr>
-                    <td>step</td>
+                <tr *ngFor="let form of forms; let i = index">
+                    <td>{{form.name}}</td>
                     <td>
 
-                        <input class="styled-checkbox" id="required-steps-checkbox-1" type="checkbox" value="value1">
-                        <label for="required-steps-checkbox-1" title="تحديد"></label>
+                        <input class="styled-checkbox" id="required-steps-checkbox-{{form.id}}" type="checkbox" value="{{form.id}}">
+                        <label for="required-steps-checkbox-{{form.id}}" (click)="selectStep(i)" title="تحديد"></label>
 
                         <a  class="additionalOptionsTablinks"
-                            (click)="openTab($event,
-                                            'additionalOptionsTabcontent',
-                                            'additionalOptionsTablinks',
-                                            'step-group-management',
-                                            'grid')"
+                            (click)="selectGroups(i,
+                                                $event,
+                                                'additionalOptionsTabcontent',
+                                                'additionalOptionsTablinks',
+                                                'step-group-management',
+                                                'grid')"
                             title="تحديد المجموعات">
                             <fa-icon [icon]="faUsers"></fa-icon>
                         </a>
 
                         <a  class="additionalOptionsTablinks"
-                            (click)="openTab($event,
-                                            'additionalOptionsTabcontent',
-                                            'additionalOptionsTablinks',
-                                            'step-order',
-                                            'grid')"
-                            title="ترتيب الخطوة">
-                            <fa-icon [icon]="faListOl"></fa-icon>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>step</td>
-                    <td>
-
-                        <input class="styled-checkbox" id="required-steps-checkbox-2" type="checkbox" value="value1">
-                        <label for="required-steps-checkbox-2" title="تحديد"></label>
-
-                        <a  class="additionalOptionsTablinks"
-                            (click)="openTab($event,
-                                            'additionalOptionsTabcontent',
-                                            'additionalOptionsTablinks',
-                                            'step-group-management',
-                                            'grid')"
-                            title="تحديد المجموعات">
-                            <fa-icon [icon]="faUsers"></fa-icon>
-                        </a>
-
-                        <a  class="additionalOptionsTablinks"
-                            (click)="openTab($event,
-                                            'additionalOptionsTabcontent',
-                                            'additionalOptionsTablinks',
-                                            'step-order',
-                                            'grid')"
+                            (click)="selectOrder(i,
+                                                $event,
+                                                'additionalOptionsTabcontent',
+                                                'additionalOptionsTablinks',
+                                                'step-order',
+                                                'grid')"
                             title="ترتيب الخطوة">
                             <fa-icon [icon]="faListOl"></fa-icon>
                         </a>
@@ -90,25 +64,11 @@
             
         <div id="required-documents" class="listStepsTabcontent">
             <table id="required-documents-table">
-                <tr>
-                    <td>document</td>
+                <tr *ngFor="let document of documents; let i = index">
+                    <td>{{document.name}}</td>
                     <td>
-                        <input class="styled-checkbox" id="required-documents-checkbox-1" type="checkbox" value="value1">
-                        <label for="required-documents-checkbox-1" title="تحديد"></label>    
-                    </td>
-                </tr>
-                <tr>
-                    <td>document</td>
-                    <td>
-                        <input class="styled-checkbox" id="required-documents-checkbox-2" type="checkbox" value="value1">
-                        <label for="required-documents-checkbox-2" title="تحديد"></label>    
-                    </td>
-                </tr>
-                <tr>
-                    <td>document</td>
-                    <td>
-                        <input class="styled-checkbox" id="required-documents-checkbox-3" type="checkbox" value="value1">
-                        <label for="required-documents-checkbox-3" title="تحديد"></label>    
+                        <input class="styled-checkbox" id="required-documents-checkbox-{{document.id}}" type="checkbox" value="{{document.id}}">
+                        <label for="required-documents-checkbox-{{document.id}}" (click)="selectDocument(i)" title="تحديد"></label>    
                     </td>
                 </tr>
             </table>
@@ -116,25 +76,11 @@
 
         <div id="required-fees" class="listStepsTabcontent">
             <table id="required-fees-table">
-                <tr>
-                    <td>fee</td>
+                <tr *ngFor="let fee of fees; let i = index">
+                    <td>{{fee.name}}</td>
                     <td>
-                        <input class="styled-checkbox" id="required-fees-checkbox-1" type="checkbox" value="value1">
-                        <label for="required-fees-checkbox-1" title="تحديد"></label>    
-                    </td>
-                </tr>
-                <tr>
-                    <td>fee</td>
-                    <td>
-                        <input class="styled-checkbox" id="required-fees-checkbox-2" type="checkbox" value="value1">
-                        <label for="required-fees-checkbox-2" title="تحديد"></label>    
-                    </td>
-                </tr>
-                <tr>
-                    <td>fee</td>
-                    <td>
-                        <input class="styled-checkbox" id="required-fees-checkbox-3" type="checkbox" value="value1">
-                        <label for="required-fees-checkbox-3" title="تحديد"></label>    
+                        <input class="styled-checkbox" id="required-fees-checkbox-{{fee.id}}" type="checkbox" value="{{fee.id}}">
+                        <label for="required-fees-checkbox-{{fee.id}}" (click)="selectFee(i)" title="تحديد"></label>    
                     </td>
                 </tr>
             </table>
@@ -142,7 +88,7 @@
     </div>
     <div class="additional-options">
         <div style="display:none" id="step-group-management" class="additionalOptionsTabcontent">
-            <h3>step</h3>
+            <h3>{{currSelectedStep}}</h3>
             <div class="tab">
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'existing-groups', 'grid')" id="groupManagementDefaultOpen">إضافة الى مجموعة</button>
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button>
