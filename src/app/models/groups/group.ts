@@ -6,8 +6,8 @@ export class Group{
     public id: number;
 
     constructor(
-        name: String,
-        members: User[])
+        public name: String,
+        public members: User[])
     {
         this.id = ++Group.prev_id;
     }

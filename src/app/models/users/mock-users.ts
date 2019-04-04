@@ -1,3 +1,4 @@
+import { MOCK_GROUPS } from './../groups/group-mockup';
 import { User } from './user';
 
 
@@ -5,49 +6,49 @@ import { User } from './user';
 export const MOCK_USERS = [
     new User(
         "Mouhammed",
-        "group 1",
+        ["group1"],
         "user",
         ["user"]
     ),
     new User(
         "Ahmed",
-        "group 1",
+        ["group1"],
         "user",
         ["user"]
     ),
     new User(
         "Hassan",
-        "group 1",
+        ["group1"],
         "user",
         ["user"]
     ),
     new User(
         "Mahmoud",
-        "group 1",
+        ["group1"],
         "user",
         ["user"]
     ),
     new User(
         "Salah",
-        "group 2",
+        ["group2"],
         "user",
         ["user"]
     ),
     new User(
         "Saad",
-        "group 2",
+        ["group2"],
         "user",
         ["user"]
     ),
     new User(
         "Abdo",
-        "group 2",
+        ["group2"],
         "user",
         ["user"]
     ),
     new User(
         "Sayed",
-        "group 2",
+        ["group2"],
         "user",
         ["user"]
     ),

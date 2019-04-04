@@ -1,3 +1,6 @@
+import { User } from './../../../models/users/user';
+import { Group } from './../../../models/groups/group';
+import { UsersService } from './../../../shared/users-service/users.service';
 import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Component, OnInit } from '@angular/core';
 
@@ -13,6 +16,7 @@ import {
   faUsers,
   faListOl
 } from '@fortawesome/free-solid-svg-icons';
+import { forEach } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'transactions',
@@ -24,7 +28,8 @@ export class TransactionsComponent implements OnInit {
   faUsers = faUsers;
   faListOl = faListOl;
 
-  currSelectedStep: String;
+  currSelectedStep: TransactionStep;
+  newGroup: Group;
   
   forms: Form[];
   selectedTransactionSteps: TransactionStep[];
@@ -35,56 +40,301 @@ export class TransactionsComponent implements OnInit {
   fees: Fee[];
   selectedFees: Fee[];
 
+  groups: Group[];
+  selectedGroups: Group[];
+
+  users: User[];
+  groupSelectedUsers: User[];
+
+  availableOrders: number[];
+  currentAvailableOrder: number[]
+
   constructor(private feesService: FeesService,
               private documentsService: DocumentsService,
-              private transactionsService: TransactionsService) { }
+              private transactionsService: TransactionsService,
+              private usersService: UsersService) { }
 
   ngOnInit() {
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("requiredStepsDefaultOpen").click();
     document.getElementById("groupManagementDefaultOpen").click();
 
-    this.currSelectedStep = null;
-
     this.forms = this.transactionsService.getForms();
     this.selectedTransactionSteps=[];
 
-    this.documents = this.documentsService.getDocuments();
+    this.documentsService.getDocuments().subscribe(data=>this.documents=data);
     this.selectedDocuments = [];
 
-    this.fees = this.feesService.getFees();
+    this.feesService.getFees().subscribe(data=>this.fees=data);
     this.selectedFees = [];
 
-    console.log(
-      this.forms,
-      this.documents,
-      this.fees
-    );
+    this.groups = this.usersService.getGroups();
+    this.selectedGroups = [];
+
+    this.users = this.usersService.getUsers();
+    this.groupSelectedUsers = [];
+
+    this.availableOrders = [];
+    this.currentAvailableOrder = [];
+
+    this.currSelectedStep = new TransactionStep(null, new Form(null), null, null);
+    this.newGroup = new Group(null, this.groupSelectedUsers);
+
   }
 
+
+  /*******************************************************************************************************
+   ********************************************* Fees utilities ******************************************
+  ********************************************************************************************************/
+  /**
+   * 
+   * @param index index of fee to be  added to selectedFees array.
+   * Note that if the fee is already selected, the fee will be removed from selectedFees array.
+   */
   selectFee(index: number){
-    this.selectedFees.push(this.fees[index]);
+    let selectedFee = this.fees[index];
+    let deletionIndex: number = -1;
+
+    this.selectedFees.forEach( (fee, i) => fee.id == selectedFee.id? deletionIndex=i: null);
+
+    if(deletionIndex < 0) {
+      this.selectedFees.push(selectedFee);
+    }else{
+      this.removeSelectedFee(deletionIndex);
+    }
   }
 
+  /**
+   * 
+   * @param index index of fee to be removed from group selectedFees array
+   */
+  removeSelectedFee(index: number){
+    this.selectedFees.splice(index, 1);
+  }
+
+
+  /*******************************************************************************************************
+   **************************************** Documents utilities ******************************************
+  ********************************************************************************************************/
+ /**
+   * 
+   * @param index index of document to be  added to selectedDocuments array.
+   * Note that if the document is already selected, the document will be removed from selectedDocuments array.
+   */
   selectDocument(index: number){
-    this.selectedDocuments.push(this.documents[index]);
+
+    let selectedDocument = this.documents[index];
+    let deletionIndex: number = -1;
+
+    this.selectedDocuments.forEach( (document, i) => document.id == selectedDocument.id? deletionIndex=i: null);
+
+    if(deletionIndex < 0) {
+      this.selectedDocuments.push(selectedDocument);
+    }else{
+      this.removeSelectedDocument(deletionIndex);
+    }
+    console.log(this.selectedDocuments);
   }
 
-  selectStep(index){
-    this.selectedTransactionSteps.push(new TransactionStep(null, this.forms[index], null, null));
+  /**
+   * 
+   * @param index index of document to be removed from group selectedDocuments array
+   */
+  removeSelectedDocument(index: number){
+    this.selectedDocuments.splice(index, 1);
+  }
+
+  /*******************************************************************************************************
+   *************************************** Transaction step utilities ************************************
+  ********************************************************************************************************/
+  /**
+   * 
+   * @param index index of step(form) to be  added to selectedTransactionSteps array.
+   * Note that if the step is already selected, the step will be removed from selectedTransactionSteps array.
+   */
+  selectStep(index: number){
+    let selectedTransactionStep = this.forms[index];
+    let deletionIndex: number = -1;
+
+    this.selectedTransactionSteps
+        .forEach((transactionStep, i) => transactionStep.form.id == selectedTransactionStep.id? deletionIndex=i: null);
+
+    if(deletionIndex < 0) {
+      this.selectedTransactionSteps.push(new TransactionStep(null, this.forms[index], null, null));
+    }else{
+      this.removeSelectedStep(deletionIndex);
+    }
+    this.availableOrders= [];
+    this.selectedTransactionSteps
+        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
+                                                    this.availableOrders.push(i+1):
+                                                    null);
     console.log(this.selectedTransactionSteps);
+    console.log(this.availableOrders);
   }
 
-  selectGroups(index, evt, tabClassName, linkClassName, terget, display="block"){
-    this.currSelectedStep = this.forms[index].name;
+  /**
+   * 
+   * @param index index of step  to be removed from group selectedTransactionSteps array
+   */
+  removeSelectedStep(index: number){
+    this.selectedTransactionSteps.splice(index, 1);
+  }
+
+  /*******************************************************************************************************
+   *************************************** Groups utilities **********************************************
+  ********************************************************************************************************/
+  /**
+   * 
+   * @param index index of group to be  added to selectedGroups array.
+   * Note that if the group is already selected, the group will be removed from selectedGroups array.
+   */
+  selectGroup(index: number){
+    let selectedGroup = this.groups[index];
+    let deletionIndex: number = -1;
+
+    this.selectedGroups.forEach((group, i) => group.id == selectedGroup.id ? deletionIndex=i: null);
+
+    if(deletionIndex < 0) this.selectedGroups.push(this.groups[index]);
+    else this.removeSelectedGroup(deletionIndex);
+    
+    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.id == this.currSelectedStep.form.id);
+    modifiedTransactionStep.groups = this.selectedGroups;
+
+    console.log(this.selectedTransactionSteps);
+
+  }
+  
+  /**
+   * 
+   * @param index index of group  to be removed from group selectedGroups array
+   */
+  removeSelectedGroup(index: number){
+    this.selectedGroups.splice(index, 1);
+  }
+
+  /**
+   * 
+   * @param index index of group user to be added to groupSelectedUsers array.
+   * Note that if the user is already selected, the user will be removed from groupSelectedUsers array.
+   */
+  selectGroupUser(index: number){
+    let selectedGroupUser = this.users[index];
+    let deletionIndex: number = -1;
+
+    this.groupSelectedUsers.forEach((groupUser, i) => groupUser.id == selectedGroupUser.id ? deletionIndex=i: null);
+
+    if(deletionIndex < 0) this.groupSelectedUsers.push(this.users[index]);
+    else this.removeGroupUser(deletionIndex);
+
+    console.log(this.groupSelectedUsers);
+  }
+
+  /**
+   * 
+   * @param index index of group user to be removed from group groupSelectedUsers array
+   */
+  removeGroupUser(index: number){
+    this.groupSelectedUsers.splice(index, 1);
+  }
+
+  /**
+   * Add new group
+   */
+  addNewGroup(){
+    let group = new Group(this.newGroup.name, this.newGroup.members);
+    this.groups.push(group);
+    this.groupSelectedUsers.forEach(SelectedUsers => SelectedUsers.groups.push(group.name));
+
+    this.newGroup.name = null;
+    this.groupSelectedUsers = [];
+
+    let checkboxes = document.getElementById('add-new-group-table').getElementsByTagName('input');
+
+    for(let i=0; i<checkboxes.length; i++){
+      checkboxes[i].checked = false;
+    }
+
+    console.log(this.newGroup, this.groupSelectedUsers);
+  }
+
+  /**
+   * 
+   * @param index index of the current step
+   * @param evt the click event
+   * @param tabClassName tabs class name to control current tab visibility
+   * @param linkClassName tab links class
+   * @param terget default tab to be active
+   * @param display optional display css property
+   */
+  manageGroups(index, evt, tabClassName, linkClassName, terget, display="block"){
+    this.currSelectedStep.form = this.forms[index];
     this.openTab(evt, tabClassName, linkClassName, terget, display);
+    console.log(this.groups);
   }
 
-  selectOrder(index, evt, tabClassName, linkClassName, terget, display="block"){
-    this.currSelectedStep = this.forms[index].name;
+  /*******************************************************************************************************
+   *********************************** Transaction step order utilities **********************************
+  ********************************************************************************************************/
+  /**
+   * 
+   * @param index index of the current step
+   * @param evt the click event
+   * @param tabClassName tabs class name to control current tab visibility
+   * @param linkClassName tab links class
+   * @param terget default tab to be active
+   * @param display optional display css property
+   */
+  manageOrder(index, evt, tabClassName, linkClassName, terget, display="block"){
+    this.currSelectedStep = this.selectedTransactionSteps.find(x=>x.form.id == this.forms[index].id);
+
+    this.currentAvailableOrder= [];
+    this.selectedTransactionSteps.forEach( (selectedTransactionStep, i) => this.currentAvailableOrder.push(i+1));
+    this.currentAvailableOrder.sort();
+
+    this.selectedTransactionSteps
+        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
+                                                    this.availableOrders.push(this.currentAvailableOrder.splice(0, 1)[0]):
+                                                    selectedTransactionStep.order == this.currSelectedStep.order?
+                                                      this.availableOrders.push(
+                                                        this.currentAvailableOrder.splice(
+                                                          this.currentAvailableOrder.findIndex(x=>x==this.currSelectedStep.order),
+                                                          1
+                                                        )[0]):
+                                                      this.currentAvailableOrder.splice(
+                                                        this.currentAvailableOrder.findIndex(x=>x==selectedTransactionStep.order),
+                                                        1
+                                                      ));
+                                                         
+
     this.openTab(evt, tabClassName, linkClassName, terget, display);
+    console.log(this.availableOrders, this.currSelectedStep, this.selectedTransactionSteps);
   }
 
+  selectOrder(order: number){
+
+    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.id == this.currSelectedStep.form.id);
+    modifiedTransactionStep.order = order;
+    this.currSelectedStep.order = order;
+
+    this.availableOrders= [];
+    this.selectedTransactionSteps
+        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
+                                                    this.availableOrders.push(i+1):
+                                                    selectedTransactionStep.order == this.currSelectedStep.order?
+                                                      this.availableOrders.push(i+1):
+                                                      null);
+    console.log(this.selectedTransactionSteps);                                                                                                    
+  }
+
+  /**
+   * 
+   * @param evt click event
+   * @param tabClassName tabs class name to control current tab visibility
+   * @param linkClassName tab links class
+   * @param terget default tab to be active
+   * @param display optional display css property
+   */
   openTab(evt, tabClassName, linkClassName, terget, display="block") {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName(tabClassName);
@@ -99,6 +349,10 @@ export class TransactionsComponent implements OnInit {
     evt.currentTarget.className += " active";
   }
 
+  /**
+   * 
+   * @param terget target tab to be displayed none
+   */
   closeTab(terget){
       document.getElementById(terget).style.display = "none";
   }

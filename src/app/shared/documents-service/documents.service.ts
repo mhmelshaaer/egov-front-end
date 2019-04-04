@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { Observable, Subject, of, throwError} from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 import { Document } from './../../models/documents/document';
 
@@ -12,17 +13,29 @@ import { MOCK_DOCUMENTS } from './../../models/documents/documents-mockup';
 })
 export class DocumentsService {
 
-  private webservice: String;
+  private webservice: String = "http://localhost:8000/api/";
+  // private headers: Headers = new Headers();
 
   constructor(private http:Http) { }
 
-  saveDocuments(documents: Document[]) {
+  updateDocuments(documents: Document[]) {
     console.log("saving documents...");
     console.log(documents);
+
+    // this.headers.append('Content-Type','application/x-www-form-urlencoded');
+    // this.headers.append('Content-Type','application/json');
+
+    return this.http.post(this.webservice+'document/fetch',{data: documents});
   }
 
-  getDocuments():Document[]{ //return type when using http will be Observable<any[]>
-    return MOCK_DOCUMENTS;
+  getDocuments(): Observable<Document[]>{ //return type when using http will be Observable<Document[]>
+    // return MOCK_DOCUMENTS;
+    return this.http.get(this.webservice+'documents/get').pipe(
+      map(res=>res.json()[1].map( (item: any)=>{
+          return new Document(item.id, item.document_name)
+        })
+      )
+    )
   }
 
 }

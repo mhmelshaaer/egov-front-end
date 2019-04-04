@@ -37,7 +37,7 @@
                         <label for="required-steps-checkbox-{{form.id}}" (click)="selectStep(i)" title="تحديد"></label>
 
                         <a  class="additionalOptionsTablinks"
-                            (click)="selectGroups(i,
+                            (click)="manageGroups(i,
                                                 $event,
                                                 'additionalOptionsTabcontent',
                                                 'additionalOptionsTablinks',
@@ -48,7 +48,7 @@
                         </a>
 
                         <a  class="additionalOptionsTablinks"
-                            (click)="selectOrder(i,
+                            (click)="manageOrder(i,
                                                 $event,
                                                 'additionalOptionsTabcontent',
                                                 'additionalOptionsTablinks',
@@ -88,33 +88,19 @@
     </div>
     <div class="additional-options">
         <div style="display:none" id="step-group-management" class="additionalOptionsTabcontent">
-            <h3>{{currSelectedStep}}</h3>
+            <h3>{{currSelectedStep.form.name}}</h3>
             <div class="tab">
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'existing-groups', 'grid')" id="groupManagementDefaultOpen">إضافة الى مجموعة</button>
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button>
             </div>
 
             <div id="existing-groups" class="groupManagementTabcontent">
-                <table id="required-documents-table">
-                    <tr>
-                        <td>group1</td>
+                <table id="existing-groups-table">
+                    <tr *ngFor="let group of groups; let i = index">
+                        <td>{{group.name}}</td>
                         <td>
-                            <input class="styled-checkbox" id="existing-groups-checkbox-1" type="checkbox" value="value1">
-                            <label for="existing-groups-checkbox-1" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>group2</td>
-                        <td>
-                            <input class="styled-checkbox" id="existing-groups-checkbox-2" type="checkbox" value="value1">
-                            <label for="existing-groups-checkbox-2" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>group3</td>
-                        <td>
-                            <input class="styled-checkbox" id="existing-groups-checkbox-3" type="checkbox" value="value1">
-                            <label for="existing-groups-checkbox-3" title="تحديد"></label>    
+                            <input class="styled-checkbox" id="existing-groups-checkbox-{{group.id}}" type="checkbox" value="{{group.id}}">
+                            <label for="existing-groups-checkbox-{{group.id}}" (click)="selectGroup(i)" title="تحديد"></label>    
                         </td>
                     </tr>
                 </table>
@@ -122,74 +108,30 @@
             <div id="add-new-group" class="groupManagementTabcontent">
                 <h3>اعضاء المجموعة</h3>
                 <input type="text" name="search_users" id="" placeholder="بحث">
-                <table id="required-documents-table">
-                    <tr>
-                        <td>user1</td>
+                <table id="add-new-group-table">
+                    <tr *ngFor="let user of users; let i = index">
+                        <td>{{user.name}}</td>
                         <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-1" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-1" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user2</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-2" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-2" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user3</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-3" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-3" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user4</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-4" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-4" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user5</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-5" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-5" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user6</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-6" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-6" title="تحديد"></label>    
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>user7</td>
-                        <td>
-                            <input class="styled-checkbox" id="add-new-group-checkbox-7" type="checkbox" value="value1">
-                            <label for="add-new-group-checkbox-7" title="تحديد"></label>    
+                            <input class="styled-checkbox" id="add-new-group-checkbox-{{user.id}}" type="checkbox" value="{{user.id}}">
+                            <label for="add-new-group-checkbox-{{user.id}}" (click)="selectGroupUser(i)" title="تحديد"></label>    
                         </td>
                     </tr>
                 </table>
-                <input type="text" name="group_name" placeholder="اسم المجموعة">
-                <input type="submit" name="create_group" value="إضافة">
+                <input type="text" [(ngModel)]="newGroup.name"  name="group_name" value="{{newGroup.name}}" placeholder="اسم المجموعة">
+                <button (click)="addNewGroup()">إضافة</button>
             </div>
 
-            <button (click)="closeTab('step-group-management')">close</button>
+            <button id="step-group-management-close-btn" (click)="closeTab('step-group-management')">close</button>
         </div>
             
         <div style="display:none" id="step-order" class="additionalOptionsTabcontent">
-            <select name="available_step_order" id="">
-                <option value="" selected disabled>available orders</option>
-                <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="7">7</option>
-                <option value="10">10</option>
-            </select>
+            <h3>{{currSelectedStep.form.name}}</h3>
+            <div id="available_step_order">
+                <div *ngFor="let order of availableOrders; let i = index">
+                    <input class="styled-checkbox" type="radio" name="step_order" id="available-orders-radio-{{order}}" value="{{order}}">
+                    <label for="available-orders-radio-{{order}}" (click)="selectOrder(order)"  title="تحديد">{{order}}</label>
+                </div>
+            </div>
             <button (click)="closeTab('step-order')">close</button>
         </div>
     </div>

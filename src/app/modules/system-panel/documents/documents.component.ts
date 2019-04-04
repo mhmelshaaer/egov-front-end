@@ -26,28 +26,36 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.documents = this.documentsService.getDocuments();
-    this.newDocument = new Document("");
-    console.log(this.documents);
+    this.documentsService.getDocuments().subscribe(data=> this.documents=data);
+    this.newDocument = new Document(null, "");
+    // console.log(this.documents);
 
   }
 
   ngOnDestroy(){
     
-    this.documentsService.saveDocuments(this.documents);
+    this.documentsService.updateDocuments(this.documents).subscribe();
+    // this.documentsService.updateDocuments(this.documents);
   }
 
   add(){
     if(this.newDocument.name != ""){
+      this.newDocument.new_document = true;
       this.documents.push(this.newDocument);
-      this.newDocument = new Document("");
+      this.newDocument = new Document(null, "");
     }else{
       console.log('fuck you');
     }
   }
 
   delete(index: number){
-    this.documents.splice(index, 1);
+
+    if(this.documents[index].new_document){
+      this.documents.splice(index, 1);
+    }else{
+      this.documents[index].deleted = true;
+    }
+    
   }
 
 }

@@ -14,15 +14,25 @@
   <div class="search-fees"><input dir="rtl" type="text" placeholder="بحث"></div>
   <div class="list-fees">
       <table id="add-fee-table">
+
           <tr *ngFor="let feeControl of feeControls; let i = index">
-            <td><input type="text" [(ngModel)]="feeControl.fee.name" [disableControl]="feeControl.disableInput"></td>
-            <td><input type="text" [(ngModel)]="feeControl.fee.value" [disableControl]="feeControl.disableInput"></td>
-            <td>
+
+            <td *ngIf="!feeControl.fee.deleted">
+              <input type="text" [(ngModel)]="feeControl.fee.name" [disableControl]="feeControl.disableInput">
+            </td>
+
+            <td *ngIf="!feeControl.fee.deleted">
+              <input type="text" [(ngModel)]="feeControl.fee.value" [disableControl]="feeControl.disableInput">
+            </td>
+
+            <td *ngIf="!feeControl.fee.deleted">
                 <a (click)="delete(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
                 <a (click)="enableEdit(feeControl)" [ngStyle]="{'display' : feeControl.diplayEdit}"><fa-icon [icon]="faEdit"></fa-icon></a>
                 <a (click)="saveEdit(feeControl)" [ngStyle]="{'display' : feeControl.diplaySave}"><fa-icon [icon]="faSave"></fa-icon></a>
             </td>
+
           </tr>
+          
       </table>
   </div>
 </main>

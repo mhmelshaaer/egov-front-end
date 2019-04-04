@@ -15,6 +15,7 @@ import { SystemPanelModule } from './modules/system-panel/system-panel.module';
 import { TransactionsService } from './shared/transactions-service/transactions.service';
 import { DocumentsService } from './shared/documents-service/documents.service';
 import { FeesService } from './shared/fees-service/fees.service';
+import { UsersService } from './shared/users-service/users.service';
 
 //Components
 import { AppComponent } from './app.component';
@@ -35,7 +36,8 @@ import { AppComponent } from './app.component';
   providers: [
     FeesService,
     DocumentsService,
-    TransactionsService
+    TransactionsService,
+    UsersService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,16 +5,16 @@
 <main>
   <div class="main-header"><h1>إضافة تقارير</h1></div>
   <div class="add-document">
-      <form action="">
-          <input type="text" name="document_name" placeholder="اسم التقرير">
+      <form action="" (ngSubmit)="add()">
+          <input type="text" [(ngModel)]="newDocument.name" name="document_name" placeholder="اسم التقرير">
           <input type="submit" value="إضافة">
       </form>
   </div>
   <div class="list-documents">
       <table id="list-documents-table">
           <tr *ngFor="let document of documents; let i = index">
-              <td>{{document.name}}</td>
-              <td>
+              <td *ngIf="!document.deleted">{{document.name}}</td>
+              <td *ngIf="!document.deleted">
                 <a (click)="delete(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
               </td>
           </tr>

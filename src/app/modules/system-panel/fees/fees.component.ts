@@ -1,13 +1,13 @@
-import { FeesService } from './../../../shared/fees-service/fees.service';
 //Core
 import { Component, OnInit } from '@angular/core';
 
 //Models
 import { Fee } from './../../../models/fees/fee';
 
-//Mockups
-import { MOCK_FEES } from 'src/app/models/fees/fees-mockup';
+//Services
+import { FeesService } from './../../../shared/fees-service/fees.service';
 
+//Fontawesome
 import {
   faTrashAlt,
   faEdit,
@@ -34,35 +34,67 @@ export class FeesComponent implements OnInit {
   constructor(private feesService: FeesService) { }
 
   ngOnInit() {
-    this.fees = this.feesService.getFees();
-    this.feeControls = [];
-    this.newFee = new Fee("");
+    this.feesService.getFees().subscribe(data=>{
+      this.fees=data;
+      this.feeControls = [];
+      //Wrapping the each Fee object in fees array in a FeeControl Object to
+      //add other attributes that control the Fee object in the view
+      this.fees.map((fee)=>{
+        this.feeControls.push(new FeeControl(Object.assign({}, fee)));
+      });
+    });
+    
+    this.newFee = new Fee(null, "", null);
+    // console.log()
+    let arr1 = [
+      new Fee(1, "fee1", 1),
+      new Fee(2, "fee2", 2),
+      new Fee(3, "fee3", 3)
+    ];
+    let arr2 = [];
 
-    //Wrapping the each Fee object in fees array in a FeeControl Object to
-    //add other attributes that control the Fee object in the view
-    this.fees.forEach(function(fee){
-      this.push(new FeeControl(fee));
-    },this.feeControls);
+    arr1.map(fee=>arr2.push(Object.assign({}, fee)));
+    arr1[1].name = "fee2 edited";
+    // arr2[1] = 9;
+
+    console.log(arr1, arr2);
+    
 
   }
 
   ngOnDestroy(){
     let modified_fees = [];
-    this.feeControls.forEach(feeControl =>  modified_fees.push(feeControl.fee));
-    this.feesService.saveFees(this.fees,  modified_fees);
+    this.feeControls.forEach( (feeControl, i) =>{
+      if(!feeControl.fee.new_fee && !feeControl.fee.deleted){
+        if( feeControl.fee.name != this.fees[i].name || feeControl.fee.value != this.fees[i].value ){
+          feeControl.fee.updated = true;
+        }
+      }
+      modified_fees.push(feeControl.fee)
+    });
+    
+    this.feesService.saveFees(modified_fees).subscribe();
   }
 
   add(){
-    if(this.newFee.name != "" && this.newFee.value != null){
+    if(this.newFee.name != "" && this.newFee.value != null){ 
+      this.newFee.new_fee = true;
       this.feeControls.push(new FeeControl(this.newFee));
-      this.newFee = new Fee("");
+      this.newFee = new Fee(null, "", null);
     }else{
       console.log('fuck you');
     }
   }
 
   delete(index: number){
-    this.feeControls.splice(index, 1);
+
+    if(this.feeControls[index].fee.new_fee){
+      this.feeControls.splice(index, 1);
+    }else{
+      this.feeControls[index].fee.deleted = true;
+    }
+
+    
   }
 
   enableEdit(curr_fee: FeeControl){

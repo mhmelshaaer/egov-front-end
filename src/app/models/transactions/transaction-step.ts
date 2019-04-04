@@ -11,7 +11,7 @@ export class TransactionStep{
     constructor(
         public transaction_id: number = null,
         public form: Form = null,
-        public groups: Group = null,
+        public groups: Group[] = null,
         public order: number = null
     ){
         this.id = ++TransactionStep.prev_id;
