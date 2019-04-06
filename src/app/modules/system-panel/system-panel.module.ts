@@ -13,6 +13,7 @@ import { DocumentsComponent } from './documents/documents.component';
 import { FeesComponent } from './fees/fees.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
+import { SelectControlDirective } from './directives/select-control/select-control.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DisableControlDirective } from './directives/disable-control/disable-co
     DocumentsComponent,
     FeesComponent,
     TransactionsComponent,
-    DisableControlDirective
+    DisableControlDirective,
+    SelectControlDirective
   ],
   imports: [
     CommonModule,

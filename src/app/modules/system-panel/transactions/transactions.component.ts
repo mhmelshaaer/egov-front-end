@@ -1,16 +1,16 @@
-import { User } from './../../../models/users/user';
-import { Group } from './../../../models/groups/group';
-import { UsersService } from './../../../shared/users-service/users.service';
-import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Component, OnInit } from '@angular/core';
 
 import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
 import { DocumentsService } from './../../../shared/documents-service/documents.service';
 import { FeesService } from './../../../shared/fees-service/fees.service';
+import { UsersService } from './../../../shared/users-service/users.service';
 
 import { Form } from './../../../models/forms/form';
+import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Document } from './../../../models/documents/document';
 import { Fee } from './../../../models/fees/fee';
+import { User } from './../../../models/users/user';
+import { Group } from './../../../models/groups/group';
 
 import {
   faUsers,
@@ -47,7 +47,7 @@ export class TransactionsComponent implements OnInit {
   groupSelectedUsers: User[];
 
   availableOrders: number[];
-  currentAvailableOrder: number[]
+  // currentAvailableOrder: number[]
 
   constructor(private feesService: FeesService,
               private documentsService: DocumentsService,
@@ -75,7 +75,7 @@ export class TransactionsComponent implements OnInit {
     this.groupSelectedUsers = [];
 
     this.availableOrders = [];
-    this.currentAvailableOrder = [];
+    // this.currentAvailableOrder = [];
 
     this.currSelectedStep = new TransactionStep(null, new Form(null), null, null);
     this.newGroup = new Group(null, this.groupSelectedUsers);
@@ -160,15 +160,17 @@ export class TransactionsComponent implements OnInit {
         .forEach((transactionStep, i) => transactionStep.form.id == selectedTransactionStep.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
-      this.selectedTransactionSteps.push(new TransactionStep(null, this.forms[index], null, null));
+      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), null, null));
     }else{
       this.removeSelectedStep(deletionIndex);
     }
-    this.availableOrders= [];
-    this.selectedTransactionSteps
-        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
-                                                    this.availableOrders.push(i+1):
-                                                    null);
+    
+    // this.availableOrders= [];
+    // this.selectedTransactionSteps
+    //     .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
+    //                                                 this.availableOrders.push(i+1):
+    //                                                 null);
+
     console.log(this.selectedTransactionSteps);
     console.log(this.availableOrders);
   }
@@ -268,9 +270,13 @@ export class TransactionsComponent implements OnInit {
    * @param display optional display css property
    */
   manageGroups(index, evt, tabClassName, linkClassName, terget, display="block"){
+
+    //Setting the current selected step
     this.currSelectedStep.form = this.forms[index];
+
+    //opening the current selected TransactionStep instance group management tab
     this.openTab(evt, tabClassName, linkClassName, terget, display);
-    console.log(this.groups);
+
   }
 
   /*******************************************************************************************************
@@ -286,45 +292,70 @@ export class TransactionsComponent implements OnInit {
    * @param display optional display css property
    */
   manageOrder(index, evt, tabClassName, linkClassName, terget, display="block"){
+
+    //Setting the current selected step
     this.currSelectedStep = this.selectedTransactionSteps.find(x=>x.form.id == this.forms[index].id);
 
-    this.currentAvailableOrder= [];
-    this.selectedTransactionSteps.forEach( (selectedTransactionStep, i) => this.currentAvailableOrder.push(i+1));
-    this.currentAvailableOrder.sort();
-
-    this.selectedTransactionSteps
-        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
-                                                    this.availableOrders.push(this.currentAvailableOrder.splice(0, 1)[0]):
-                                                    selectedTransactionStep.order == this.currSelectedStep.order?
-                                                      this.availableOrders.push(
-                                                        this.currentAvailableOrder.splice(
-                                                          this.currentAvailableOrder.findIndex(x=>x==this.currSelectedStep.order),
-                                                          1
-                                                        )[0]):
-                                                      this.currentAvailableOrder.splice(
-                                                        this.currentAvailableOrder.findIndex(x=>x==selectedTransactionStep.order),
-                                                        1
-                                                      ));
-                                                         
-
+    //update available step orders
+    this.updateAvailableOrders();
+                                         
+    //opening the current selected TransactionStep instance order management tab
     this.openTab(evt, tabClassName, linkClassName, terget, display);
-    console.log(this.availableOrders, this.currSelectedStep, this.selectedTransactionSteps);
+
   }
 
   selectOrder(order: number){
 
-    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.id == this.currSelectedStep.form.id);
+    //Set the step order for the TransactionStep instance in the selectedTransactionSteps array
+    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.form.id == this.currSelectedStep.form.id);
     modifiedTransactionStep.order = order;
+
+    //Set the step order for the currSelectedStep
     this.currSelectedStep.order = order;
 
-    this.availableOrders= [];
-    this.selectedTransactionSteps
-        .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
-                                                    this.availableOrders.push(i+1):
-                                                    selectedTransactionStep.order == this.currSelectedStep.order?
-                                                      this.availableOrders.push(i+1):
-                                                      null);
-    console.log(this.selectedTransactionSteps);                                                                                                    
+    //update available step orders
+    this.updateAvailableOrders();
+
+  }
+
+  updateAvailableOrders(){
+
+    //Reset the array
+    this.availableOrders = [];
+
+    //Looping through each possible order and decide whether to be added to the availableOrders array for the
+    //current selected step or not
+    for(let stepOrder=1; stepOrder<=this.selectedTransactionSteps.length; stepOrder++){
+
+      //flag sets to true if the stepOrder is already taken by some TransactionStep instance
+      let exists = false;
+
+      //looping through to see if there exist a TransactionStep instance having this stepOrder
+      this.selectedTransactionSteps
+          .forEach( (x)=> x.order?
+                            x.order==stepOrder && this.currSelectedStep.order!=x.order?
+                              exists=true
+                              :null
+                            :null);
+
+      //add the stepOrder to the availableOrder array if it does not set for any other TransactionStep
+      //instance or if the current TransactionStep instance is the one having this stepOrder                            
+      !exists? this.availableOrders.push(stepOrder): null;
+    }
+  }
+
+  clearStepOrder(){
+    //Clear the step order for the TransactionStep instance in the selectedTransactionSteps array
+    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.form.id == this.currSelectedStep.form.id);
+    modifiedTransactionStep.order = null;
+
+    //Clear the step order for the TransactionStep instance
+    this.currSelectedStep.order = null;
+
+    //update availableOrders array
+    this.updateAvailableOrders();
+
+    console.log(this.availableOrders);
   }
 
   /**

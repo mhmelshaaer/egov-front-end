@@ -128,10 +128,24 @@
             <h3>{{currSelectedStep.form.name}}</h3>
             <div id="available_step_order">
                 <div *ngFor="let order of availableOrders; let i = index">
-                    <input class="styled-checkbox" type="radio" name="step_order" id="available-orders-radio-{{order}}" value="{{order}}">
-                    <label for="available-orders-radio-{{order}}" (click)="selectOrder(order)"  title="تحديد">{{order}}</label>
+
+                    <input  class="styled-checkbox"
+                            type="radio"
+                            name="step_order"
+                            id="available-orders-radio-{{order}}"
+                            value="{{order}}"
+                            [selectControl]="currSelectedStep.order? order == currSelectedStep.order: false">
+
+                    <label  id="available-orders-label-{{order}}"
+                            for="available-orders-radio-{{order}}"
+                            (click)="selectOrder(order)"
+                            title="تحديد">
+                            {{order}}
+                    </label>
+
                 </div>
             </div>
+            <button (click)="clearStepOrder()">clear choice</button>
             <button (click)="closeTab('step-order')">close</button>
         </div>
     </div>

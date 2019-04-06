@@ -45,21 +45,6 @@ export class FeesComponent implements OnInit {
     });
     
     this.newFee = new Fee(null, "", null);
-    // console.log()
-    let arr1 = [
-      new Fee(1, "fee1", 1),
-      new Fee(2, "fee2", 2),
-      new Fee(3, "fee3", 3)
-    ];
-    let arr2 = [];
-
-    arr1.map(fee=>arr2.push(Object.assign({}, fee)));
-    arr1[1].name = "fee2 edited";
-    // arr2[1] = 9;
-
-    console.log(arr1, arr2);
-    
-
   }
 
   ngOnDestroy(){

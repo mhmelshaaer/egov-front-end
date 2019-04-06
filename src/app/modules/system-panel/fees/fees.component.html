@@ -18,7 +18,9 @@
           <tr *ngFor="let feeControl of feeControls; let i = index">
 
             <td *ngIf="!feeControl.fee.deleted">
-              <input type="text" [(ngModel)]="feeControl.fee.name" [disableControl]="feeControl.disableInput">
+              <input  type="text"
+                      [(ngModel)]="feeControl.fee.name"
+                      [disableControl]="feeControl.disableInput">
             </td>
 
             <td *ngIf="!feeControl.fee.deleted">
