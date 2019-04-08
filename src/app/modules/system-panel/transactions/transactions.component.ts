@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
 import { DocumentsService } from './../../../shared/documents-service/documents.service';
 import { FeesService } from './../../../shared/fees-service/fees.service';
 import { UsersService } from './../../../shared/users-service/users.service';
 
+import { Transaction } from 'src/app/models/transactions/transaction';
 import { Form } from './../../../models/forms/form';
 import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Document } from './../../../models/documents/document';
@@ -16,7 +17,7 @@ import {
   faUsers,
   faListOl
 } from '@fortawesome/free-solid-svg-icons';
-import { forEach } from '@angular/router/src/utils/collection';
+
 
 @Component({
   selector: 'transactions',
@@ -27,6 +28,9 @@ export class TransactionsComponent implements OnInit {
 
   faUsers = faUsers;
   faListOl = faListOl;
+
+  newtransactions: Transaction[];
+  newTransaction: Transaction;
 
   currSelectedStep: TransactionStep;
   newGroup: Group;
@@ -41,13 +45,11 @@ export class TransactionsComponent implements OnInit {
   selectedFees: Fee[];
 
   groups: Group[];
-  selectedGroups: Group[];
 
   users: User[];
   groupSelectedUsers: User[];
 
   availableOrders: number[];
-  // currentAvailableOrder: number[]
 
   constructor(private feesService: FeesService,
               private documentsService: DocumentsService,
@@ -55,7 +57,8 @@ export class TransactionsComponent implements OnInit {
               private usersService: UsersService) { }
 
   ngOnInit() {
-    // Get the element with id="defaultOpen" and click on it
+    
+    // Defaulte opened tabs
     document.getElementById("requiredStepsDefaultOpen").click();
     document.getElementById("groupManagementDefaultOpen").click();
 
@@ -69,22 +72,53 @@ export class TransactionsComponent implements OnInit {
     this.selectedFees = [];
 
     this.groups = this.usersService.getGroups();
-    this.selectedGroups = [];
 
     this.users = this.usersService.getUsers();
     this.groupSelectedUsers = [];
 
     this.availableOrders = [];
-    // this.currentAvailableOrder = [];
 
-    this.currSelectedStep = new TransactionStep(null, new Form(null), null, null);
+    this.currSelectedStep = new TransactionStep(null, new Form(null), [], null);
     this.newGroup = new Group(null, this.groupSelectedUsers);
+
+    this.newtransactions = [];
+    this.newTransaction = new Transaction("",
+                                          this.selectedTransactionSteps,
+                                          this.selectedDocuments,
+                                          this.selectedFees);
 
   }
 
+  ngOnDestroy(){
+    this.transactionsService.saveTransactions(this.newtransactions).subscribe();
+    // this.transactionsService.saveTransactions(this.newtransactions);
+  }
 
   /*******************************************************************************************************
-   ********************************************* Fees utilities ******************************************
+   ****************************************** Creating Transaction ***************************************
+  ********************************************************************************************************/
+
+  /**
+   * Creating a new Transaction
+   */
+  add(){
+    this.newtransactions.push(this.newTransaction);
+
+    this.selectedTransactionSteps=[];
+    this.selectedDocuments = [];
+    this.selectedFees = [];
+    this.groupSelectedUsers = [];
+    this.availableOrders = [];
+    this.currSelectedStep = new TransactionStep(null, new Form(null), [], null);
+
+    this.newTransaction = new Transaction( "",
+                                          this.selectedTransactionSteps,
+                                          this.selectedDocuments,
+                                          this.selectedFees);
+  }
+
+  /*******************************************************************************************************
+   ******************************************** Fees utilities *******************************************
   ********************************************************************************************************/
   /**
    * 
@@ -114,7 +148,7 @@ export class TransactionsComponent implements OnInit {
 
 
   /*******************************************************************************************************
-   **************************************** Documents utilities ******************************************
+   ************************************** Documents utilities *******************************************
   ********************************************************************************************************/
  /**
    * 
@@ -133,7 +167,7 @@ export class TransactionsComponent implements OnInit {
     }else{
       this.removeSelectedDocument(deletionIndex);
     }
-    console.log(this.selectedDocuments);
+    
   }
 
   /**
@@ -145,7 +179,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   /*******************************************************************************************************
-   *************************************** Transaction step utilities ************************************
+   ************************************** Transaction step utilities *************************************
   ********************************************************************************************************/
   /**
    * 
@@ -160,19 +194,11 @@ export class TransactionsComponent implements OnInit {
         .forEach((transactionStep, i) => transactionStep.form.id == selectedTransactionStep.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
-      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), null, null));
+      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), [], null));
     }else{
       this.removeSelectedStep(deletionIndex);
     }
     
-    // this.availableOrders= [];
-    // this.selectedTransactionSteps
-    //     .forEach( (selectedTransactionStep, i) => selectedTransactionStep.order == null?
-    //                                                 this.availableOrders.push(i+1):
-    //                                                 null);
-
-    console.log(this.selectedTransactionSteps);
-    console.log(this.availableOrders);
   }
 
   /**
@@ -184,35 +210,42 @@ export class TransactionsComponent implements OnInit {
   }
 
   /*******************************************************************************************************
-   *************************************** Groups utilities **********************************************
+   ****************************************** Groups utilities *******************************************
   ********************************************************************************************************/
   /**
    * 
-   * @param index index of group to be  added to selectedGroups array.
-   * Note that if the group is already selected, the group will be removed from selectedGroups array.
+   * @param index index of group to be  added to currSelectedStep groups array.
+   * Note that if the group is already selected, the group will be removed from currSelectedStep groups array.
    */
-  selectGroup(index: number){
+  selectGroup(event, index: number){
+
+    // Prevent the input checkbox from being set checked on click, and make the selectControl directive
+    // take care of that.
+    event.preventDefault();
+
     let selectedGroup = this.groups[index];
     let deletionIndex: number = -1;
 
-    this.selectedGroups.forEach((group, i) => group.id == selectedGroup.id ? deletionIndex=i: null);
+    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.form.id == this.currSelectedStep.form.id);
 
-    if(deletionIndex < 0) this.selectedGroups.push(this.groups[index]);
-    else this.removeSelectedGroup(deletionIndex);
+    if(modifiedTransactionStep.groups.length > 0){
+      modifiedTransactionStep.groups.forEach((group, i) => group.id == selectedGroup.id ? deletionIndex=i: null);
+    }
+
+    if(deletionIndex < 0) modifiedTransactionStep.groups.push(this.groups[index]);
+    else this.removeSelectedGroup(modifiedTransactionStep, deletionIndex);
     
-    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.id == this.currSelectedStep.form.id);
-    modifiedTransactionStep.groups = this.selectedGroups;
-
-    console.log(this.selectedTransactionSteps);
+    
+    this.currSelectedStep = modifiedTransactionStep;
 
   }
   
   /**
    * 
-   * @param index index of group  to be removed from group selectedGroups array
+   * @param index index of group  to be removed from currSelectedStep groups array.
    */
-  removeSelectedGroup(index: number){
-    this.selectedGroups.splice(index, 1);
+  removeSelectedGroup(TransactionStep: TransactionStep, index: number){
+    TransactionStep.groups.splice(index, 1);
   }
 
   /**
@@ -229,7 +262,6 @@ export class TransactionsComponent implements OnInit {
     if(deletionIndex < 0) this.groupSelectedUsers.push(this.users[index]);
     else this.removeGroupUser(deletionIndex);
 
-    console.log(this.groupSelectedUsers);
   }
 
   /**
@@ -257,7 +289,20 @@ export class TransactionsComponent implements OnInit {
       checkboxes[i].checked = false;
     }
 
-    console.log(this.newGroup, this.groupSelectedUsers);
+  }
+
+  selected(group_id: number): boolean{
+
+    let selected = false;
+
+    if(this.currSelectedStep.groups.length > 0 ){
+      this.currSelectedStep.groups.forEach(x=> x.id==group_id? selected = true: null);
+    }else{
+      return selected;
+    }
+
+    return selected;
+
   }
 
   /**
@@ -271,8 +316,10 @@ export class TransactionsComponent implements OnInit {
    */
   manageGroups(index, evt, tabClassName, linkClassName, terget, display="block"){
 
+    let currentForm = this.forms[index];
+    
     //Setting the current selected step
-    this.currSelectedStep.form = this.forms[index];
+    this.currSelectedStep = this.selectedTransactionSteps.find(x=>x.form.id==currentForm.id);
 
     //opening the current selected TransactionStep instance group management tab
     this.openTab(evt, tabClassName, linkClassName, terget, display);
@@ -280,7 +327,7 @@ export class TransactionsComponent implements OnInit {
   }
 
   /*******************************************************************************************************
-   *********************************** Transaction step order utilities **********************************
+   ********************************** Transaction step order utilities ***********************************
   ********************************************************************************************************/
   /**
    * 
@@ -355,7 +402,6 @@ export class TransactionsComponent implements OnInit {
     //update availableOrders array
     this.updateAvailableOrders();
 
-    console.log(this.availableOrders);
   }
 
   /**

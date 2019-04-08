@@ -7,8 +7,12 @@
 <main>
     <div class="main-header"><h1>إضافة معاملة</h1></div>
     <div class="add-transaction">
-        <form action="">
-            <input type="text" name="transaction_name" placeholder="اسم المعاملة">
+        <form action="" (ngSubmit)="add()">
+            <input  type="text"
+                    [(ngModel)]="newTransaction.name"
+                    name="transaction_name"
+                    placeholder="اسم المعاملة">
+
             <select name="administration" id="">
                 <option value="" selected disabled>الإدارة</option>
                 <option value="">option</option>
@@ -17,7 +21,9 @@
                 <option value="">option</option>
                 <option value="">option</option>
             </select>
+
             <input type="submit" value="إضافة">
+
         </form>
     </div>
     <div class="list-steps">
@@ -99,8 +105,14 @@
                     <tr *ngFor="let group of groups; let i = index">
                         <td>{{group.name}}</td>
                         <td>
-                            <input class="styled-checkbox" id="existing-groups-checkbox-{{group.id}}" type="checkbox" value="{{group.id}}">
-                            <label for="existing-groups-checkbox-{{group.id}}" (click)="selectGroup(i)" title="تحديد"></label>    
+                            <input  class="styled-checkbox"
+                                    id="existing-groups-checkbox-{{currSelectedStep.form.id}}-{{group.id}}"
+                                    type="checkbox"
+                                    [selectControl]="selected(group.id)"
+                                    value="{{group.id}}">
+                            <label  for="existing-groups-checkbox-{{currSelectedStep.form.id}}-{{group.id}}"
+                                    (click)="selectGroup($event, i)"
+                                    title="تحديد"></label>    
                         </td>
                     </tr>
                 </table>

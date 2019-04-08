@@ -1,3 +1,4 @@
+import { TransactionStep } from './transaction-step';
 import { Fee } from './../fees/fee';
 import { Document } from './../documents/document';
 import { Form } from './../forms/form';
@@ -10,9 +11,10 @@ export class Transaction{
     public id:number;
 
     constructor(
-        public steps: number[],
-        public documents: number[],
-        public fees: number[]
+        public name: string,
+        public steps: TransactionStep[],
+        public documents: Document[],
+        public fees: Fee[]
     ){}
 
 }
