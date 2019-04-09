@@ -11,19 +11,25 @@
     </form>
     <hr class="line"> -->
     <ul id="menu">
-        <li ><a  href="#">الصفحه الريئسيه</a>
+        <li ><a>الصفحه الريئسيه</a>
             <ul class="downmenu">
                 <li><a routerLink="/panel-home/">تسجيل معامله جديده</a></li>
                 <li><a routerLink="/panel-home/">تقديم شكوى</a></li>
             </ul>
         </li>
-        <li><a href="#">الإعدادات</a>
+        <li><a>الإعدادات</a>
             <ul  class="downmenu" >
-                <li><a routerLink="/panel-home/">إضافه موظف</a></li>
                 <li><a routerLink="/panel-home/transactions">إضافه معامله</a></li>
                 <li><a routerLink="/panel-home/fees">إضافه رسوم</a></li>
                 <li><a routerLink="/panel-home/documents">إضافه مستندات</a></li>
-                <li><a routerLink="/panel-home/">إضافه تقارير</a></li>
+                <!-- <li><a routerLink="/panel-home/">إضافه تقارير</a></li> -->
+            </ul>
+        </li>
+        <li>
+            <a>إدارة المستخدمين</a>
+            <ul class="downmenu">
+                <li><a routerLink="/panel-home/add-employee">إضافة موظف</a></li>
+                <li><a routerLink="/panel-home/add-user">إضافة مستخدم</a></li>
             </ul>
         </li>
     </ul>

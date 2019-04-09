@@ -1,0 +1,80 @@
+header{
+padding: 20px 20px;
+background: red;
+
+display: grid;
+grid-template-columns: 2fr 4fr 2fr;
+
+.logo{
+    padding: 20px;
+    background: yellow;
+    grid-column: 1 / span 1;
+    grid-row: 1; 
+}
+
+.breadcrumb{
+    padding: 20px;
+    background: blue;
+    grid-column: 3 / span 1;
+    grid-row: 1;
+}
+}
+
+main{
+padding: 20px 20px;
+background: green;
+
+display: grid;
+grid-template-columns: 1fr;
+grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, 50vh);
+grid-row-gap: 10px;
+
+div{
+    padding: 10px;
+    background: #ececec;
+}
+}
+
+.main-header{
+    justify-self: end;
+    h1{margin: 0;}
+}
+.add-user{
+    form{
+        display: grid;
+        grid-template-columns: 1fr 3fr 3fr 3fr 3fr;
+        grid-column-gap: 10px;
+    }
+
+    input{
+        direction: rtl;
+    }
+
+    input:nth-child(1){
+        grid-column: 5 / span 1;
+        grid-row: 1;
+    }
+    input:nth-child(2){
+        grid-column: 4 / span 1;
+        grid-row: 1;
+    }
+    input:nth-child(3){
+        grid-column: 3 / span 1;
+        grid-row: 1;
+    }
+    
+    select{
+        grid-column: 2 / span 1;
+        grid-row: 1;
+    }
+
+    input[type="submit"]{
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center;
+    }
+    
+}
+
+
+

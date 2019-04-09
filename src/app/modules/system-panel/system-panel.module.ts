@@ -14,6 +14,8 @@ import { FeesComponent } from './fees/fees.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
 import { SelectControlDirective } from './directives/select-control/select-control.directive';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { AddUserComponent } from './add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { SelectControlDirective } from './directives/select-control/select-contr
     FeesComponent,
     TransactionsComponent,
     DisableControlDirective,
-    SelectControlDirective
+    SelectControlDirective,
+    AddEmployeeComponent,
+    AddUserComponent
   ],
   imports: [
     CommonModule,
