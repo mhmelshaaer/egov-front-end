@@ -1,4 +1,5 @@
-import { Group } from '../groups/group';
+import { Employee } from '../employees/employee';
+import { Role } from '../roles/role';
 
 export class User{
 
@@ -7,10 +8,11 @@ export class User{
     public id: number;
 
     constructor(
-        public name: String,
-        public groups: String[],
-        public role: String,
-        public privileges: String[]){
+        public username: String,
+        public password: String,
+        public role: Role=null,
+        public employee: Employee=null
+        ){
             this.id = ++User.prev_id;
         }
 }

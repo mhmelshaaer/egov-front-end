@@ -10,7 +10,7 @@ import { Form } from './../../../models/forms/form';
 import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Document } from './../../../models/documents/document';
 import { Fee } from './../../../models/fees/fee';
-import { User } from './../../../models/users/user';
+import { GroupUser } from '../../../models/group-users/group-user';
 import { Group } from './../../../models/groups/group';
 
 import {
@@ -46,8 +46,8 @@ export class TransactionsComponent implements OnInit {
 
   groups: Group[];
 
-  users: User[];
-  groupSelectedUsers: User[];
+  users: GroupUser[];
+  groupSelectedUsers: GroupUser[];
 
   availableOrders: number[];
 

@@ -5,15 +5,57 @@
 <main>
   <div class="main-header"><h1>إضافة موظف</h1></div>
   <div class="add-employee">
-      <form action="" (ngSubmit)="add()">
-          <input type="text" placeholder="الرقم القومى">
-          <input type="text" placeholder="اسم المواطن">
-          <select name="employee_department" id="employee-department">
-            <option value="dept1">dept1</option>
-            <option value="dept2">dept2</option>
-            <option value="dept3">dept3</option>
+
+      <form (ngSubmit)="addNewEmployee()">
+
+          <ngx-select-dropdown  name="citizen_national_id"
+                                [config]="config"
+                                [options]="citizens"
+                                [(ngModel)]="currSelectOption"
+                                (change)="selectCitizen()">
+          </ngx-select-dropdown>
+
+          <input  type="text"
+                  name="citizen_name"
+                  [(ngModel)]="selectedCitizen.name"
+                  placeholder="اسم المواطن"
+                  disabled>
+
+          <select name="employee_department"
+                  id="employee-department"
+                  [(ngModel)]="newEmployee.department.name">
+            
+            <option value="" disabled selected>Select Department</option>
+
+            <option *ngFor="let department of departments"
+                    value="department.name">
+              {{department.name}}
+            </option>
+
           </select>
+
           <input type="submit" value="إضافة">
+
       </form>
+
+  </div>
+  <div class="add-citizen">
+
+      <form (ngSubmit)="addNewCitizen()">
+
+          <input  type="text"
+                  name="citizen_national_id"
+                  [(ngModel)]="newCitizen.national_id"
+                  placeholder="الرقم القومى">
+
+          <input  type="text"
+                  name="citizen_name"
+                  [(ngModel)]="newCitizen.name"
+                  placeholder="اسم المواطن">
+
+          <input type="submit" value="إضافة">
+
+      </form>
+
   </div>
 </main>

@@ -5,16 +5,37 @@
 <main>
   <div class="main-header"><h1>إضافة مستخدم</h1></div>
   <div class="add-user">
-      <form action="" (ngSubmit)="add()">
-          <input type="text" placeholder="اسم الموظف">
-          <input type="text" placeholder="اسم المستخدم">
-          <input type="text" placeholder="كلمة السر">
-          <select name="user_role" id="user-role">
-            <option value="role1">role1</option>
-            <option value="role2">role2</option>
-            <option value="role3">role3</option>
+      <form action="" (ngSubmit)="addUser()">
+          
+          <ngx-select-dropdown  name="citizen_national_id"
+                                [config]="config"
+                                [options]="employees"
+                                [(ngModel)]="currSelectOption"
+                                (change)="selectEmployee()">
+          </ngx-select-dropdown>
+
+          <input  type="text"
+                  name="username"
+                  [(ngModel)]="newUser.username"
+                  placeholder="اسم المستخدم">
+
+          <input  type="password"
+                  name="user_password"
+                  [(ngModel)]="newUser.password"
+                  placeholder="كلمة السر">
+
+          <select name="user_role"
+                  id="user-role"
+                  [(ngModel)]="newUser.role.name">
+
+            <option value="" disabled selected>Select Role</option>
+
+            <option *ngFor="let role of roles" value="{{role.name}}">{{role.name}}</option>
+
           </select>
+
           <input type="submit" value="إضافة">
+
       </form>
   </div>
 </main>

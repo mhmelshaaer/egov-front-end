@@ -25,7 +25,7 @@ export class DocumentsService {
     // this.headers.append('Content-Type','application/x-www-form-urlencoded');
     // this.headers.append('Content-Type','application/json');
 
-    return this.http.post(this.webservice+'document/fetch',{data: documents});
+    return this.http.post(this.webservice+'documents/fetch',{data: documents});
   }
 
   getDocuments(): Observable<Document[]>{ //return type when using http will be Observable<Document[]>

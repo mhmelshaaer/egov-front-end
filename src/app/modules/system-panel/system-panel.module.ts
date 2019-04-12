@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 //External Modules
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 import { SystemPanelRoutingModule } from './system-panel.routing';
 
@@ -33,7 +34,8 @@ import { AddUserComponent } from './add-user/add-user.component';
     CommonModule,
     FormsModule,
     SystemPanelRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    SelectDropDownModule
   ]
 })
 export class SystemPanelModule { }

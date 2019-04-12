@@ -1,28 +1,28 @@
 import { MOCK_GROUPS } from './../groups/group-mockup';
-import { User } from './user';
+import { GroupUser } from './group-user';
 
 
 
 export const GROUP_ONE_MOCK_USERS = [
-    new User(
+    new GroupUser(
         "Mouhammed",
         [MOCK_GROUPS[0].name],
         "user",
         ["user"]
     ),
-    new User(
+    new GroupUser(
         "Ahmed",
         [MOCK_GROUPS[0].name],
         "user",
         ["user"]
     ),
-    new User(
+    new GroupUser(
         "Hassan",
         [MOCK_GROUPS[0].name],
         "user",
         ["user"]
     ),
-    new User(
+    new GroupUser(
         "Mahmoud",
         [MOCK_GROUPS[0].name],
         "user",

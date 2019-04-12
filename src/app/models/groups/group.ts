@@ -1,4 +1,4 @@
-import { User } from './../users/user';
+import { GroupUser } from './../group-users/group-user';
 export class Group{
 
     public static prev_id = 0;
@@ -7,7 +7,7 @@ export class Group{
 
     constructor(
         public name: String,
-        public members: User[])
+        public members: GroupUser[])
     {
         this.id = ++Group.prev_id;
     }

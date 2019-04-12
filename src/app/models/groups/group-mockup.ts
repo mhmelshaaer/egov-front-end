@@ -1,7 +1,7 @@
 import { Group } from './group';
-import { GROUP_ONE_MOCK_USERS } from '../users/group-one-mock-users';
-import { GROUP_TWO_MOCK_USERS } from '../users/group-two-mock-users';
-import { MOCK_USERS } from '../users/mock-users';
+import { GROUP_ONE_MOCK_USERS } from '../group-users/group-one-mock-users';
+import { GROUP_TWO_MOCK_USERS } from '../group-users/group-two-mock-users';
+import { MOCK_USERS } from '../group-users/mock-users';
 
 
 
