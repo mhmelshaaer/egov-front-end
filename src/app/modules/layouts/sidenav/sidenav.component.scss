@@ -10,8 +10,9 @@ $colors:(
   height: 100%;
   width: 250px;
   position: fixed;
-  z-index: 1;
-  top: 0;
+  // z-index: 1;
+  top: 28px;
+  // top: 0;
   right: 0;
   background-color: map-get($colors, SideMenu-backgorund);
   color: map-get($colors, SideMenu-color);
@@ -62,7 +63,8 @@ $colors:(
 .openMenu {
   // width: 70px;
   position: fixed;
-  top: 0;
+  top: 30px;
+  // top: 0;
   right: 0;
   background-color: map-get($colors, SideMenu-backgorund);
   color: #ffffff;

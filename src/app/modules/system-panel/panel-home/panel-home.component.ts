@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-panel-home',
   templateUrl: './panel-home.component.html',

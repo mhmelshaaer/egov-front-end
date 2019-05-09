@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SystemPanelModule } from './modules/system-panel/system-panel.module';
+import { RequestsControllerModule } from './modules/requests-controller/requests-controller.module';
 
 //App Services
 import { TransactionsService } from './shared/transactions-service/transactions.service';
@@ -31,7 +32,8 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     FontAwesomeModule,
     AuthModule,
-    SystemPanelModule
+    SystemPanelModule,
+    RequestsControllerModule
   ],
   providers: [
     FeesService,

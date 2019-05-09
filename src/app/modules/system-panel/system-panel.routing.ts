@@ -8,6 +8,11 @@ import { DocumentsComponent } from './documents/documents.component';
 import { FeesComponent } from './fees/fees.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { RequestTypeSelectionComponent } from './../requests-controller/request-type-selection/request-type-selection.component';
+import { LUSRequestsListComponent } from './../lusrequest/lusrequests-list/lusrequests-list.component';
+import { OpenRequestComponent } from '../requests-controller/open-request/open-request.component';
+import { ModuleRoutingControllerComponent } from '../requests-controller/module-routing-controller/module-routing-controller.component';
+
 
 
 const routes:Routes=[
@@ -34,6 +39,44 @@ const routes:Routes=[
 			{
 				path: 'add-user',
 				component: AddUserComponent
+			},
+			{
+				path: 'requests-add',
+				component: RequestTypeSelectionComponent,
+				children: [
+					{
+						path: 'lusrequest-metadata',
+						// component: LUSRequestMetaDataComponent
+						redirectTo: '/lusrequest/metadata'
+					},
+					{
+						path: 'otherRequestType-metadata',
+						// component: LUSRequestMetaDataComponent
+						redirectTo: '/lusrequest/metadata'
+
+					}
+				]
+			},
+			{
+				path: 'requests-list',
+				component: RequestTypeSelectionComponent,
+				children: [
+					{
+						path: 'lusrequest-list-all',
+						component: LUSRequestsListComponent,
+						children: [
+							{
+								path: 'request-open/:transaction-type/:request-id',
+								redirectTo: '/requests-controller/navigator/:transaction-type/:request-id'
+							}
+						]
+					},
+					{
+						path: 'otherRequestType-list-all',
+						component: LUSRequestsListComponent
+
+					}
+				]
 			}
 	  ]
   }

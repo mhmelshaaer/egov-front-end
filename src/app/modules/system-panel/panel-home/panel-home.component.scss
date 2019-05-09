@@ -10,6 +10,7 @@ $colors:(
     -webkit-transition: margin-right .5s;
     transition: margin-right .5s;
     margin-right: 250px;
+    margin-top: 28px;
 
     background: map-get($colors, body-background);
 
@@ -19,4 +20,3 @@ $colors:(
   
 }
 
-  

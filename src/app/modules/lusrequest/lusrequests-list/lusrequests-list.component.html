@@ -1,0 +1,12 @@
+<p>
+  lusrequests-list works!
+</p>
+
+<!-- <a [routerLink]="['../request-open/'] + transactionType + '/' + requestID">Open Request</a><br> -->
+<!-- <a [routerLink]="[{outlets: {primary: ['../request-open/'] + transactionType + '/' + requestID}}]">Open Request</a><br> -->
+<!-- <a [routerLink]="[{ outlets: { primary: ['../request-open/'] + transactionType + '/' + requestID, testOutlet: ['../requests-controller'] } }]">Open Request</a><br> -->
+<a [routerLink]="" (click)="navigate('lusrequest', 1)">Open Request</a><br>
+<a [routerLink]="" (click)="navigate('lusrequest', 2)">Open Request</a><br>
+<a [routerLink]="" (click)="navigate('lusrequest', 3)">Open Request</a><br>
+
+<router-outlet></router-outlet>
