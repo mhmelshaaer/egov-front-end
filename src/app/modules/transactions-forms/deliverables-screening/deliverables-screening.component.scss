@@ -1,0 +1,37 @@
+section{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 10px;
+
+    margin: 20px 0;
+
+    & > article{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-row-gap: 10px;
+
+        &:nth-child(2) > div{
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-column-gap: 10px;
+            align-items: center;
+            justify-items: end;
+
+            &:nth-of-type(1) > input{
+                grid-column: 2 / span 1;
+
+                width: 100%;
+            }
+        }
+    }
+}
+
+input, select{
+    direction: rtl;
+    box-sizing: border-box;
+}
+textarea{
+    direction: rtl;
+    resize: none;
+}
