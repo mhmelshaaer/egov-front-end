@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutsModule } from './../layouts/layouts.module';
+import { TransactionsFormsModule } from './../transactions-forms/transactions-forms.module';
 
 import { RequestsControllerRoutingModule } from './requests-controller-routing.module';
 import { RequestTypeSelectionComponent } from './request-type-selection/request-type-selection.component';
@@ -21,7 +22,8 @@ import { ModuleRoutingControllerComponent } from './module-routing-controller/mo
     CommonModule,
     RequestsControllerRoutingModule,
     LUSRequestModule,
-    LayoutsModule
+    LayoutsModule,
+    TransactionsFormsModule
   ]
 })
 export class RequestsControllerModule { }

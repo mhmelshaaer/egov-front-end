@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 //App Modules
 import { AppRoutingModule } from './app-routing.module';
+import { LayoutsModule } from './modules/layouts/layouts.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { SystemPanelModule } from './modules/system-panel/system-panel.module';
 import { RequestsControllerModule } from './modules/requests-controller/requests-controller.module';
@@ -31,6 +32,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     AppRoutingModule,
     FontAwesomeModule,
+    LayoutsModule,
     AuthModule,
     SystemPanelModule,
     RequestsControllerModule

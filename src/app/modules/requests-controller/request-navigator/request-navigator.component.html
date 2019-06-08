@@ -1,5 +1,30 @@
-<p>
-  request-navigator works!
-</p>
 
 <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>
+
+<div class="request-navigator">
+
+  <input type="text" name="request_id" id="request-id" placeholder="رقم المعاملة">
+  <input type="text" name="transaction_type" id="transaction-type" placeholder="الخدمة المطلوبة" disabled>
+
+  <span class="v-separator1"></span>
+
+  <input type="text" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن" disabled>
+  <input type="text" name="representative_name" id="representative-name" placeholder="الوكيل" disabled>
+
+  <span class="v-separator2"></span>
+
+  <input type="text" name="address" id="address" placeholder="العنوان" disabled>
+  <select name="request_steps" id="request-steps" (change)="openSelectedStep($event)">
+    <option value="" selected disabled>الإجرائات المطلوبة</option>
+    <option value="{{trasactionType}}-data">ملئ النموذج</option>
+    <option value="deliverables-checklist">إستلام الطلب</option>
+    <option value="deliverables-screening">فحص الطلب</option>
+    <option value="initial-fees">تحديد رسوم أولية</option>
+    <option value="initial-fees-procurement">تحصيل الرسوم الأولية</option>
+    <option value="inspections-dates">تحديد ميعاد المعاينة</option>
+  </select>
+
+</div>
+
+<router-outlet></router-outlet>
+

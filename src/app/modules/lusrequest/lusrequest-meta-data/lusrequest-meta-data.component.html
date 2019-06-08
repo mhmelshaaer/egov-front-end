@@ -1,8 +1,47 @@
-<p>
-  lusrequest-meta-data works!
-</p>
-<p>
-  in this tab, each section will be in a separate tab.
-</p>
+
+<div class="meta-data-section">
+
+  <div class="applicant">
+
+    <input type="text" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن">
+
+    <select name="property_selection" id="property-selection">
+      <option value="" selected disabled>property selection</option>
+      <option value="option">option</option>
+    </select>
+
+    <input type="text" name="representative_name" id="representative-name" placeholder="الوكيل">
+
+    <select name="representative_relationship" id="representative-relationship">
+        <option value="" selected disabled>representative relationship</option>
+      <option value="optyion">option</option>
+    </select>
+    
+    <select name="request_source" id="request-source">
+        <option value="" selected disabled>request source</option>
+        <option value="option">option</option>
+    </select>
+
+  </div>
+
+  <div class="property-info">
+
+    <input type="text" name="address_selection" id="address-selection" placeholder="اختيار العنوان">
+
+    <input type="text" name="organization" id="organization" placeholder="التنظيم">
+
+    <select name="select1" id="select1">
+      <option value="" selected disabled>select1</option>
+      <option value="">select1</option>
+    </select>
+
+    <select name="select2" id="select2">
+      <option value="" selected disabled>select2</option>
+      <option value="">select2</option>
+    </select>
+
+  </div>
+
+</div>
 
 <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>

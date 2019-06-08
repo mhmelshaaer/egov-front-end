@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-request-navigator',
@@ -8,12 +8,27 @@ import { Router } from '@angular/router';
 })
 export class RequestNavigatorComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  trasactionType: string;
+
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
 
     console.log("RequestNavigatorComponent")
 
+    this.route.params.subscribe(params =>{
+      this.trasactionType = params['transaction-type'];
+      console.log(this.trasactionType);
+    });
+
+  }
+
+  openSelectedStep(event){
+    this.router
+          .navigate(
+            [event.target.value],
+            {relativeTo: this.route}
+          );
   }
 
   goBack(){
