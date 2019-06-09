@@ -3,12 +3,12 @@ section{
     grid-template-columns: 1fr 1fr;
     grid-gap: 10px;
 
-    margin: 10px;
+    margin: 10px 0;
 }
 
 article{
-    background: silver;
-    padding: 5px;
+    box-shadow: 0 0 5px 8px silver inset;
+    padding: 10px;
 }
 
 #first-article{

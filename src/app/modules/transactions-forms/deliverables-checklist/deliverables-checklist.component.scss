@@ -4,11 +4,17 @@ section{
     grid-gap: 5px;
 
     margin: 20px 0;
+    box-shadow: 0 0 5px 8px silver inset;
+    padding: 10px;
 
     & > div{
         display: grid;
         grid-template-columns: 1fr 1fr 3fr 5fr;
         grid-column-gap: 5px;
+
+        padding: 5px 0;
+
+        &:nth-child(even){background-color: #e2e2e2;}
 
         &:nth-child(1){
             justify-items: end;
