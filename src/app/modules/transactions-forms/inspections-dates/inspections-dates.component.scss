@@ -1,0 +1,35 @@
+
+section{
+    display: grid;
+    grid-template-columns: 1fr;
+
+    margin: 20px 0;
+    font-size: 11px;
+
+    & > article{
+        display: grid;
+        grid-template-columns: 1fr;
+
+        box-shadow: 0 0 5px 8px silver inset;
+        padding: 10px;
+    }
+}
+
+input, select{
+    direction: rtl;
+    padding: 2px 0;
+    height: 22px;
+}
+input[type='date']{
+    height: 14px;
+}
+textarea{
+    direction: rtl;
+    resize: none;
+}
+
+td, th{border: 1px solid #ddd;padding: 8px;}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+tr:last-child{border-top: 2px solid black;}
+tr > td{text-align: center;}

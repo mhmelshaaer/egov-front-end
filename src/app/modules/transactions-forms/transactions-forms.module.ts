@@ -7,9 +7,11 @@ import { DeliverablesScreeningComponent } from './deliverables-screening/deliver
 import { InitialFeesComponent } from './initial-fees/initial-fees.component';
 import { InitialFeesProcurementComponent } from './initial-fees-procurement/initial-fees-procurement.component';
 import { InspectionsDatesComponent } from './inspections-dates/inspections-dates.component';
+import { FeesComponent } from './fees/fees.component';
+import { FeesProcurementComponent } from './fees-procurement/fees-procurement.component';
 
 @NgModule({
-  declarations: [DeliverablesChecklistComponent, DeliverablesScreeningComponent, InitialFeesComponent, InitialFeesProcurementComponent, InspectionsDatesComponent],
+  declarations: [DeliverablesChecklistComponent, DeliverablesScreeningComponent, InitialFeesComponent, InitialFeesProcurementComponent, InspectionsDatesComponent, FeesComponent, FeesProcurementComponent],
   imports: [
     CommonModule,
     TransactionsFormsRoutingModule
