@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FeesProcurementComponent implements OnInit {
 
+  step = 'feesProcurement'
+
   constructor() { }
 
   ngOnInit() {

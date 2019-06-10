@@ -62,4 +62,7 @@
 
   </article>
 
+  <button *ngIf="step" (click)="feesAdd()">Add</button>
+  <button *ngIf="!step" (click)="initialFeesAdd()">Add</button>
+
 </section>

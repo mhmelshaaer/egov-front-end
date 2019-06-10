@@ -1,0 +1,40 @@
+
+section{
+    display: grid;
+    grid-template-columns: 1fr;
+
+    margin: 20px 0;
+    font-size: 11px;
+
+    & > article{
+        display: grid;
+        grid-template-columns: 1fr;
+
+        box-shadow: 0 0 5px 8px silver inset;
+        padding: 10px;
+    }
+}
+
+table{
+    display: grid;
+    grid-template-columns: 1fr;
+
+    thead > tr, tbody > tr{
+        display: grid;
+        grid-template-columns: 150px repeat(4, 50px) 1fr;
+    }
+}
+
+input{
+    direction: rtl;
+    width: 100%;
+    padding: 2px 0;
+    height: 22px;
+    font-size: 10px;
+}
+
+
+td, th{border: 1px solid #ddd;padding: 8px;}
+tr:nth-child(even){background-color: #f2f2f2;}
+tr:hover {background-color: #ddd;}
+tr > td{text-align: center;}

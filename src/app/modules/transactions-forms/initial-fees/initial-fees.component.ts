@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-initial-fees',
+  selector: 'initial-fees',
   templateUrl: './initial-fees.component.html',
   styleUrls: ['./initial-fees.component.scss']
 })
 export class InitialFeesComponent implements OnInit {
 
-  constructor() { }
+  @Input() step: string;
+
+  constructor() {}
 
   ngOnInit() {
+  }
+
+  initialFeesAdd(){
+    console.log("initial fees");
+  }
+
+  feesAdd(){
+    console.log("fees");
   }
 
 }
