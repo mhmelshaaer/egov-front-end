@@ -1,3 +1,208 @@
-<p>
-  inspections-result works!
-</p>
+<section>
+
+  <article>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <button>إضافة</button>
+          </th>
+          <th>
+            <select name="inspector" id="inspector">
+              <option value="" selected disabled>المعاين</option>
+            </select>
+          </th>
+          <th>اسم القائم بالمعاينة</th>
+        </tr>
+        <tr>
+          <th>حذف</th>
+          <th>الاسم</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>عبد العال امام عبد العال امام عبد العال امام</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>عبد العال امام</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>عبد العال امام</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <article>
+
+    <div>
+      <select name="organization" id="organization">
+        <option value="" selected disabled>الإدارة</option>
+      </select>
+      <label for="organization">الإدارة</label>
+    </div>
+
+    <div>
+      <input type="date" name="design_plan_date" id="design-plan-date">
+      <label for="design-plan-date">تاريخ المخطط</label>
+    </div>
+
+    <div>
+      <input type="date" name="inspection_date" id="inspection-date">
+      <label for="inspection-date">تريخ المعاينة</label>
+    </div>
+
+    <div>
+      <input type="checkbox" name="building_infraction" id="building-infraction">
+      <label for="building-infraction">مخالفة بناء</label>
+    </div>
+
+  </article>
+
+  <article>
+    
+    <div>
+      <input type="text" name="fine_value" id="fine-value" placeholder="قيمة الغرامة">
+      <label for="fine-value">يوجد غرامة</label>
+      <input type="checkbox" name="fine" id="fine">
+    </div>
+
+    <div>
+      <label for="re-inspection">مطلوب إعادة معاية</label>
+      <input type="checkbox" name="re_inspection" id="re-inspection">
+    </div>
+
+    <div>
+      <label for="situation-legalization">تم تقنين الوضع</label>
+      <input type="checkbox" name="situation_legalization " id="situation-legalization">
+    </div>
+
+    <div>
+      <label for="public-utility-police">تم التحويل الى شرطة المرافق</label>
+      <input type="checkbox" name="public_utility_police" id="public-utility-police">
+    </div>
+
+    <div>
+      <label for="empty-land">الأرض فضاء</label>
+      <input type="checkbox" name="empty_land" id="empty-land">
+    </div>
+
+    <div>
+      <label for="electric-source">يوجد مصدر طيار كهربى</label>
+      <input type="checkbox" name="electric_source" id="electric-source">
+    </div>
+
+    <div>
+      <label for="complete-building">المبنى مكتمل</label>
+      <input type="checkbox" name="complete_building" id="complete-building">
+    </div>
+
+    <div>
+      <label for="shader-suitability">الموقع صالح لإقامة شادر</label>
+      <input type="checkbox" name="shader_suitability" id="shader-suitability">
+    </div>
+
+
+  </article>
+
+  <article>
+
+    <div>
+
+      <textarea name="infraction_description" id="infraction-description" cols="" rows="2" placeholder="الوصف"></textarea>
+      <label for="infraction-description">وصف المخالفة</label>
+
+    </div>
+
+    <div>
+
+      <textarea name="committee_report" id="committee-report" cols="" rows="2" placeholder="الوصف"></textarea>
+      <label for="committee-report">تقرير اللجنة</label>
+
+    </div>
+
+    <div>
+
+      <textarea name="design_edit_description" id="design-edit-description" cols="" rows="2" placeholder="الوصف"></textarea>
+      <label for="design-edit-required">مطلوب تعديل رسومات</label>
+      <input type="checkbox" name="design_edit_required" id="design-edit-required">
+
+    </div>
+
+    <div>
+
+      <textarea name="removal_description" id="removal-description" cols="" rows="2" placeholder="الوصف"></textarea>
+      <label for="removal-description">مطلوب إزالة-تكسير</label>
+      <input type="checkbox" name="removal_required" id="removal-required">
+
+    </div>
+
+  </article>
+
+  <article>
+
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <button>إضافة</button>
+          </th>
+          <th>
+            <select name="item" id="item">
+              <option value="" selected disabled>البنود</option>
+            </select>
+          </th>
+          <th><textarea name="item_description" id="item-description" row="1" placeholder="توصيف البند"></textarea></th>
+          <th>البنود</th>
+        </tr>
+        <tr>
+          <th>حذف</th>
+          <th>التوصيف</th>
+          <th>البند</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+        <tr>
+          <td><button>حذف</button></td>
+          <td>وصف هدم بدون تصريح</td>
+          <td>هدم بدون تصريح</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </article>
+
+</section>

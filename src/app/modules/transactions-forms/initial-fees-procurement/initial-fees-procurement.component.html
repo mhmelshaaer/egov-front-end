@@ -29,6 +29,9 @@
       <div>
         <textarea name="notes" id="notes" rows="3" placeholder="ملاحظات"></textarea>
       </div>
+      
+      <button *ngIf="step" (click)="feesAdd()">تحصيل</button>
+      <button *ngIf="!step" (click)="initialFeesAdd()">تحصيل</button>
   
     </article>
     
@@ -66,8 +69,5 @@
       </div>
   
     </article>
-
-    <button *ngIf="step" (click)="feesAdd()">Add</button>
-    <button *ngIf="!step" (click)="initialFeesAdd()">Add</button>
   
   </section>
