@@ -6,6 +6,7 @@
 
       <div>
         <p>البروز</p>
+        <p>الردود</p>
         <p>طول الحد</p>
         <p>الإتجاهات</p>
         <p>الحدود</p>
@@ -13,6 +14,7 @@
 
       <div>
         <input type="text" name="north_prominences" id="north-prominences">
+        <input type="text" name="north_interiors" id="north-interiors">
         <input type="text" name="north_border_length" id="north-border-length">
         <select name="north_directions" id="north-directions">
           <option value="" selected disabled>الإتجاه</option>
@@ -22,6 +24,7 @@
 
       <div>
         <input type="text" name="south_prominences" id="south-prominences">
+        <input type="text" name="south_interiors" id="south-interiors">
         <input type="text" name="south_border_length" id="south-border-length">
         <select name="south_directions" id="south-directions">
           <option value="" selected disabled>الإتجاه</option>
@@ -31,6 +34,7 @@
 
       <div>
         <input type="text" name="east_prominences" id="east-prominences">
+        <input type="text" name="east_interiors" id="east-interiors">
         <input type="text" name="east_border_length" id="east-border-length">
         <select name="east_directions" id="east-directions">
           <option value="" selected disabled>الإتجاه</option>
@@ -40,6 +44,7 @@
 
       <div>
         <input type="text" name="west_prominences" id="west-prominences">
+        <input type="text" name="west_interiors" id="west-interiors">
         <input type="text" name="west_border_length" id="west-border-length">
         <select name="west_directions" id="west-directions">
           <option value="" selected disabled>الإتجاه</option>
@@ -53,36 +58,143 @@
 
   <article>
     
-  </article>
-
-  <article>
-
-  </article>
-
-  <article>
+    <div>
+      <input type="text" name="license_issuing_year" id="license-issuing-year" disabled value="2019">
+      <label for="license-issuing-year">سنة الإصدار</label>
+    </div>
 
     <div>
+      <input type="text" name="license_number" id="license-number">
+      <label for="license-number">رقم الرخصة</label>
+    </div>
 
-      <div>
-        <input type="text" name="engineering_office_input" id="engineering-office-input">
-        <input type="text" name="engineering_office" id="engineering-office" placeholder="المكتب الهندسى">
-      </div>
+    <div>
+      <select name="building_type" id="building-type">
+        <option value="" selected disabled>نوع المبنى</option>
+      </select>
+      <label for="building-type">نوع المبنى</label>
+    </div>
 
-      <div>
-        <input type="text" name="syndicate_registration_number" id="syndicate-registration-number" placeholder="رقم القيد بالنقابة">
-        <input type="text" name="tax_card" id="tax-card" placeholder="البطاقة الضريبية">
-        <input type="text" name="commercial_register" id="commercial-register" placeholder="السجل التجارى">
-      </div>
+    <div>
+      <select name="license_type" id="license-type">
+        <option value="" selected disabled>نوع الرخصة</option>
+      </select>
+      <label for="license-type">نوع الرخصة</label>
+    </div>
 
+    <div>
+      <input type="number" name="file_number" id="file-number">
+      <label for="file-number">رقم الملف</label>
+    </div>
+
+    <div>
+      <input type="date" name="issuing_date" id="issuing-date">
+      <label for="issuing-date">تاريخ الإصدار</label>
+    </div>
+
+    <div>
+      <input type="number" name="building_percentage" id="building-percentage">
+      <label for="building-percentage">نسبة البناء</label>
     </div>
 
   </article>
 
   <article>
 
+    <div>
+      <input type="text" name="" id="">
+      <label for="">عدد الوحدات</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">المساحة</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">عدد الأدوات المكررة</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">رسوم نظافة</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">مكعب الحفر</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">سطح الأعمال</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">إجمالى التكلفة</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">تكلفة الرخصة</label>
+    </div>
+
+    <div>
+      <input type="checkbox" name="" id="">
+      <label for="">يوجد بدروم</label>
+    </div>
+
+    <div>
+      <input type="text" name="" id="">
+      <label for="">رقم خطاب التأمينات</label>
+    </div>
+
   </article>
 
   <article>
+
+    <div>
+      <input type="text" name="engineering_office_input" id="engineering-office-input">
+      <input type="text" name="engineering_office" id="engineering-office" placeholder="المكتب الهندسى">
+    </div>
+
+    <div>
+      <input type="text" name="syndicate_registration_number" id="syndicate-registration-number" placeholder="رقم القيد بالنقابة">
+      <input type="text" name="tax_card" id="tax-card" placeholder="البطاقة الضريبية">
+      <input type="text" name="commercial_register" id="commercial-register" placeholder="السجل التجارى">
+    </div>
+
+    <div>
+      <select name="work_type" id="work-type">
+        <option value="" selected disabled>فئة الأعمال</option>
+      </select>
+    </div>
+
+  </article>
+
+  <article>
+
+    <textarea name="" id="" cols="" rows="3" placeholder="ملاحظات"></textarea>
+    <textarea name="" id="" cols="" rows="3" placeholder="منطوق الأعمال المرخصة"></textarea>
+
+  </article>
+
+  <article>
+
+    <div>
+      <input type="text" name="engineer_consultant_input" id="engineer-consultant-input">
+      <input type="text" name="engineer_consultant" id="engineer-consultant" placeholder="المهندس الإستشارى">
+    </div>
+
+    <div>
+      <select name="responsible_engineer" id="responsible-engineer">
+        <option value="" selected disabled>المهندس المسؤول</option>
+      </select>
+      <input type="text" name="commercial_register_number" id="commercial-register-number" placeholder="رقم السجل">
+      <input type="text" name="" id="" placeholder="رقم القيد">
+    </div>
 
   </article>
 
