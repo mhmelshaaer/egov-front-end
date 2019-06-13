@@ -13,6 +13,21 @@ export class DepartmentsService {
 
   getDepartments(){
     return MOCK_DEPARTMENTS;
+
+    // return this.http.get(this.webservice+'employees/get').pipe(
+    //   map(res=>res.json().map( (item: any)=>{
+    //     let newEmployee= new Employee(item.employee.employee_name,
+    //                                   new Citizen(item.citizen.id,
+    //                                               item.citizen.citizen_name,
+    //                                               item.citizen.citizen_national_id),
+    //                                   new Department(item.department.department_name));
+        
+    //     newEmployee.id = item.employee.id;
+    //     return newEmployee;
+    //   })
+    // )
+    // );
+
   }
 
 }
