@@ -15,11 +15,7 @@
 
             <select name="administration" id="">
                 <option value="" selected disabled>الإدارة</option>
-                <option value="">option</option>
-                <option value="">option</option>
-                <option value="">option</option>
-                <option value="">option</option>
-                <option value="">option</option>
+                <option value="الهندسة/ التنظيم">الهندسة/ التنظيم</option>
             </select>
 
             <input type="submit" value="إضافة">
@@ -97,7 +93,7 @@
             <h3>{{currSelectedStep.form.name}}</h3>
             <div class="tab">
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'existing-groups', 'grid')" id="groupManagementDefaultOpen">إضافة الى مجموعة</button>
-                <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button>
+                <!-- <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button> -->
             </div>
 
             <div id="existing-groups" class="groupManagementTabcontent">
@@ -117,12 +113,12 @@
                     </tr>
                 </table>
             </div>
-            <div id="add-new-group" class="groupManagementTabcontent">
+            <!-- <div id="add-new-group" class="groupManagementTabcontent">
                 <h3>اعضاء المجموعة</h3>
                 <input type="text" name="search_users" id="" placeholder="بحث">
                 <table id="add-new-group-table">
                     <tr *ngFor="let user of users; let i = index">
-                        <td>{{user.name}}</td>
+                        <td>{{user.username}}</td>
                         <td>
                             <input class="styled-checkbox" id="add-new-group-checkbox-{{user.id}}" type="checkbox" value="{{user.id}}">
                             <label for="add-new-group-checkbox-{{user.id}}" (click)="selectGroupUser(i)" title="تحديد"></label>    
@@ -131,7 +127,7 @@
                 </table>
                 <input type="text" [(ngModel)]="newGroup.name"  name="group_name" value="{{newGroup.name}}" placeholder="اسم المجموعة">
                 <button (click)="addNewGroup()">إضافة</button>
-            </div>
+            </div> -->
 
             <button id="step-group-management-close-btn" (click)="closeTab('step-group-management')">close</button>
         </div>

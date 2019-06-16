@@ -1,0 +1,19 @@
+<main>
+  <div class="main-header"><h1>إضافة خطوات</h1></div>
+  <div class="add-document">
+      <form action="" (ngSubmit)="add()">
+          <input type="text" [(ngModel)]="newForm.name" name="document_name" placeholder="اسم الخطوة">
+          <input type="submit" value="إضافة">
+      </form>
+  </div>
+  <div class="list-documents">
+      <table id="list-documents-table">
+          <tr *ngFor="let form of forms; let i = index">
+              <td *ngIf="!form.deleted">{{form.name}}</td>
+              <td *ngIf="!form.deleted">
+                <a (click)="delete(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+              </td>
+          </tr>
+      </table>
+  </div>
+</main>

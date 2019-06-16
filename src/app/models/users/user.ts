@@ -5,14 +5,16 @@ export class User{
 
     public static prev_id = 0;
 
-    public id: number;
+    // public id: number;
 
     constructor(
+        public id: number,
         public username: String,
         public password: String,
+        // public groups: String[] = [],
         public role: Role=null,
         public employee: Employee=null
         ){
-            this.id = ++User.prev_id;
+            // this.id = ++User.prev_id;
         }
 }

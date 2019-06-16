@@ -1,3 +1,4 @@
+import { FormsService } from './../../../shared/forms-service/forms.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
@@ -17,6 +18,7 @@ import {
   faUsers,
   faListOl
 } from '@fortawesome/free-solid-svg-icons';
+import { User } from 'src/app/models/users/user';
 
 
 @Component({
@@ -46,13 +48,17 @@ export class TransactionsComponent implements OnInit {
 
   groups: Group[];
 
-  users: GroupUser[];
-  groupSelectedUsers: GroupUser[];
+  // users: GroupUser[];
+  // groupSelectedUsers: GroupUser[];
+  users: User[];
+  groupUsers: GroupUser[];
+  groupSelectedUsers: User[];
 
   availableOrders: number[];
 
   constructor(private feesService: FeesService,
               private documentsService: DocumentsService,
+              private formsService:FormsService,
               private transactionsService: TransactionsService,
               private usersService: UsersService) { }
 
@@ -62,7 +68,8 @@ export class TransactionsComponent implements OnInit {
     document.getElementById("requiredStepsDefaultOpen").click();
     document.getElementById("groupManagementDefaultOpen").click();
 
-    this.forms = this.transactionsService.getForms();
+    // this.forms = this.transactionsService.getForms();
+    this.formsService.getForms().subscribe(data => this.forms=data);
     this.selectedTransactionSteps=[];
 
     this.documentsService.getDocuments().subscribe(data=>this.documents=data);
@@ -73,13 +80,23 @@ export class TransactionsComponent implements OnInit {
 
     this.groups = this.usersService.getGroups();
 
-    this.users = this.usersService.getUsers();
-    this.groupSelectedUsers = [];
+    // this.users = this.usersService.getUsers();
+    this.usersService.getUsers().subscribe(data => this.users = data);
+
+    /**
+     * *** Thess variales is related to add new group, so it will be removed ***
+     */
+    // this.groupUsers = [];
+    // this.groupSelectedUsers = [];
 
     this.availableOrders = [];
 
-    this.currSelectedStep = new TransactionStep(null, new Form(null), [], null);
-    this.newGroup = new Group(null, this.groupSelectedUsers);
+    this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
+
+    /**
+     * *** This variale is related to add new group, so it will be removed ***
+     */
+    // this.newGroup = new Group(null, null, this.groupSelectedUsers);
 
     this.newtransactions = [];
     this.newTransaction = new Transaction("",
@@ -90,7 +107,8 @@ export class TransactionsComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.transactionsService.saveTransactions(this.newtransactions).subscribe();
+    console.log(this.newtransactions);
+    // this.transactionsService.saveTransactions(this.newtransactions).subscribe();
     // this.transactionsService.saveTransactions(this.newtransactions);
   }
 
@@ -109,7 +127,7 @@ export class TransactionsComponent implements OnInit {
     this.selectedFees = [];
     this.groupSelectedUsers = [];
     this.availableOrders = [];
-    this.currSelectedStep = new TransactionStep(null, new Form(null), [], null);
+    this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
 
     this.newTransaction = new Transaction( "",
                                           this.selectedTransactionSteps,
@@ -252,44 +270,55 @@ export class TransactionsComponent implements OnInit {
    * 
    * @param index index of group user to be added to groupSelectedUsers array.
    * Note that if the user is already selected, the user will be removed from groupSelectedUsers array.
+   * 
+   * *** This function is related to add new group, so it will be removed ***
    */
-  selectGroupUser(index: number){
-    let selectedGroupUser = this.users[index];
-    let deletionIndex: number = -1;
+  // selectGroupUser(index: number){
+  //   let selectedGroupUser = this.users[index];
+  //   let deletionIndex: number = -1;
 
-    this.groupSelectedUsers.forEach((groupUser, i) => groupUser.id == selectedGroupUser.id ? deletionIndex=i: null);
+  //   this.groupSelectedUsers.forEach((groupUser, i) => groupUser.id == selectedGroupUser.id ? deletionIndex=i: null);
 
-    if(deletionIndex < 0) this.groupSelectedUsers.push(this.users[index]);
-    else this.removeGroupUser(deletionIndex);
+  //   if(deletionIndex < 0){
 
-  }
+  //     this.groupSelectedUsers.push(this.users[index]); 
+
+  //   }else{
+  //     this.removeGroupUser(deletionIndex);
+  //   }
+
+  // }
 
   /**
    * 
    * @param index index of group user to be removed from group groupSelectedUsers array
+   * 
+   * *** This function is related to add new group, so it will be removed ***
    */
-  removeGroupUser(index: number){
-    this.groupSelectedUsers.splice(index, 1);
-  }
+  // removeGroupUser(index: number){
+  //   this.groupSelectedUsers.splice(index, 1);
+  // }
 
   /**
    * Add new group
+   * 
+   * *** This function will be deleted because group management moved to other part of the system ***
    */
-  addNewGroup(){
-    let group = new Group(this.newGroup.name, this.newGroup.members);
-    this.groups.push(group);
-    this.groupSelectedUsers.forEach(SelectedUsers => SelectedUsers.groups.push(group.name));
+  // addNewGroup(){
+  //   let group = new Group(null, this.newGroup.name, this.newGroup.members);
+  //   this.groups.push(group);
+  //   this.groupSelectedUsers.forEach(SelectedUser => SelectedUser.groups.push(group.name));
 
-    this.newGroup.name = null;
-    this.groupSelectedUsers = [];
+  //   this.newGroup.name = null;
+  //   this.groupSelectedUsers = [];
 
-    let checkboxes = document.getElementById('add-new-group-table').getElementsByTagName('input');
+  //   let checkboxes = document.getElementById('add-new-group-table').getElementsByTagName('input');
 
-    for(let i=0; i<checkboxes.length; i++){
-      checkboxes[i].checked = false;
-    }
+  //   for(let i=0; i<checkboxes.length; i++){
+  //     checkboxes[i].checked = false;
+  //   }
 
-  }
+  // }
 
   selected(group_id: number): boolean{
 

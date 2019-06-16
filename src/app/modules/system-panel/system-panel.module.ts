@@ -21,6 +21,8 @@ import { AddUserComponent } from './add-user/add-user.component';
 //Directives
 import { DisableControlDirective } from './directives/disable-control/disable-control.directive';
 import { SelectControlDirective } from './directives/select-control/select-control.directive';
+import { FormsComponent } from './forms/forms.component';
+import { GroupsComponent } from './groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { SelectControlDirective } from './directives/select-control/select-contr
     DisableControlDirective,
     SelectControlDirective,
     AddEmployeeComponent,
-    AddUserComponent
+    AddUserComponent,
+    FormsComponent,
+    GroupsComponent
   ],
   imports: [
     CommonModule,

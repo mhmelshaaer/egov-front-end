@@ -1,0 +1,58 @@
+<main>
+  <div class="main-header"><h1>إدارة المجموعات</h1></div>
+
+  <div class="add-group">
+      <form action="" (ngSubmit)="addGroup()">
+
+          <input type="text" [(ngModel)]="newGroup.name" name="new_group" id="new-group" placeholder="اسم المجموعة">
+
+          <input type="submit" value="إضافة">
+
+      </form>
+  </div>
+  <div class="list-groups">
+    <table id="list-groups-table">
+      <tr *ngFor="let group of groups; let i = index">
+          <td *ngIf="!group.deleted">{{group.name}}</td>
+          <td *ngIf="!group.deleted">
+            <a (click)="deleteGroup(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+          </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="manage-group-users">
+      <form action="" (ngSubmit)="addGroupUser()">
+          
+          <ngx-select-dropdown  name="username"
+                                [config]="usersConfig"
+                                [options]="users"
+                                [(ngModel)]="currSelectOption">
+          </ngx-select-dropdown>
+
+          <select name="group"
+                  id="group"
+                  (change)="selectGroup()"
+                  [(ngModel)]="currSelctedGroup.name">
+
+            <option value="" disabled selected>المجموعة</option>
+
+            <option *ngFor="let group of groups" value="{{group.name}}">{{group.name}}</option>
+
+          </select>
+
+          <input type="submit" value="إضافة">
+
+      </form>
+  </div>
+  <div class="list-group-users">
+    <table id="list-group-users-table">
+      <tr *ngFor="let groupUser of currGroupUsers; let i = index">
+          <td *ngIf="!groupUser.deleted">{{groupUser.name}}</td>
+          <td *ngIf="!groupUser.deleted">
+            <a (click)="deleteGroupUser(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+          </td>
+      </tr>
+    </table>
+  </div>
+</main>

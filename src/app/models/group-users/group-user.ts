@@ -4,13 +4,15 @@ export class GroupUser{
 
     public static prev_id = 0;
 
-    public id: number;
+    // public id: number;
 
     constructor(
+        public id: number,
         public name: String,
-        public groups: String[],
-        public role: String,
-        public privileges: String[]){
-            this.id = ++GroupUser.prev_id;
+        public group: String,
+        public new_group_user: boolean = false,
+        public deleted: boolean = false,
+        public updated: boolean = false){
+            // this.id = ++GroupUser.prev_id;
         }
 }

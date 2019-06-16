@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 
 import { Document } from './../../../models/documents/document';
 
-import { MOCK_DOCUMENTS } from 'src/app/models/documents/documents-mockup';
-
 import {
   faTrashAlt
 } from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +18,7 @@ export class DocumentsComponent implements OnInit {
   faTrashAlt = faTrashAlt;
 
   documents:Document[]
-  newDocument: Document;
+  newDocument: Document; 
 
   constructor(private documentsService: DocumentsService) { }
 

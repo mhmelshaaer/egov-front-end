@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { User } from './../../models/users/user';
 import { MOCK_ROLES } from './../../models/roles/role-mockup';
 import { MOCK_USERS } from './../../models/group-users/mock-users';
@@ -26,10 +27,25 @@ export class UsersService {
 
   getGroups(): Group[]{
     return MOCK_GROUPS;
+
+    // return this.http.get(this.webservice+'forms/get').pipe(
+    //   map(res=>res.json()[1].map( (item: any)=>{
+    //       console.log(res.json());
+    //       return new Form(item.id, item.form_name)
+    //     })
+    //   )
+    // )
   }
 
-  getUsers(): GroupUser[]{
-    return MOCK_USERS;
+  getUsers(){
+    // return MOCK_USERS;
+
+    return this.http.get(this.webservice+'users/get').pipe(
+      map(res=>res.json().users.map( (item: any)=>{
+          return new User(item.id, item.name, item.password)
+        })
+      )
+    )
   }
 
   getRoles(): Role[]{

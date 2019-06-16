@@ -34,7 +34,7 @@ export class AddUserComponent implements OnInit {
     this.currSelectOption = null;
 
     this.newUsers = [];
-    this.newUser = new User("", "", new Role(""));
+    this.newUser = new User(null, "", "", new Role(""));
 
     this.roles = this.usersService.getRoles();
 
@@ -64,7 +64,7 @@ export class AddUserComponent implements OnInit {
   addUser(){
     this.newUser.employee = this.currSelectOption;
     this.newUsers.push(this.newUser)
-    this.newUser = new User("", "", new Role(""));
+    this.newUser = new User(null, "", "", new Role(""));
     console.log(this.newUsers);
   }
 

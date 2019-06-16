@@ -6,8 +6,10 @@ import { PanelHomeComponent } from './panel-home/panel-home.component';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { FeesComponent } from './fees/fees.component';
+import { FormsComponent } from './forms/forms.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { GroupsComponent } from './groups/groups.component';
 import { RequestTypeSelectionComponent } from './../requests-controller/request-type-selection/request-type-selection.component';
 import { LUSRequestsListComponent } from './../lusrequest/lusrequests-list/lusrequests-list.component';
 import { OpenRequestComponent } from '../requests-controller/open-request/open-request.component';
@@ -33,12 +35,20 @@ const routes:Routes=[
 				component: FeesComponent
 			},
 			{
+				path: 'forms',
+				component: FormsComponent
+			},
+			{
 				path: 'add-employee',
 				component: AddEmployeeComponent
 			},
 			{
 				path: 'add-user',
 				component: AddUserComponent
+			},
+			{
+				path: 'groups',
+				component: GroupsComponent
 			},
 			{
 				path: 'requests-add',
