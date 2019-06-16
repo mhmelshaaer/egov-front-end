@@ -27,7 +27,6 @@ export class FormsComponent implements OnInit {
 
     this.formsService.getForms().subscribe(data=> this.forms=data);
     this.newForm = new Form(null, "");
-    console.log(this.forms);
 
   }
 

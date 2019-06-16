@@ -27,7 +27,7 @@ export class FeesService {
   getFees(): Observable<Fee[]>{ //return type when using http will be Observable<any[]>
     // return MOCK_FEES;
     return this.http.get(this.webservice+'fees/get').pipe(
-      map(res=>res.json()[1].map( (item: any)=>{
+      map(res=>res.json().fees.map( (item: any)=>{
           return new Fee(item.id, item.fees_name, item.default_value)
         })
       )

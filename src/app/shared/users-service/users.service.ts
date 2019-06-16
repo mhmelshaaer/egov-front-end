@@ -1,14 +1,14 @@
 import { map } from 'rxjs/operators';
-import { User } from './../../models/users/user';
-import { MOCK_ROLES } from './../../models/roles/role-mockup';
-import { MOCK_USERS } from './../../models/group-users/mock-users';
-import { GroupUser } from './../../models/group-users/group-user';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 
-import { MOCK_GROUPS } from './../../models/groups/group-mockup';
+import { User } from './../../models/users/user';
+import { GroupUser } from './../../models/group-users/group-user';
 import { Group } from './../../models/groups/group';
 import { Role } from 'src/app/models/roles/role';
+
+import { MOCK_ROLES } from './../../models/roles/role-mockup';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,21 +25,44 @@ export class UsersService {
     return this.http.post(this.webservice+'users/fetch',{data: users});
   }
 
-  getGroups(): Group[]{
-    return MOCK_GROUPS;
+  saveGroupUsers(groups: Group[], groupUsers: GroupUser[]){
+    console.log("saving new groupUsers...");
+    console.log(groups);
+    console.log(groupUsers);
 
-    // return this.http.get(this.webservice+'forms/get').pipe(
-    //   map(res=>res.json()[1].map( (item: any)=>{
-    //       console.log(res.json());
-    //       return new Form(item.id, item.form_name)
-    //     })
-    //   )
-    // )
+    return this.http.post(this.webservice+'groupUsers/fetch',{data: {groups: groups, groupUsers: groupUsers}});
   }
 
-  getUsers(){
-    // return MOCK_USERS;
+  getGroups(): Observable<Group[]>{
+    return this.http.get(this.webservice+'groups/get').pipe(
+      map(res=>res.json().groups.map( (item: any)=>{
+          return new Group(item.id, item.group_name)
+        })
+      )
+    )
+  }
 
+  getGroupUsers(): Observable<GroupUser[]>{
+    return this.http.get(this.webservice+'groupUsers/get').pipe(
+      map(res => {
+        
+        let groupUsers: GroupUser[] = [];
+
+        res.json()
+            .groupUsers
+            .map( (item: any)=>{
+              let group = res.json().groups.find(x => x.id == item.group_id);
+              let user = res.json().users.find(x => x.id == item.user_id);
+              groupUsers.push(new GroupUser(item.id, user.name, group.group_name));
+            })
+
+          return groupUsers;
+        }
+      )
+    )
+  }
+
+  getUsers(): Observable<User[]>{
     return this.http.get(this.webservice+'users/get').pipe(
       map(res=>res.json().users.map( (item: any)=>{
           return new User(item.id, item.name, item.password)

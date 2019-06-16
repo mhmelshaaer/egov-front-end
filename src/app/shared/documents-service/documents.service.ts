@@ -31,7 +31,7 @@ export class DocumentsService {
   getDocuments(): Observable<Document[]>{ //return type when using http will be Observable<Document[]>
     // return MOCK_DOCUMENTS;
     return this.http.get(this.webservice+'documents/get').pipe(
-      map(res=>res.json()[1].map( (item: any)=>{
+      map(res=>res.json().documents.map( (item: any)=>{
           return new Document(item.id, item.document_name)
         })
       )

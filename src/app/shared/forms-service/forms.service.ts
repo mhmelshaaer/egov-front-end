@@ -29,7 +29,7 @@ export class FormsService {
   getForms(): Observable<Form[]>{ //return type when using http will be Observable<Document[]>
     // return MOCK_FORMS;
     return this.http.get(this.webservice+'forms/get').pipe(
-      map(res=>res.json()[1].map( (item: any)=>{
+      map(res=>res.json().forms.map( (item: any)=>{
           console.log(res.json());
           return new Form(item.id, item.form_name)
         })

@@ -16,7 +16,7 @@ export class CitizensService {
 
   getCitizens(): Observable<Citizen[]>{ 
     return this.http.get(this.webservice+'citizens/get').pipe(
-      map(res=>res.json()[1].map( (item: any)=>{
+      map(res=>res.json().citizens.map( (item: any)=>{
         return new Citizen(item.id, item.citizen_name, item.citizen_national_id)
       })
     )

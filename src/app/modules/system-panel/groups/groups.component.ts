@@ -20,32 +20,31 @@ export class GroupsComponent implements OnInit {
   //Fontawesome icons
   faTrashAlt = faTrashAlt;
 
-  usersConfig: any;
-
   users: User[];
   groups: Group[];
+  groupUsers: GroupUser[];
+
   currSelectOption: User;
   currSelctedGroup: Group;
-
+  currGroupUsers: GroupUser[];
+  
   newGroup: Group;
 
-  groupUsers: GroupUser[];
-  currGroupUsers: GroupUser[];
+  usersConfig: any;  
 
   constructor(private usersService: UsersService) { }
 
   ngOnInit() {
 
     this.usersService.getUsers().subscribe(data => {this.users = data;});
-    this.groups = [];
+    this.usersService.getGroups().subscribe(data => {this.groups = data;});
+    this.usersService.getGroupUsers().subscribe(data => {this.groupUsers = data;});
 
     this.currSelectOption = null;
     this.currSelctedGroup = new Group(null, "");
+    this.currGroupUsers = [];
 
     this.newGroup = new Group(null, "");
-
-    this.groupUsers = [];
-    this.currGroupUsers = [];
 
     this.usersConfig = {
       displayKey:"username", //if objects array passed which key to be displayed defaults to description
@@ -60,6 +59,12 @@ export class GroupsComponent implements OnInit {
       searchOnKey: 'name', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
     }
 
+  }
+
+  ngOnDestroy(){
+    console.log(this.groups);
+    console.log(this.groupUsers);
+    this.usersService.saveGroupUsers(this.groups, this.groupUsers).subscribe();
   }
 
   selectGroup(){
@@ -116,7 +121,7 @@ export class GroupsComponent implements OnInit {
 
     }else{
       currGroupUser.deleted = true;
-      this.groupUsers.forEach(x => x.name == currGroupUser.name? x.deleted = true: null);
+      this.groupUsers.forEach(x => x.id == currGroupUser.id? x.deleted = true: null);
     }
     
     console.log(this.currGroupUsers);
@@ -133,12 +138,13 @@ export class GroupsComponent implements OnInit {
       this.groupUsers = newGroupUsers;
       this.groups.splice(index, 1);
 
-      this.currGroupUsers = [];
-      this.currSelctedGroup.name = "";
-
     }else{
       currGroup.deleted = true;
     }
+
+    this.currGroupUsers = [];
+    this.currSelctedGroup.name = "";
+    
     console.log(this.currGroupUsers);
     console.log(this.groupUsers);
   }

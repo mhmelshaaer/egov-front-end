@@ -78,7 +78,8 @@ export class TransactionsComponent implements OnInit {
     this.feesService.getFees().subscribe(data=>this.fees=data);
     this.selectedFees = [];
 
-    this.groups = this.usersService.getGroups();
+    this.usersService.getGroups().subscribe(data => {this.groups = data});
+    // this.groups = this.usersService.getGroups();
 
     // this.users = this.usersService.getUsers();
     this.usersService.getUsers().subscribe(data => this.users = data);

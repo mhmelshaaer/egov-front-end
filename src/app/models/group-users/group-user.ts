@@ -11,8 +11,7 @@ export class GroupUser{
         public name: String,
         public group: String,
         public new_group_user: boolean = false,
-        public deleted: boolean = false,
-        public updated: boolean = false){
+        public deleted: boolean = false){
             // this.id = ++GroupUser.prev_id;
         }
 }
