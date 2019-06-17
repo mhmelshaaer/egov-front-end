@@ -14,6 +14,7 @@ import { RequestTypeSelectionComponent } from './../requests-controller/request-
 import { LUSRequestsListComponent } from './../lusrequest/lusrequests-list/lusrequests-list.component';
 import { OpenRequestComponent } from '../requests-controller/open-request/open-request.component';
 import { ModuleRoutingControllerComponent } from '../requests-controller/module-routing-controller/module-routing-controller.component';
+import { PrivilegesComponent } from './privileges/privileges.component';
 
 
 
@@ -49,6 +50,10 @@ const routes:Routes=[
 			{
 				path: 'groups',
 				component: GroupsComponent
+			},
+			{
+				path: 'privileges',
+				component: PrivilegesComponent
 			},
 			{
 				path: 'requests-add',

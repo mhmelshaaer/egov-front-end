@@ -30,7 +30,6 @@ export class FormsService {
     // return MOCK_FORMS;
     return this.http.get(this.webservice+'forms/get').pipe(
       map(res=>res.json().forms.map( (item: any)=>{
-          console.log(res.json());
           return new Form(item.id, item.form_name)
         })
       )

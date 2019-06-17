@@ -139,11 +139,11 @@ export class TransactionsComponent implements OnInit {
                                           this.selectedDocuments,
                                           this.selectedFees);
 
-      let checkboxes = document.getElementsByTagName('input');
+    let checkboxes = document.getElementsByTagName('input');
 
-      for(let i=0; i<checkboxes.length; i++){
-        checkboxes[i].checked = false;
-      }
+    for(let i=0; i<checkboxes.length; i++){
+      checkboxes[i].checked = false;
+    }
   }
 
   /*******************************************************************************************************
