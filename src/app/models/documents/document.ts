@@ -6,6 +6,7 @@ export class Document {
     constructor(
       public id:number,
       public name: string,
+      public mandatory: boolean = false,
       public new_document: boolean = false,
       public deleted: boolean = false){
         //   this.id = ++Document.prv_id;

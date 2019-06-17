@@ -12,6 +12,7 @@ export class Transaction{
 
     constructor(
         public name: string,
+        public parent: string,
         public steps: TransactionStep[],
         public documents: Document[],
         public fees: Fee[]

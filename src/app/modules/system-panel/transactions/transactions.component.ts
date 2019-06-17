@@ -1,24 +1,22 @@
-import { FormsService } from './../../../shared/forms-service/forms.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
 import { DocumentsService } from './../../../shared/documents-service/documents.service';
 import { FeesService } from './../../../shared/fees-service/fees.service';
 import { UsersService } from './../../../shared/users-service/users.service';
+import { FormsService } from './../../../shared/forms-service/forms.service';
 
 import { Transaction } from 'src/app/models/transactions/transaction';
 import { Form } from './../../../models/forms/form';
 import { TransactionStep } from './../../../models/transactions/transaction-step';
 import { Document } from './../../../models/documents/document';
 import { Fee } from './../../../models/fees/fee';
-import { GroupUser } from '../../../models/group-users/group-user';
 import { Group } from './../../../models/groups/group';
 
 import {
   faUsers,
   faListOl
 } from '@fortawesome/free-solid-svg-icons';
-import { User } from 'src/app/models/users/user';
 
 
 @Component({
@@ -48,11 +46,14 @@ export class TransactionsComponent implements OnInit {
 
   groups: Group[];
 
+  /**
+   * *** These variales is related to add new group, so it will be removed ***
+   */
   // users: GroupUser[];
   // groupSelectedUsers: GroupUser[];
-  users: User[];
-  groupUsers: GroupUser[];
-  groupSelectedUsers: User[];
+  // users: User[];
+  // groupUsers: GroupUser[];
+  // groupSelectedUsers: User[];
 
   availableOrders: number[];
 
@@ -66,9 +67,8 @@ export class TransactionsComponent implements OnInit {
     
     // Defaulte opened tabs
     document.getElementById("requiredStepsDefaultOpen").click();
-    document.getElementById("groupManagementDefaultOpen").click();
+    // document.getElementById("groupManagementDefaultOpen").click();
 
-    // this.forms = this.transactionsService.getForms();
     this.formsService.getForms().subscribe(data => this.forms=data);
     this.selectedTransactionSteps=[];
 
@@ -79,20 +79,22 @@ export class TransactionsComponent implements OnInit {
     this.selectedFees = [];
 
     this.usersService.getGroups().subscribe(data => {this.groups = data});
-    // this.groups = this.usersService.getGroups();
-
-    // this.users = this.usersService.getUsers();
-    this.usersService.getUsers().subscribe(data => this.users = data);
 
     /**
-     * *** Thess variales is related to add new group, so it will be removed ***
+     * *** This variale is related to add new group, so it will be removed ***
+     */
+    // this.usersService.getUsers().subscribe(data => this.users = data);
+
+    /**
+     * *** These variales is related to add new group, so it will be removed ***
      */
     // this.groupUsers = [];
     // this.groupSelectedUsers = [];
 
     this.availableOrders = [];
 
-    this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
+    // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
+    this.currSelectedStep = new TransactionStep(null, new Form(null, null), null);
 
     /**
      * *** This variale is related to add new group, so it will be removed ***
@@ -101,6 +103,7 @@ export class TransactionsComponent implements OnInit {
 
     this.newtransactions = [];
     this.newTransaction = new Transaction("",
+                                          "",
                                           this.selectedTransactionSteps,
                                           this.selectedDocuments,
                                           this.selectedFees);
@@ -109,8 +112,7 @@ export class TransactionsComponent implements OnInit {
 
   ngOnDestroy(){
     console.log(this.newtransactions);
-    // this.transactionsService.saveTransactions(this.newtransactions).subscribe();
-    // this.transactionsService.saveTransactions(this.newtransactions);
+    this.transactionsService.saveTransactions(this.newtransactions).subscribe();
   }
 
   /*******************************************************************************************************
@@ -126,14 +128,22 @@ export class TransactionsComponent implements OnInit {
     this.selectedTransactionSteps=[];
     this.selectedDocuments = [];
     this.selectedFees = [];
-    this.groupSelectedUsers = [];
+    // this.groupSelectedUsers = [];
     this.availableOrders = [];
-    this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
+    // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
+    this.currSelectedStep = new TransactionStep(null, new Form(null, null), null);
 
     this.newTransaction = new Transaction( "",
+                                          "",
                                           this.selectedTransactionSteps,
                                           this.selectedDocuments,
                                           this.selectedFees);
+
+      let checkboxes = document.getElementsByTagName('input');
+
+      for(let i=0; i<checkboxes.length; i++){
+        checkboxes[i].checked = false;
+      }
   }
 
   /*******************************************************************************************************
@@ -189,6 +199,13 @@ export class TransactionsComponent implements OnInit {
     
   }
 
+  mandatoryDocument(index: number){
+    let selectedDocument = this.documents[index];
+    let mandatoryDocument = this.selectedDocuments.find(x => x.id == selectedDocument.id);
+    mandatoryDocument?mandatoryDocument.mandatory = true: null;
+
+  }
+
   /**
    * 
    * @param index index of document to be removed from group selectedDocuments array
@@ -213,7 +230,8 @@ export class TransactionsComponent implements OnInit {
         .forEach((transactionStep, i) => transactionStep.form.id == selectedTransactionStep.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
-      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), [], null));
+      // this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), [], null));
+      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), null));
     }else{
       this.removeSelectedStep(deletionIndex);
     }
@@ -235,37 +253,39 @@ export class TransactionsComponent implements OnInit {
    * 
    * @param index index of group to be  added to currSelectedStep groups array.
    * Note that if the group is already selected, the group will be removed from currSelectedStep groups array.
+   * *** This function is related to selecting transaction step groups, so it will be removed ***
    */
-  selectGroup(event, index: number){
+  // selectGroup(event, index: number){
 
-    // Prevent the input checkbox from being set checked on click, and make the selectControl directive
-    // take care of that.
-    event.preventDefault();
+  //   // Prevent the input checkbox from being set checked on click, and make the selectControl directive
+  //   // take care of that.
+  //   event.preventDefault();
 
-    let selectedGroup = this.groups[index];
-    let deletionIndex: number = -1;
+  //   let selectedGroup = this.groups[index];
+  //   let deletionIndex: number = -1;
 
-    let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.form.id == this.currSelectedStep.form.id);
+  //   let modifiedTransactionStep = this.selectedTransactionSteps.find(x => x.form.id == this.currSelectedStep.form.id);
 
-    if(modifiedTransactionStep.groups.length > 0){
-      modifiedTransactionStep.groups.forEach((group, i) => group.id == selectedGroup.id ? deletionIndex=i: null);
-    }
+  //   if(modifiedTransactionStep.groups.length > 0){
+  //     modifiedTransactionStep.groups.forEach((group, i) => group.id == selectedGroup.id ? deletionIndex=i: null);
+  //   }
 
-    if(deletionIndex < 0) modifiedTransactionStep.groups.push(this.groups[index]);
-    else this.removeSelectedGroup(modifiedTransactionStep, deletionIndex);
+  //   if(deletionIndex < 0) modifiedTransactionStep.groups.push(this.groups[index]);
+  //   else this.removeSelectedGroup(modifiedTransactionStep, deletionIndex);
     
     
-    this.currSelectedStep = modifiedTransactionStep;
+  //   this.currSelectedStep = modifiedTransactionStep;
 
-  }
+  // }
   
   /**
    * 
    * @param index index of group  to be removed from currSelectedStep groups array.
+   * *** This function is related to selecting transaction step groups, so it will be removed ***
    */
-  removeSelectedGroup(TransactionStep: TransactionStep, index: number){
-    TransactionStep.groups.splice(index, 1);
-  }
+  // removeSelectedGroup(TransactionStep: TransactionStep, index: number){
+  //   TransactionStep.groups.splice(index, 1);
+  // }
 
   /**
    * 
@@ -321,19 +341,23 @@ export class TransactionsComponent implements OnInit {
 
   // }
 
-  selected(group_id: number): boolean{
+  /**
+   * return true if the goup with group_id is selected
+   * *** This function is related to selecting transaction step groups, so it will be removed ***
+   */
+  // selected(group_id: number): boolean{
 
-    let selected = false;
+  //   let selected = false;
 
-    if(this.currSelectedStep.groups.length > 0 ){
-      this.currSelectedStep.groups.forEach(x=> x.id==group_id? selected = true: null);
-    }else{
-      return selected;
-    }
+  //   if(this.currSelectedStep.groups.length > 0 ){
+  //     this.currSelectedStep.groups.forEach(x=> x.id==group_id? selected = true: null);
+  //   }else{
+  //     return selected;
+  //   }
 
-    return selected;
+  //   return selected;
 
-  }
+  // }
 
   /**
    * 

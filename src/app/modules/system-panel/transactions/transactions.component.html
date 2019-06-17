@@ -13,7 +13,7 @@
                     name="transaction_name"
                     placeholder="اسم المعاملة">
 
-            <select name="administration" id="">
+            <select name="administration" id="" [(ngModel)] = "newTransaction.parent">
                 <option value="" selected disabled>الإدارة</option>
                 <option value="الهندسة/ التنظيم">الهندسة/ التنظيم</option>
             </select>
@@ -38,7 +38,7 @@
                         <input class="styled-checkbox" id="required-steps-checkbox-{{form.id}}" type="checkbox" value="{{form.id}}">
                         <label for="required-steps-checkbox-{{form.id}}" (click)="selectStep(i)" title="تحديد"></label>
 
-                        <a  class="additionalOptionsTablinks"
+                        <!-- <a  class="additionalOptionsTablinks"
                             (click)="manageGroups(i,
                                                 $event,
                                                 'additionalOptionsTabcontent',
@@ -47,7 +47,7 @@
                                                 'grid')"
                             title="تحديد المجموعات">
                             <fa-icon [icon]="faUsers"></fa-icon>
-                        </a>
+                        </a> -->
 
                         <a  class="additionalOptionsTablinks"
                             (click)="manageOrder(i,
@@ -66,13 +66,24 @@
             
         <div id="required-documents" class="listStepsTabcontent">
             <table id="required-documents-table">
-                <tr *ngFor="let document of documents; let i = index">
-                    <td>{{document.name}}</td>
-                    <td>
-                        <input class="styled-checkbox" id="required-documents-checkbox-{{document.id}}" type="checkbox" value="{{document.id}}">
-                        <label for="required-documents-checkbox-{{document.id}}" (click)="selectDocument(i)" title="تحديد"></label>    
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>اسم المستندات</td>
+                        <td>تحديد/ أساسى</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let document of documents; let i = index">
+                        <td>{{document.name}}</td>
+                        <td>
+                            <input class="styled-checkbox" id="required-documents-checkbox-{{document.id}}" type="checkbox" value="{{document.id}}">
+                            <label for="required-documents-checkbox-{{document.id}}" (click)="selectDocument(i)" title="تحديد المستند"></label>    
+
+                            <input class="styled-checkbox" id="mandatory-documents-checkbox-{{document.id}}" type="checkbox">
+                            <label for="mandatory-documents-checkbox-{{document.id}}" (click)="mandatoryDocument(i)" title="مستند أساسى"></label>    
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
 
@@ -89,11 +100,11 @@
         </div>
     </div>
     <div class="additional-options">
-        <div style="display:none" id="step-group-management" class="additionalOptionsTabcontent">
+        <!-- <div style="display:none" id="step-group-management" class="additionalOptionsTabcontent">
             <h3>{{currSelectedStep.form.name}}</h3>
             <div class="tab">
                 <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'existing-groups', 'grid')" id="groupManagementDefaultOpen">إضافة الى مجموعة</button>
-                <!-- <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button> -->
+                <button class="groupManagementTablinks" (click)="openTab($event, 'groupManagementTabcontent', 'groupManagementTablinks', 'add-new-group', 'grid')">إضافة مجموعة جديدة</button>
             </div>
 
             <div id="existing-groups" class="groupManagementTabcontent">
@@ -113,7 +124,7 @@
                     </tr>
                 </table>
             </div>
-            <!-- <div id="add-new-group" class="groupManagementTabcontent">
+            <div id="add-new-group" class="groupManagementTabcontent">
                 <h3>اعضاء المجموعة</h3>
                 <input type="text" name="search_users" id="" placeholder="بحث">
                 <table id="add-new-group-table">
@@ -127,10 +138,10 @@
                 </table>
                 <input type="text" [(ngModel)]="newGroup.name"  name="group_name" value="{{newGroup.name}}" placeholder="اسم المجموعة">
                 <button (click)="addNewGroup()">إضافة</button>
-            </div> -->
+            </div>
 
             <button id="step-group-management-close-btn" (click)="closeTab('step-group-management')">close</button>
-        </div>
+        </div> -->
             
         <div style="display:none" id="step-order" class="additionalOptionsTabcontent">
             <h3>{{currSelectedStep.form.name}}</h3>

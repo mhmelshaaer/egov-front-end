@@ -20,7 +20,4 @@ export class TransactionsService {
     return this.http.post(this.webservice+'transactions/fetch',{data: transactions});
   }
 
-  getForms():Form[]{ //return type when using http will be Observable<any[]>
-    return MOCK_FORMS;
-  }
 }
