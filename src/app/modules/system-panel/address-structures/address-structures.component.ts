@@ -38,41 +38,35 @@ export class AddressStructuresComponent implements OnInit {
 
   ngOnInit() {
 
-    this.addressesService.getAddressItems().subscribe(data => {this.addressItems = data;});
+    this.addressesService.getAll().subscribe(responseList => {
 
-    this.addressesService.getAddressItemsInstances().subscribe(
-      data => {
+      let rawAddressItems = responseList[0];
+      let rawAddressItemsInstances = responseList[1];
+      let rawAddressStructures = responseList[2];
 
-        this.addressItemsInstances = [];
+      this.addressItems = rawAddressItems;
 
-        data.map(
+      this.addressItemsInstances = [];
+      rawAddressItemsInstances.map(
           (item: any)=>{
             let addressItem = this.addressItems.find(x => x.id == item.address_item_id);
             let newAddressItemInstance = new AddressItemInstance( item.id, item.name, addressItem);
             this.addressItemsInstances.push(newAddressItemInstance);
           }
-        )
-        console.log(this.addressItemsInstances);
-      }
-    );
+      )
 
-    this.addressesService.getAddressStructures().subscribe(
-      data => {
+      this.addressStructures = [];
+      rawAddressStructures.map(
+        (item: any)=>{
+          let parent = rawAddressStructures.find(x => x.id == item.parent_id);
+          !parent? parent=null: null;
+          let itemInstance = this.addressItemsInstances.find(x => x.id == item.address_item_instance_id);
+          let newAddressStructure = new AddressStructure( item.id, item.acc_code, item.acc_address, parent, itemInstance);
+          this.addressStructures.push(newAddressStructure);
+        }
+      )
 
-        this.addressStructures = [];
-
-        data.map(
-          (item: any)=>{
-            let parent = data.find(x => x.id == item.parent_id);
-            !parent? parent=null: null;
-            let itemInstance = this.addressItemsInstances.find(x => x.id == item.address_item_instance_id);
-            let newAddressStructure = new AddressStructure( item.id, item.acc_code, item.acc_address, parent, itemInstance);
-            this.addressStructures.push(newAddressStructure);
-          }
-        )
-        console.log(this.addressStructures);
-      }
-    );
+    });
 
     this.currAddressStructure = null;
     this.currAddressStructureParent = null;

@@ -1,6 +1,6 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AddressStructure } from './../../models/address-structures/AddressStructure';
@@ -33,6 +33,14 @@ export class AddressesService {
 
     return this.http.post(this.webservice+'address-structures/fetch',{data: addressStructures});
   }
+
+  getAll():Observable<any[]>{
+    let response1 = this.getAddressItems();
+    let response2 = this.getAddressItemsInstances();
+    let response3 = this.getAddressStructures();
+    // Observable.forkJoin (RxJS 5) changes to just forkJoin() in RxJS 6
+    return forkJoin([response1, response2, response3]);
+  } 
 
   getAddressItems(): Observable<AddressItem[]>{
     return this.http.get(this.webservice+'address-items/get').pipe(
