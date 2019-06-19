@@ -21,7 +21,7 @@ export class AddUserComponent implements OnInit {
   newUsers: User[];
   newUser: User;
 
-  roles: Role[];
+  // roles: Role[];
 
   constructor(private employeesService: EmployeesService, private usersService: UsersService) { }
 
@@ -36,7 +36,7 @@ export class AddUserComponent implements OnInit {
     this.newUsers = [];
     this.newUser = new User(null, "", "", new Role(""));
 
-    this.roles = this.usersService.getRoles();
+    // this.roles = this.usersService.getRoles();
 
     this.config = {
       displayKey:"name", //if objects array passed which key to be displayed defaults to description

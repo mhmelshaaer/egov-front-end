@@ -12,7 +12,7 @@ $colors:(
     margin-right: 250px;
     margin-top: 28px;
 
-    background: map-get($colors, body-background);
+    // background: map-get($colors, body-background);
 
     display: grid;
     grid-template-columns: 1fr;

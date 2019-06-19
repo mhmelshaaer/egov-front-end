@@ -1,0 +1,126 @@
+<main>
+
+  <button class="save-changes" (click)="saveChanges()">Save Changes</button>
+  <div class="main-header"><h1>إدارة هيكلة العناوين</h1></div>
+
+  <div class="list-address-items">
+    <table id="list-address-items-table">
+      <tbody>
+        <tr *ngFor="let addressItem of addressItems; let i = index">
+          <td *ngIf="!addressItem.deleted">
+            <a (click)="deleteAddressItem(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+          </td>
+          <td *ngIf="!addressItem.deleted">{{addressItem.code}}</td>
+          <td *ngIf="!addressItem.deleted">{{addressItem.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="add-address-item">
+    <form action="" (ngSubmit)="addAddressItem()">
+
+      <input  type="text"
+              [(ngModel)]="newAddressItem.code"
+              name="new_item_code"
+              id="new-item-code"
+              placeholder="كود الوحدة">
+
+      <input  type="text"
+              [(ngModel)]="newAddressItem.name"
+              name="new_item_name"
+              id="new-item-name"
+              placeholder="اسم الوحدة">
+
+      <input type="submit" value="إضافة">
+
+      <input  type="text"
+              [(ngModel)]="newAddressItem.digit"
+              name="new_item_digits"
+              id="new-item-digits"
+              placeholder="عدد الأرقام">
+
+    </form>
+  </div>
+
+  <div class="list-address-item-instnaces">
+    <table id="list-address-item-instnaces-table">
+      <tbody>
+        <tr *ngFor="let addressItemsInstance of addressItemsInstances; let i = index">
+          <td *ngIf="!addressItemsInstance.deleted">
+            <a (click)="deleteAddressItemInstance(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+          </td>
+          <td *ngIf="!addressItemsInstance.deleted">{{addressItemsInstance.name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="add-address-item-instnace">
+      <form action="" (ngSubmit)="addAddressItemInstnace()">
+          
+        <input  type="text"
+                [(ngModel)]="newAddressItemInstance.name"
+                name="item_instance_name"
+                id="item-instance-name"
+                placeholder="الإسم">
+
+        <select name="item_instance_type"
+                id="item-instance-type"
+                [(ngModel)]="newAddressItemInstance.address_item">
+
+          <option [ngValue]="null" disabled selected>نوع الوحدة</option>
+
+          <option *ngFor="let addressItem of addressItems" [ngValue]="addressItem">{{addressItem.name}}</option>
+
+        </select>
+
+        <input type="submit" value="إضافة">
+
+      </form>
+  </div>
+
+  <article>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <button (click)="addAddressStructure()">Add</button>
+          </th>
+          <th>
+            <input  type="text"
+                    [(ngModel)]="newAddressStructure.accumulated_code"
+                    name="address_structure_code"
+                    id="address-structure-code"
+                    placeholder="الكود"
+                    disabled>
+          </th>
+          <th>
+            <ngx-select-dropdown  name="address_structure_parent"
+                                  [config]="addressItemInstanceParentConfig"
+                                  [options]="addressStructures"
+                                  [(ngModel)]="currAddressStructureParent">
+            </ngx-select-dropdown>
+          </th>
+          <th>
+            <ngx-select-dropdown  name="address_structure"
+                                  [config]="addressItemInstancesConfig"
+                                  [options]="addressItemsInstances"
+                                  [(ngModel)]="currAddressStructure">
+            </ngx-select-dropdown>
+          </th>
+        </tr>
+        <tr>
+          <th>حذف</th>
+          <th>العنوان</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let addressStructure of addressStructures; let i = index">
+          <td *ngIf="!addressStructure.deleted"><a (click)="deleteAddressStructure(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a></td>
+          <td *ngIf="!addressStructure.deleted">{{addressStructure.accumulated_address}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+</main>

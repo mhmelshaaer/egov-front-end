@@ -12,9 +12,10 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { GroupsComponent } from './groups/groups.component';
 import { RequestTypeSelectionComponent } from './../requests-controller/request-type-selection/request-type-selection.component';
 import { LUSRequestsListComponent } from './../lusrequest/lusrequests-list/lusrequests-list.component';
+import { PrivilegesComponent } from './privileges/privileges.component';
+import { AddressStructuresComponent } from './address-structures/address-structures.component';
 import { OpenRequestComponent } from '../requests-controller/open-request/open-request.component';
 import { ModuleRoutingControllerComponent } from '../requests-controller/module-routing-controller/module-routing-controller.component';
-import { PrivilegesComponent } from './privileges/privileges.component';
 
 
 
@@ -54,6 +55,10 @@ const routes:Routes=[
 			{
 				path: 'privileges',
 				component: PrivilegesComponent
+			},
+			{
+				path: 'address-structures',
+				component: AddressStructuresComponent
 			},
 			{
 				path: 'requests-add',

@@ -24,6 +24,7 @@ import { SelectControlDirective } from './directives/select-control/select-contr
 import { FormsComponent } from './forms/forms.component';
 import { GroupsComponent } from './groups/groups.component';
 import { PrivilegesComponent } from './privileges/privileges.component';
+import { AddressStructuresComponent } from './address-structures/address-structures.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PrivilegesComponent } from './privileges/privileges.component';
     AddUserComponent,
     FormsComponent,
     GroupsComponent,
-    PrivilegesComponent
+    PrivilegesComponent,
+    AddressStructuresComponent
   ],
   imports: [
     CommonModule,

@@ -3,24 +3,26 @@
   <div class="add-user">
       <form action="" (ngSubmit)="addUser()">
           
-          <ngx-select-dropdown  name="citizen_national_id"
-                                [config]="config"
-                                [options]="employees"
-                                [(ngModel)]="currSelectOption"
-                                (change)="selectEmployee()">
-          </ngx-select-dropdown>
+        <input type="submit" value="إضافة">
 
-          <input  type="text"
-                  name="username"
-                  [(ngModel)]="newUser.username"
-                  placeholder="اسم المستخدم">
+        <input  type="password"
+                name="user_password"
+                [(ngModel)]="newUser.password"
+                placeholder="كلمة السر">
 
-          <input  type="password"
-                  name="user_password"
-                  [(ngModel)]="newUser.password"
-                  placeholder="كلمة السر">
+        <input  type="text"
+                name="username"
+                [(ngModel)]="newUser.username"
+                placeholder="اسم المستخدم">
 
-          <select name="user_role"
+        <ngx-select-dropdown  name="citizen_national_id"
+                        [config]="config"
+                        [options]="employees"
+                        [(ngModel)]="currSelectOption"
+                        (change)="selectEmployee()">
+        </ngx-select-dropdown>
+        
+          <!-- <select name="user_role"
                   id="user-role"
                   [(ngModel)]="newUser.role.name">
 
@@ -28,9 +30,7 @@
 
             <option *ngFor="let role of roles" value="{{role.name}}">{{role.name}}</option>
 
-          </select>
-
-          <input type="submit" value="إضافة">
+          </select> -->
 
       </form>
   </div>

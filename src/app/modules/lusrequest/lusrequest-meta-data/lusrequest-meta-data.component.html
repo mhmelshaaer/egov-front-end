@@ -6,20 +6,17 @@
     <input type="text" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن">
 
     <select name="property_selection" id="property-selection">
-      <option value="" selected disabled>property selection</option>
-      <option value="option">option</option>
+      <option value="" selected disabled>الأرض/ العقار</option>
     </select>
 
     <input type="text" name="representative_name" id="representative-name" placeholder="الوكيل">
 
     <select name="representative_relationship" id="representative-relationship">
-        <option value="" selected disabled>representative relationship</option>
-      <option value="optyion">option</option>
+        <option value="" selected disabled>الصفة</option>
     </select>
     
     <select name="request_source" id="request-source">
-        <option value="" selected disabled>request source</option>
-        <option value="option">option</option>
+        <option value="" selected disabled>مصدر الخدمة</option>
     </select>
 
   </div>
@@ -32,16 +29,13 @@
 
     <select name="select1" id="select1">
       <option value="" selected disabled>select1</option>
-      <option value="">select1</option>
     </select>
 
     <select name="select2" id="select2">
       <option value="" selected disabled>select2</option>
-      <option value="">select2</option>
     </select>
 
   </div>
 
+  <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>
 </div>
-
-<a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>

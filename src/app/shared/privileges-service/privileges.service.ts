@@ -44,7 +44,6 @@ export class PrivilegesService {
                                                 item.delete);
 
               privileges.push(newPrivilege);
-              console.log(privileges);
             })
 
           return privileges;

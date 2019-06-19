@@ -35,7 +35,7 @@ export class PrivilegesComponent implements OnInit {
 
   ngOnInit() {
 
-    this.privilegesService.getPrivileges().subscribe(data => {this.privileges = data; console.log(this.privileges);})
+    this.privilegesService.getPrivileges().subscribe(data => {this.privileges = data;})
     this.newPrivilege = new Privilege(null, "", new Module(0, ""), new Form(0, ""), new Group(0, ""));
 
     this.usersService.getGroups().subscribe(data => {this.groups = data});
@@ -44,7 +44,6 @@ export class PrivilegesComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    console.log(this.privileges);
     this.privilegesService.savePrivileges(this.privileges).subscribe();
   }
 
@@ -60,10 +59,6 @@ export class PrivilegesComponent implements OnInit {
       checkboxes[i].checked = false;
     }
 
-  }
-
-  hello(){
-    console.log("hello");
   }
 
   deletePrivilege(index: number){
