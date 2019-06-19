@@ -1,0 +1,33 @@
+section{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-row-gap: 10px;
+    justify-items: end;
+    align-items: center;
+
+    margin: 10px 0;
+    padding: 10px;
+    box-shadow: 0 0 3px 3px gray inset;
+}
+
+select{
+    direction: rtl;
+    width: 200px;
+}
+
+a{
+    text-decoration: none;
+    background: silver;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+    font-size: 0.9em;
+}
+a:hover{
+    box-shadow: 1px 1px 0px 0px black;
+    font-size: 0.88em;
+}
+
+a:visited{
+    color: black;
+}

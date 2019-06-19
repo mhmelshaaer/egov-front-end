@@ -1,18 +1,22 @@
 
 main{
     padding: 20px 20px;
-    background: green;
     margin: 0;
 
     display: grid;
     grid-template-columns: 1fr;
-    // grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, 40vh);
     grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(25vh, 40vh);
     grid-row-gap: 10px;
 
-    div{
-        padding: 10px;
-        background: #ececec;
+    margin: 10px 0;
+    padding: 10px;
+    box-shadow: 0 0 3px 3px gray inset;
+
+    & > div{
+        &:nth-child(n+2):nth-child(-n+3){
+            box-shadow: 0 0 1px 1px gray;
+            padding: 10px;
+        }
     }
 }
 

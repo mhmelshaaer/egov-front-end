@@ -1,39 +1,19 @@
 
-  
-  header{
-    padding: 10px 20px;
-    background: red;
-  
-    display: grid;
-    grid-template-columns: 2fr 4fr 2fr;
-  
-    .logo{
-      padding: 10px;
-      background: yellow;
-      grid-column: 1 / span 1;
-      grid-row: 1; 
-    }
-    
-    .breadcrumb{
-      padding: 10px;
-      background: blue;
-      grid-column: 3 / span 1;
-      grid-row: 1;
-    }
-  }
-  
   main{
-    padding: 20px 20px;
-    background: green;
-  
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: minmax(3vh, auto) minmax(3vh, auto) minmax(35vh, 45vh) auto;
     grid-row-gap: 10px;
+
+    margin: 10px 0;
+    padding: 10px;
+    box-shadow: 0 0 3px 3px gray inset;
   
-    div{
-      padding: 10px;
-      background: #ececec;
+    & > div{
+      &:nth-child(n+2):nth-child(-n+3){
+        box-shadow: 0 0 1px 1px gray;
+        padding: 10px;
+      }
     }
   }
   

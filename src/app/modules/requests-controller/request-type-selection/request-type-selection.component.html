@@ -1,13 +1,11 @@
 
+<section>
+  <select name="transaction_type" id="transaction-type">
+    <option value="" selected disabled>نوع المعاملة</option>
+    <option value="lusrequest">رخصة مبانى</option>
+  </select>
 
-<select name="transaction_type" id="transaction-type">
-  <option value="" selected disabled>نوع المعاملة</option>
-  <option value="lusrequest">رخصة مبانى</option>
-</select><br>
-
-<a *ngIf="isParentURL(requestsList)" (click)="listRequests()" routerLink="">عرض الطلبات</a>
-<a *ngIf="isParentURL(requestsAdd)" (click)="addRequests()" routerLink="">إضافة طلب</a>
-<!-- <a *ngIf="currURL == requestsList" [routerLink]="['./lusrequest-list-all']">requsts list</a>
-<a *ngIf="currURL == requestsAdd" [routerLink]="['./lusrequest-metadata']">requsts add</a> -->
-
+  <a *ngIf="isParentURL(requestsList)" (click)="listRequests()" routerLink="">عرض الطلبات</a>
+  <a *ngIf="isParentURL(requestsAdd)" (click)="addRequests()" routerLink="">إضافة طلب</a>
+</section>
 <router-outlet></router-outlet>
