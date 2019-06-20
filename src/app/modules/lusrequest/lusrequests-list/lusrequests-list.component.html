@@ -1,12 +1,29 @@
-<p>
-  lusrequests-list works!
-</p>
+<section>  
 
-<!-- <a [routerLink]="['../request-open/'] + transactionType + '/' + requestID">Open Request</a><br> -->
-<!-- <a [routerLink]="[{outlets: {primary: ['../request-open/'] + transactionType + '/' + requestID}}]">Open Request</a><br> -->
-<!-- <a [routerLink]="[{ outlets: { primary: ['../request-open/'] + transactionType + '/' + requestID, testOutlet: ['../requests-controller'] } }]">Open Request</a><br> -->
-<a [routerLink]="" (click)="navigate('lusrequest', 1)">Open Request</a><br>
-<a [routerLink]="" (click)="navigate('lusrequest', 2)">Open Request</a><br>
-<a [routerLink]="" (click)="navigate('lusrequest', 3)">Open Request</a><br>
+  <!-- <a [routerLink]="" (click)="navigate('lusrequest', 1)">Open Request</a><br>
+  <a [routerLink]="" (click)="navigate('lusrequest', 2)">Open Request</a><br>
+  <a [routerLink]="" (click)="navigate('lusrequest', 3)">Open Request</a><br> -->
 
-<router-outlet></router-outlet>
+  <article>
+    <table>
+      <thead>
+        <tr>
+          <th>حذف</th>
+          <th>عرض</th>
+          <th>صاحب الشأن</th>
+          <th>رقم الطلب</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let requestsInstance of requestsInstances; let i = index">
+          <td *ngIf="!requestsInstance.deleted"><a (click)="deleteRequestsInstance(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a></td>
+          <td *ngIf="!requestsInstance.deleted"><a (click)="openRequestsInstance(i)"><fa-icon [icon]="faEye"></fa-icon></a></td>
+          <td *ngIf="!requestsInstance.deleted">{{requestsInstance.customer.name}}</td>
+          <td *ngIf="!requestsInstance.deleted">{{requestsInstance.id}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </article>
+
+  <!-- <router-outlet></router-outlet> -->
+</section>

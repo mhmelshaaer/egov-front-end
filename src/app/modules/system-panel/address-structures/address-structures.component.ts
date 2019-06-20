@@ -218,6 +218,7 @@ export class AddressStructuresComponent implements OnInit {
       this.newAddressStructure.accumulated_address += accumulatedAddressLength>0?
                                                         "-" + this.currAddressStructureParent.accumulated_address:
                                                         this.currAddressStructureParent.accumulated_address;
+      this.newAddressStructure.parent = this.currAddressStructureParent;
     }
 
     accumulatedAddressLength = this.newAddressStructure.accumulated_address.length;

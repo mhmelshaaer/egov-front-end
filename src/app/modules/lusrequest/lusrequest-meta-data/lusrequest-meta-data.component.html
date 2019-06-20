@@ -3,39 +3,56 @@
 
   <div class="applicant">
 
-    <input type="text" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن">
+    <ngx-select-dropdown  name="concerned_person"
+                          id="concerned-person"
+                          [config]="concernedPersonConfig"
+                          [options]="citizens"
+                          [(ngModel)]="currConcernedPerson">
+    </ngx-select-dropdown>
 
     <select name="property_selection" id="property-selection">
       <option value="" selected disabled>الأرض/ العقار</option>
     </select>
 
-    <input type="text" name="representative_name" id="representative-name" placeholder="الوكيل">
+    <ngx-select-dropdown  name="bond_agency_name"
+                          id="bond-agency-name"
+                          [config]="bondAgencyConfig"
+                          [options]="citizens"
+                          [(ngModel)]="currBondAgency">
+    </ngx-select-dropdown>
 
     <select name="representative_relationship" id="representative-relationship">
         <option value="" selected disabled>الصفة</option>
+        <option value="وكيل">وكيل</option>
     </select>
-    
+<!--     
     <select name="request_source" id="request-source">
         <option value="" selected disabled>مصدر الخدمة</option>
-    </select>
+    </select> -->
 
-  </div>
+  </div> 
 
   <div class="property-info">
 
-    <input type="text" name="address_selection" id="address-selection" placeholder="اختيار العنوان">
-
-    <input type="text" name="organization" id="organization" placeholder="التنظيم">
+    <ngx-select-dropdown  name="address_selection"
+                          id="address-selection"
+                          [config]="addressSelectionConfig"
+                          [options]="addressStructures"
+                          [(ngModel)]="currAddressSelection">
+    </ngx-select-dropdown>
 
     <select name="select1" id="select1">
-      <option value="" selected disabled>select1</option>
+      <option value="" selected disabled>النوع</option>
+      <option value="قطعة أرض">قطعة أرض</option>
     </select>
 
     <select name="select2" id="select2">
-      <option value="" selected disabled>select2</option>
+      <option value="" selected disabled>رقم الوحدة</option>
+      <!-- <option value="">رقم الوحدة</option> -->
     </select>
 
   </div>
 
-  <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>
+  <a (click)="addTransaction()">إضافة معاملة</a>
+  <a (click)="goBack()">العودة لتحديد نوع المعاملة</a>
 </div>

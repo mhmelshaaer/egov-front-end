@@ -28,7 +28,9 @@ export class AddEmployeeComponent implements OnInit {
   newEmployees: Employee[];
   newEmployee: Employee;
 
-  constructor(private employeesService: EmployeesService, private citizensService: CitizensService, private departmentsService: DepartmentsService) { }
+  constructor(private employeesService: EmployeesService,
+              private citizensService: CitizensService,
+              private departmentsService: DepartmentsService) { }
 
   ngOnInit() {
 

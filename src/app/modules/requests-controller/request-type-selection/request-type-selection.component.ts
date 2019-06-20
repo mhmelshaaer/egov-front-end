@@ -26,19 +26,19 @@ export class RequestTypeSelectionComponent implements OnInit {
     this.requestsList = "/panel-home/requests-list";
     this.requestsAdd = "/panel-home/requests-add";
 
-    this.selectedTransactionType = 'رخصة بناء';
-    this.MOCK_REQUEST_TYPE_METADATA_ROUTE = 'lusrequest-list-all';
-    this.MOCK_REQUEST_TYPE_LIST_ALL_ROUTE = 'lusrequest-metadata';
+    this.selectedTransactionType = "";
+    this.MOCK_REQUEST_TYPE_METADATA_ROUTE = 'lusrequest-metadata';
+    this.MOCK_REQUEST_TYPE_LIST_ALL_ROUTE = 'lusrequest-list-all';
 
   }
 
   listRequests(){
-    this.getSelectedRequestTypeMetadataRoute();
+    this.getSelectedRequestTypeListAllRoute()
     this.router.navigate([this.targetComponentRoute], {relativeTo: this.route});
     
   }
   addRequests(){
-    this.getSelectedRequestTypeListAllRoute()
+    this.getSelectedRequestTypeMetadataRoute();
     this.router.navigate([this.targetComponentRoute], {relativeTo: this.route});
   }
 

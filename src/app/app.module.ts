@@ -14,7 +14,7 @@ import { SystemPanelModule } from './modules/system-panel/system-panel.module';
 import { RequestsControllerModule } from './modules/requests-controller/requests-controller.module';
 
 //App Services
-import { TransactionsService } from './shared/transactions-service/transactions.service';
+import { RequestsService } from './shared/requests-service/requests.service';
 import { DocumentsService } from './shared/documents-service/documents.service';
 import { FeesService } from './shared/fees-service/fees.service';
 import { UsersService } from './shared/users-service/users.service';
@@ -40,7 +40,7 @@ import { AppComponent } from './app.component';
   providers: [
     FeesService,
     DocumentsService,
-    TransactionsService,
+    RequestsService,
     UsersService
   ],
   bootstrap: [AppComponent]

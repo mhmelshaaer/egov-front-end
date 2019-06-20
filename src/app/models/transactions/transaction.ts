@@ -1,21 +1,13 @@
-import { TransactionStep } from './transaction-step';
-import { Fee } from './../fees/fee';
-import { Document } from './../documents/document';
-import { Form } from './../forms/form';
-
+import { Citizen } from './../citizen/citizen';
+import { RequestInstance } from '../request-instances/request-instance';
 
 export class Transaction{
 
-    private static prev_id: number = 0;
-
-    public id:number;
-
     constructor(
-        public name: string,
-        public parent: string,
-        public steps: TransactionStep[],
-        public documents: Document[],
-        public fees: Fee[]
+        public id: number,
+        public request_instance: RequestInstance,
+        public agency: Citizen,
+        public new_transaction: boolean = false,
+        public deleted: boolean = false
     ){}
-
 }

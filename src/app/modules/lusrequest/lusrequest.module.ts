@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { SelectDropDownModule } from 'ngx-select-dropdown'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { LUSRequestRoutingModule } from './lusrequest-routing.module';
 
@@ -17,7 +21,10 @@ import { LUSRequestDataComponent } from './lusrequest-data/lusrequest-data.compo
   ],
   imports: [
     CommonModule,
-    LUSRequestRoutingModule
+    FormsModule,
+    SelectDropDownModule,
+    LUSRequestRoutingModule,
+    FontAwesomeModule
   ]
 })
 export class LUSRequestModule {

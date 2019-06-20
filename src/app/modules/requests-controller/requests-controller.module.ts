@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { LayoutsModule } from './../layouts/layouts.module';
 import { TransactionsFormsModule } from './../transactions-forms/transactions-forms.module';
@@ -20,6 +21,7 @@ import { ModuleRoutingControllerComponent } from './module-routing-controller/mo
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RequestsControllerRoutingModule,
     LUSRequestModule,
     LayoutsModule,

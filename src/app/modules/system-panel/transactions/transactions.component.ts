@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
+import { RequestsService } from '../../../shared/requests-service/requests.service';
 import { DocumentsService } from './../../../shared/documents-service/documents.service';
 import { FeesService } from './../../../shared/fees-service/fees.service';
 import { UsersService } from './../../../shared/users-service/users.service';
 import { FormsService } from './../../../shared/forms-service/forms.service';
 
-import { Transaction } from 'src/app/models/transactions/transaction';
+import { Request } from 'src/app/models/requests/request';
 import { Form } from './../../../models/forms/form';
-import { TransactionStep } from './../../../models/transactions/transaction-step';
+import { RequestStep } from '../../../models/requests/request-step';
 import { Document } from './../../../models/documents/document';
 import { Fee } from './../../../models/fees/fee';
 import { Group } from './../../../models/groups/group';
@@ -29,14 +29,14 @@ export class TransactionsComponent implements OnInit {
   faUsers = faUsers;
   faListOl = faListOl;
 
-  newtransactions: Transaction[];
-  newTransaction: Transaction;
+  newRequests: Request[];
+  newRequest: Request;
 
-  currSelectedStep: TransactionStep;
+  currSelectedStep: RequestStep;
   newGroup: Group;
   
   forms: Form[];
-  selectedTransactionSteps: TransactionStep[];
+  selectedTransactionSteps: RequestStep[];
 
   documents: Document[];
   selectedDocuments: Document[];
@@ -60,7 +60,7 @@ export class TransactionsComponent implements OnInit {
   constructor(private feesService: FeesService,
               private documentsService: DocumentsService,
               private formsService:FormsService,
-              private transactionsService: TransactionsService,
+              private requestsService: RequestsService,
               private usersService: UsersService) { }
 
   ngOnInit() {
@@ -94,25 +94,25 @@ export class TransactionsComponent implements OnInit {
     this.availableOrders = [];
 
     // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
-    this.currSelectedStep = new TransactionStep(null, new Form(null, null), null);
+    this.currSelectedStep = new RequestStep(null, new Form(null, null), null);
 
     /**
      * *** This variale is related to add new group, so it will be removed ***
      */
     // this.newGroup = new Group(null, null, this.groupSelectedUsers);
 
-    this.newtransactions = [];
-    this.newTransaction = new Transaction("",
-                                          "",
-                                          this.selectedTransactionSteps,
-                                          this.selectedDocuments,
-                                          this.selectedFees);
+    this.newRequests = [];
+    this.newRequest = new Request("",
+                                  "",
+                                  this.selectedTransactionSteps,
+                                  this.selectedDocuments,
+                                  this.selectedFees);
 
   }
 
   ngOnDestroy(){
-    console.log(this.newtransactions);
-    this.transactionsService.saveTransactions(this.newtransactions).subscribe();
+    console.log(this.newRequests);
+    this.requestsService.saveRequests(this.newRequests).subscribe();
   }
 
   /*******************************************************************************************************
@@ -123,7 +123,7 @@ export class TransactionsComponent implements OnInit {
    * Creating a new Transaction
    */
   add(){
-    this.newtransactions.push(this.newTransaction);
+    this.newRequests.push(this.newRequest);
 
     this.selectedTransactionSteps=[];
     this.selectedDocuments = [];
@@ -131,13 +131,13 @@ export class TransactionsComponent implements OnInit {
     // this.groupSelectedUsers = [];
     this.availableOrders = [];
     // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
-    this.currSelectedStep = new TransactionStep(null, new Form(null, null), null);
+    this.currSelectedStep = new RequestStep(null, new Form(null, null), null);
 
-    this.newTransaction = new Transaction( "",
-                                          "",
-                                          this.selectedTransactionSteps,
-                                          this.selectedDocuments,
-                                          this.selectedFees);
+    this.newRequest = new Request(  "",
+                                        "",
+                                        this.selectedTransactionSteps,
+                                        this.selectedDocuments,
+                                        this.selectedFees);
 
     let checkboxes = document.getElementsByTagName('input');
 
@@ -231,11 +231,13 @@ export class TransactionsComponent implements OnInit {
 
     if(deletionIndex < 0) {
       // this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), [], null));
-      this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), null));
+      this.selectedTransactionSteps.push(new RequestStep(null, Object.assign({}, this.forms[index]), null));
     }else{
       this.removeSelectedStep(deletionIndex);
     }
     
+    //update available step orders
+    this.updateAvailableOrders();
   }
 
   /**

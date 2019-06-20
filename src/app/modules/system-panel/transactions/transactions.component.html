@@ -9,11 +9,11 @@
     <div class="add-transaction">
         <form action="" (ngSubmit)="add()">
             <input  type="text"
-                    [(ngModel)]="newTransaction.name"
+                    [(ngModel)]="newRequest.name"
                     name="transaction_name"
                     placeholder="اسم المعاملة">
 
-            <select name="administration" id="" [(ngModel)] = "newTransaction.parent">
+            <select name="administration" id="" [(ngModel)] = "newRequest.parent">
                 <option value="" selected disabled>الإدارة</option>
                 <option value="الهندسة/ التنظيم">الهندسة/ التنظيم</option>
             </select>

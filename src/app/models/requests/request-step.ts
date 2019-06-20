@@ -1,8 +1,8 @@
-import { Form } from './../forms/form';
+import { Form } from '../forms/form';
 import { Group } from '../groups/group';
 
 
-export class TransactionStep{
+export class RequestStep{
 
     public static prev_id: number = 0;
 
@@ -14,7 +14,7 @@ export class TransactionStep{
         // public groups: Group[] = [],
         public order: number = null
     ){
-        this.id = ++TransactionStep.prev_id;
+        this.id = ++RequestStep.prev_id;
     }
 
 }

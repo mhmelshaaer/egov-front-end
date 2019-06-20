@@ -1,11 +1,13 @@
 
 <section>
-  <select name="transaction_type" id="transaction-type">
+  <select [(ngModel)]="selectedTransactionType" name="transaction_type" id="transaction-type">
     <option value="" selected disabled>نوع المعاملة</option>
-    <option value="lusrequest">رخصة مبانى</option>
+    <option value="طلب ترخيص أعمال بناء">طلب ترخيص أعمال بناء</option>
   </select>
 
   <a *ngIf="isParentURL(requestsList)" (click)="listRequests()" routerLink="">عرض الطلبات</a>
   <a *ngIf="isParentURL(requestsAdd)" (click)="addRequests()" routerLink="">إضافة طلب</a>
+
+  <router-outlet></router-outlet>
+  
 </section>
-<router-outlet></router-outlet>

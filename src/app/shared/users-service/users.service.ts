@@ -71,6 +71,12 @@ export class UsersService {
     )
   }
 
+  getCustomersResponse(): Observable<User[]>{
+    return this.http.get(this.webservice+'customers/get').pipe(
+      map(res=>res.json().customers)
+    )
+  }
+
   getRoles(): Role[]{
     return MOCK_ROLES;
   }

@@ -61,8 +61,6 @@
   
     .additional-options{
       padding: 20px;
-      background: white;
-  
     }
   
     #step-group-management{
@@ -140,9 +138,9 @@
     #available_step_order{
       display: grid;
       grid-template-columns: repeat(8, 1fr);
+      grid-column-gap: 15px;
       justify-content: end;
 
-      outline: 1px solid red;
       justify-self: center;
       max-height: 100px;
       overflow-y: scroll;
@@ -267,7 +265,7 @@ table{
     // Box.
     & + label:before {
       content: '';
-      margin-right: 10px;
+      // margin-right: 10px;
       display: inline-block;
       vertical-align: text-top;
       width: 15px;
