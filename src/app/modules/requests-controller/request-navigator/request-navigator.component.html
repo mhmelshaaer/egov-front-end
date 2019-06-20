@@ -1,23 +1,23 @@
 
 
 
-<div class="request-navigator">
-  <!-- <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a> -->
+<div class="request-navigator" *ngIf="requestInstance">
 
-  <input type="text" name="request_id" id="request-id" placeholder="رقم المعاملة">
-  <input type="text" name="transaction_type" id="transaction-type" placeholder="الخدمة المطلوبة" disabled>
+  <input type="text" [(ngModel)]="requestInstance.id" name="request_id" id="request-id" placeholder="رقم المعاملة">
+  <input type="text" [(ngModel)]="requestInstance.request.name" name="transaction_type" id="transaction-type" placeholder="الخدمة المطلوبة" disabled>
 
   <span class="v-separator1"></span>
 
-  <input type="text" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن" disabled>
-  <input type="text" name="representative_name" id="representative-name" placeholder="الوكيل" disabled>
+  <input type="text" [(ngModel)]="requestInstance.customer.name" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن" disabled>
+  <input type="text" [(ngModel)]="requestInstance.customer.name" name="representative_name" id="representative-name" placeholder="الوكيل" disabled>
 
   <span class="v-separator2"></span>
 
-  <input type="text" name="address" id="address" placeholder="العنوان" disabled>
+  <input type="text" [(ngModel)]="requestInstance.structure.accumulated_address" name="address" id="address" placeholder="العنوان" disabled>
+
   <select name="request_steps" id="request-steps" (change)="openSelectedStep($event)">
     <option value="" selected disabled>الإجرائات المطلوبة</option>
-    <option value="{{trasactionType}}-data">ملئ النموذج</option>
+    <option value="{{transactionType}}-data">ملئ النموذج</option>
     <option value="deliverables-checklist">إستلام الطلب</option>
     <option value="deliverables-screening">فحص الطلب</option>
     <option value="initial-fees">تحديد رسوم أولية</option>
@@ -30,6 +30,8 @@
     <option value="fees-procurement">تحصيل رسوم</option>
     <option value="issuing-license">إصدار ترخيص</option>
   </select>
+
+  <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>
 
 </div>
 

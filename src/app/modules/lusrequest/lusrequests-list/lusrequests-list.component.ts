@@ -53,15 +53,12 @@ export class LUSRequestsListComponent implements OnInit {
             this.requestsInstances.push(newRequestInstance);
           }
         )
-
       }
     )    
 
   }
 
-  navigate(transactionType: string, requestID: string){
-
-    // console.log('lusrequests-list Navigate');
+  openRequestsInstance(transactionType: string, requestID: string){
 
     this.router
         .navigate(

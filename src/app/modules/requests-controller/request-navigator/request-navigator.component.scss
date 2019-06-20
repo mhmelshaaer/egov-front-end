@@ -44,6 +44,10 @@
         grid-column: 2 / span 1;
         grid-row: 1/ span 2;
     }
+    a{
+        grid-column: 1/ span 1;
+        grid-row: 3/ span 1;
+    }
 
     span{
         height: 100%;
@@ -61,7 +65,9 @@
 
 a{
     text-decoration: none;
-    background: silver;
+    color: black;
+    text-align: center;
+    background: white;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 1px 1px 1px 1px black;

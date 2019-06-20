@@ -16,10 +16,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let requestsInstance of requestsInstances; let i = index">
-          <td *ngIf="!requestsInstance.deleted"><a (click)="deleteRequestsInstance(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a></td>
-          <td *ngIf="!requestsInstance.deleted"><a (click)="openRequestsInstance(i)"><fa-icon [icon]="faEye"></fa-icon></a></td>
+
+          <td *ngIf="!requestsInstance.deleted">
+            <a (click)="deleteRequestsInstance(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
+          </td>
+
+          <td *ngIf="!requestsInstance.deleted">
+            <a (click)="openRequestsInstance('lusrequest', requestsInstance.id)"><fa-icon [icon]="faEye"></fa-icon></a>
+          </td>
+
           <td *ngIf="!requestsInstance.deleted">{{requestsInstance.customer.name}}</td>
+
           <td *ngIf="!requestsInstance.deleted">{{requestsInstance.id}}</td>
+
         </tr>
       </tbody>
     </table>
