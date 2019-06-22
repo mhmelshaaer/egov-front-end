@@ -15,36 +15,40 @@
       <div>
         <input type="text" name="north_prominences" id="north-prominences">
         <input type="text" name="north_border_length" id="north-border-length">
-        <select name="north_directions" id="north-directions">
+        <!-- <select name="north_directions" id="north-directions">
           <option value="" selected disabled>الإتجاه</option>
-        </select>
+        </select> -->
+        <input type="text" name="north_directions" id="north-directions">
         <p>الشمالى</p>
       </div>
 
       <div>
         <input type="text" name="south_prominences" id="south-prominences">
         <input type="text" name="south_border_length" id="south-border-length">
-        <select name="south_directions" id="south-directions">
+        <!-- <select name="south_directions" id="south-directions">
           <option value="" selected disabled>الإتجاه</option>
-        </select>
+        </select> -->
+        <input type="text" name="south_directions" id="south-directions">
         <p>الجنوبى</p>
       </div>
 
       <div>
         <input type="text" name="east_prominences" id="east-prominences">
         <input type="text" name="east_border_length" id="east-border-length">
-        <select name="east_directions" id="east-directions">
+        <!-- <select name="east_directions" id="east-directions">
           <option value="" selected disabled>الإتجاه</option>
-        </select>
+        </select> -->
+        <input type="text" name="east_directions" id="east-directions">
         <p>الشرقى</p>
       </div>
 
       <div>
         <input type="text" name="west_prominences" id="west-prominences">
         <input type="text" name="west_border_length" id="west-border-length">
-        <select name="west_directions" id="west-directions">
+        <!-- <select name="west_directions" id="west-directions">
           <option value="" selected disabled>الإتجاه</option>
-        </select>
+        </select> -->
+        <input type="text" name="west_directions" id="west-directions">
         <p>الغربى</p>
       </div>
 
@@ -58,11 +62,12 @@
                 id="request-description"
                 placeholder="وصف الطلب"
                 rows="5"></textarea>
-      
+      <!-- building_license.Request_Description -->
       <textarea name="required_work"
                 id="required-work"
                 placeholder="الأعمال المطلوبة"
                 rows="5"></textarea>
+      <!-- building_license.Work_Description -->
     </div>
 
   </article>
@@ -70,56 +75,74 @@
   <article id="second-article">
 
     <div>
-      <select name="validity_statement" id="validity-statement">
+      <!-- <select name="validity_statement" id="validity-statement">
         <option value="" disabled selected>بيان صلاحية</option>
-      </select>
+      </select> -->
+      <input type="text" name="validity_statement" id="validity-statement" placeholder="بيان صلاحية" disabled>
 
-      <select name="land" id="land">
+      <!-- <select name="land_decision" id="land">
           <option value="" disabled selected>قرار الأرض</option>
-      </select>
-    </div>
-
-    <div>
-
-      <div>
-        <input type="text" name="engineering_office_input" id="engineering-office-input">
-        <input type="text" name="engineering_office" id="engineering-office" placeholder="المكتب الهندسى">
-      </div>
-
-      <div>
-        <input type="text" name="syndicate_registration_number" id="syndicate-registration-number" placeholder="رقم القيد بالنقابة">
-        <input type="text" name="tax_card" id="tax-card" placeholder="البطاقة الضريبية">
-        <input type="text" name="commercial_register" id="commercial-register" placeholder="السجل التجارى">
-      </div>
+      </select> -->
+      <input type="text" name="land_decision" id="land-decision" placeholder="قرار الأرض" disabled>
 
     </div>
 
     <div>
 
       <div>
-        <input type="text" name="" id="">
-        <input type="text" name="" id="" placeholder="المهندس الإستشارى">
+        <!-- <input type="text" name="engineering_office" id="engineering-office" placeholder="المكتب الهندسى"> -->
+        <ngx-select-dropdown  name="engineering_office"
+                              [config]="engineeringOfficesConfig"
+                              [options]="engineeringOffices"
+                              [(ngModel)]="currEngineeringOffice">
+        </ngx-select-dropdown>
       </div>
 
       <div>
-        <select name="" id="">
+        <input type="text" name="syndicate_registration_number" id="syndicate-registration-number" placeholder="رقم القيد بالنقابة" disabled>
+        <input type="text" name="tax_card" id="tax-card" placeholder="البطاقة الضريبية" disabled>
+        <input type="text" name="commercial_register" id="commercial-register" placeholder="السجل التجارى" disabled>
+      </div>
+
+    </div>
+
+    <div>
+
+      <!-- <div> -->
+        <!-- <input type="text" name="" id=""> -->
+        <!-- <input type="text" name="engineer" id="" placeholder="المهندس الإستشارى"> -->
+        <ngx-select-dropdown  name="engineer"
+                              [config]="engineersConfig"
+                              [options]="engineers"
+                              [(ngModel)]="currEngineer">
+        </ngx-select-dropdown>
+      <!-- </div> -->
+
+      <!-- <div> -->
+        <!-- <select name="" id="">
           <option value="" selected disabled>رقم السجل</option>
-        </select>
-        <input type="text" name="" id="" placeholder="رقم القيد">
-      </div>
-
+        </select> -->
+        <input type="text" name="" id="" placeholder="رقم القيد" disabled>
+      <!-- </div> -->
+    </div>
+    <div>
       <div>
         <select name="" id="">
             <option value="" selected disabled>فئة الأعمال</option>
+            <option value="" >أ</option>
+            <option value="" >ب</option>
+            <option value="" >ج</option>
+            <option value="" >د</option>
         </select>
         <input type="text" name="" id="" placeholder="عدد الوحدات">
+        <!-- building_license.Units_Number -->
       </div>
 
       <div>
         <select name="" id="">
           <option value="" selected disabled>نوع الترخيص</option>
         </select>
-        <input type="text" name="" id="" placeholder="عدد الأدوات">
+        <input type="text" name="" id="" placeholder="عدد الأدوار">
       </div>
 
       <div>
@@ -127,9 +150,11 @@
           <option value="" selected disabled>نوع المبنى</option>
         </select>
         <input type="text" name="" id="" placeholder="سطح الأعمال">
+        <!-- building_license.Working_Area -->
       </div>
 
-      <input type="text" name="" id="" placeholder="مساحة قطعة الأرض">
+      <input type="text" name="" id="" placeholder="مساحة قطعة الأرض" disabled>
+      <!--get from lus.area - save in building_license.land_area -->
 
     </div>
 

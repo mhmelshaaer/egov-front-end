@@ -58,6 +58,10 @@ export class LUSRequestsListComponent implements OnInit {
 
   }
 
+  saveChanges(){
+    console.log("hello save instance requests");
+  }
+
   openRequestsInstance(transactionType: string, requestID: string){
 
     this.router
@@ -65,6 +69,13 @@ export class LUSRequestsListComponent implements OnInit {
           ['panel-home/requests-list/lusrequest-list-all/request-open/'+transactionType+'/'+requestID]
         );
 
+  }
+
+  deleteRequestsInstance(index: number){
+     
+    let currRequestsInstance = this.requestsInstances[index];
+    currRequestsInstance.deleted = true;
+    
   }
 
 }

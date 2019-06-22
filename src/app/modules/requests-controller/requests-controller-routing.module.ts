@@ -39,6 +39,10 @@ const routes: Routes = [
            * request type/ So, this component is part of the request type module
            * not the the TransactionsForms module. 
            */
+          // {
+          //   path: 'lusrequest-ملئ النموذج',
+          //   component: LUSRequestDataComponent
+          // },
           {
             path: 'lusrequest-data',
             component: LUSRequestDataComponent
@@ -51,8 +55,52 @@ const routes: Routes = [
           /***********************************************************************/
 
           /**
-           * The remaining routes corressponds to a general trasaction form
+           * The remaining routes corressponds to a general transactions forms
            */
+          // {
+          //   path: 'lusrequest-إستلام الطلب',
+          //   component: DeliverablesChecklistComponent
+          // },
+          // {
+          //   path: 'lusrequest-فحص الطلب',
+          //   component: DeliverablesScreeningComponent
+          // },
+          // {
+          //   path: 'lusrequest-تحديد رسوم أولية',
+          //   component: InitialFeesComponent
+          // },
+          // {
+          //   path: 'lusrequest-تحصيل الرسوم الأولية',
+          //   component: InitialFeesProcurementComponent
+          // },
+          // {
+          //   path: 'lusrequest-تحديد ميعاد المعاينة',
+          //   component: InspectionsDatesComponent
+          // },
+          // {
+          //   path: 'lusrequest-إخطار العميل بميعاد المعاينة',
+          //   component: InspectionsDateNotificationComponent
+          // },
+          // {
+          //   path: 'lusrequest-تسجيل نتيجة المعاينة',
+          //   component: InspectionsResultComponent
+          // },
+          // {
+          //   path: 'lusrequest-تسجيل تكلفة المبنى',
+          //   component: BuildingCostComponent
+          // },
+          // {
+          //   path: 'lusrequest-تحديد رسوم',
+          //   component: FeesComponent
+          // },
+          // {
+          //   path: 'lusrequest-تحصيل رسوم',
+          //   component: FeesProcurementComponent
+          // },
+          // {
+          //   path: 'lusrequest-إصدار ترخيص',
+          //   component: IssuingLicenseComponent
+          // },
           {
             path: 'deliverables-checklist',
             component: DeliverablesChecklistComponent

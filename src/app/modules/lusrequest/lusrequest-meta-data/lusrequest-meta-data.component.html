@@ -7,12 +7,14 @@
                           id="concerned-person"
                           [config]="concernedPersonConfig"
                           [options]="citizens"
-                          [(ngModel)]="currConcernedPerson">
+                          [(ngModel)]="currConcernedPerson"
+                          (change)=getAllCitizenLus()>
     </ngx-select-dropdown>
 
-    <select name="property_selection" id="property-selection">
+    <!-- <select name="property_selection" id="property-selection">
       <option value="" selected disabled>الأرض/ العقار</option>
-    </select>
+      <option *ngFor="let citizenLus of allCitizenLus" value="">الأرض/ العقار</option>
+    </select> -->
 
     <ngx-select-dropdown  name="bond_agency_name"
                           id="bond-agency-name"
@@ -34,21 +36,23 @@
 
   <div class="property-info">
 
+    <!-- <input type="text" name="address_selection" id="address-selection" placeholder="التنظيم" disabled> -->
     <ngx-select-dropdown  name="address_selection"
                           id="address-selection"
                           [config]="addressSelectionConfig"
-                          [options]="addressStructures"
-                          [(ngModel)]="currAddressSelection">
+                          [options]="allCitizenStructures"
+                          [(ngModel)]="currAddressSelection"
+                          (change)="getAllCitizenUnits()">
     </ngx-select-dropdown>
 
-    <select name="select1" id="select1">
-      <option value="" selected disabled>النوع</option>
-      <option value="قطعة أرض">قطعة أرض</option>
+    <select [(ngModel)]="currLusSelection" name="unit_number" id="unit-number">
+      <option value="null" selected disabled>رقم الوحدة</option>
+      <option *ngFor="let citizenLus of allCitizenLus" [ngValue]="citizenLus">{{citizenLus.serial}}</option>
     </select>
 
-    <select name="select2" id="select2">
-      <option value="" selected disabled>رقم الوحدة</option>
-      <!-- <option value="">رقم الوحدة</option> -->
+    <select name="unit_type" id="unit-type">
+      <option value="" selected disabled>الوحدة</option>
+      <option value="قطعة أرض">قطعة أرض</option>
     </select>
 
   </div>

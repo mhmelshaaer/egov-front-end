@@ -3,13 +3,13 @@
 
 <div class="request-navigator" *ngIf="requestInstance">
 
-  <input type="text" [(ngModel)]="requestInstance.id" name="request_id" id="request-id" placeholder="رقم المعاملة">
+  <input type="text" [(ngModel)]="requestInstanceId" name="request_id" id="request-id" placeholder="رقم المعاملة" disabled>
   <input type="text" [(ngModel)]="requestInstance.request.name" name="transaction_type" id="transaction-type" placeholder="الخدمة المطلوبة" disabled>
 
   <span class="v-separator1"></span>
 
   <input type="text" [(ngModel)]="requestInstance.customer.name" name="concerned_person" id="concerned-person" placeholder="صاحب الشأن" disabled>
-  <input type="text" [(ngModel)]="requestInstance.customer.name" name="representative_name" id="representative-name" placeholder="الوكيل" disabled>
+  <input type="text" [(ngModel)]="transaction.agency.name" name="representative_name" id="representative-name" placeholder="الوكيل" disabled>
 
   <span class="v-separator2"></span>
 
@@ -17,6 +17,8 @@
 
   <select name="request_steps" id="request-steps" (change)="openSelectedStep($event)">
     <option value="" selected disabled>الإجرائات المطلوبة</option>
+    <!-- <option *ngFor="let form of forms" value="{{transactionType}}-{{form.name}}">{{form.name}}</option> -->
+
     <option value="{{transactionType}}-data">ملئ النموذج</option>
     <option value="deliverables-checklist">إستلام الطلب</option>
     <option value="deliverables-screening">فحص الطلب</option>

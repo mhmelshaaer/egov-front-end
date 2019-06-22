@@ -1,5 +1,8 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 import { TransactionsFormsRoutingModule } from './transactions-forms-routing.module';
 import { DeliverablesChecklistComponent } from './deliverables-checklist/deliverables-checklist.component';
@@ -18,6 +21,8 @@ import { BuildingCostComponent } from './building-cost/building-cost.component';
   declarations: [DeliverablesChecklistComponent, DeliverablesScreeningComponent, InitialFeesComponent, InitialFeesProcurementComponent, InspectionsDatesComponent, FeesComponent, FeesProcurementComponent, InspectionsDateNotificationComponent, InspectionsResultComponent, IssuingLicenseComponent, BuildingCostComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    SelectDropDownModule,
     TransactionsFormsRoutingModule
   ]
 })

@@ -1,7 +1,12 @@
-import { AddressStructure } from './../../../models/address-structures/AddressStructure';
+import { Form } from './../../../models/forms/form';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
+
 import { TransactionsService } from 'src/app/shared/transactions-service/transactions.service';
+
+import { Transaction } from 'src/app/models/transactions/transaction';
+import { AddressStructure } from './../../../models/address-structures/AddressStructure';
 import { RequestInstance } from 'src/app/models/request-instances/request-instance';
 import { Citizen } from 'src/app/models/citizen/citizen';
 import { Request } from 'src/app/models/requests/request';
@@ -13,10 +18,15 @@ import { Request } from 'src/app/models/requests/request';
 })
 export class RequestNavigatorComponent implements OnInit {
 
+  REQUEST_ID_LENGTH: number = 10;
+  requestInstanceId: string;
+
   transactionType: string;
   requestInstanceID: string;
 
   requestInstance: RequestInstance;
+  transaction: Transaction;
+  forms: Form[];
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -27,10 +37,13 @@ export class RequestNavigatorComponent implements OnInit {
     this.route.params.subscribe(params =>{
       this.transactionType = params['transaction-type'];
       this.requestInstanceID = params['request-id'];
+      this.requestInstanceId = this.formatID(+this.requestInstanceID);
       console.log(this.transactionType);
     });
 
     this.requestInstance = null;
+    this.transaction = null;
+    this.forms = [];
 
     this.transactionsService.getRequestInstanceResponse(this.requestInstanceID).subscribe(
       responseList =>{
@@ -41,13 +54,25 @@ export class RequestNavigatorComponent implements OnInit {
         let rawCustomer = responseList.customer;
         let rawRequest = responseList.request;
         let rawStructure = responseList.structure;
+        let rawAgency = responseList.agency;
+        let forms = responseList.forms;
 
         this.requestInstance = new RequestInstance( rawRequestsInstance.id,
                                                     new Request(rawRequest.request_name, null, null, null, null),
                                                     new AddressStructure(rawStructure.id, rawStructure.acc_code, rawStructure.acc_address, null, null),
                                                     new Citizen(null, rawCustomer.customer_name, rawCustomer.citizen_national_id));
 
+        this.transaction = new Transaction( null,null,
+                                            new Citizen(rawAgency.id, rawAgency.citizen_name, rawAgency.citizen_national_id),
+                                            null);
+
+        
+        forms.map(item=>{
+          this.forms.push(new Form(item.id, item.form_name));
+        });
         console.log(this.requestInstance);
+        console.log(this.transaction);
+        console.log(this.forms);
       }
     )   
 
@@ -59,6 +84,18 @@ export class RequestNavigatorComponent implements OnInit {
             [event.target.value],
             {relativeTo: this.route}
           );
+  }
+
+  formatID(id: number){
+
+    let strID: string = ""+id;
+    let remainingDigits = this.REQUEST_ID_LENGTH - strID.length;
+
+    for(let i=0; i<remainingDigits; i++){
+      strID = '0' + strID;
+    }
+
+    return strID;
   }
 
   goBack(){

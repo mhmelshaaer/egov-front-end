@@ -1,3 +1,6 @@
+import { RequestInstance } from './../../../models/request-instances/request-instance';
+import { LandsService } from './../../../shared/lands-service/lands.service';
+import { Lus } from './../../../models/lus/lus';
 import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
 import { AddressStructure } from './../../../models/address-structures/AddressStructure';
 import { AddressItemInstance } from './../../../models/address-items-instances/AddressItemInstance';
@@ -8,7 +11,6 @@ import { Router } from '@angular/router';
 
 import { CitizensService } from './../../../shared/citizens-service/citizens.service';
 import { Citizen } from './../../../models/citizen/citizen';
-import { RequestInstance } from 'src/app/models/request-instances/request-instance';
 import { Request } from 'src/app/models/requests/request';
 import { Transaction } from 'src/app/models/transactions/transaction';
 
@@ -20,13 +22,17 @@ import { Transaction } from 'src/app/models/transactions/transaction';
 export class LUSRequestMetaDataComponent implements OnInit {
 
   citizens: Citizen[];
+  allCitizenLus: Lus[];
   addressItems: AddressItem[];
   addressItemsInstances: AddressItemInstance[];
   addressStructures: AddressStructure[];
+  allCitizenStructures: AddressStructure[];
 
   currConcernedPerson: Citizen;
   currBondAgency: Citizen;
+  currCitizenLus: Lus;
   currAddressSelection: AddressStructure;
+  currLusSelection: Lus;
 
   transactionType: string;
   unitType: string;
@@ -42,7 +48,8 @@ export class LUSRequestMetaDataComponent implements OnInit {
   constructor(private router: Router,
               private citizensService: CitizensService,
               private addressesService:AddressesService,
-              private transactionsService:TransactionsService) { }
+              private transactionsService:TransactionsService,
+              private landsService:LandsService) { }
 
   ngOnInit() {
 
@@ -80,12 +87,14 @@ export class LUSRequestMetaDataComponent implements OnInit {
 
     this.currConcernedPerson = null;
     this.currBondAgency = null;
+    this.currCitizenLus = null;
     this.currAddressSelection = null;
+    this.currLusSelection = null;
 
     this.transactionType = "طلب ترخيص أعمال بناء";
 
     this.newRequestInstance = new RequestInstance(null,new Request(this.transactionType, null, null, null, null),null,null);
-    this.newTransaction = new Transaction(null, null, null);
+    this.newTransaction = new Transaction(null, null, null, null);
 
     this.concernedPersonConfig = {
       displayKey:"name", //if objects array passed which key to be displayed defaults to description
@@ -127,6 +136,20 @@ export class LUSRequestMetaDataComponent implements OnInit {
     }
   }
 
+  getAllCitizenLus(){
+    this.landsService.getAllCitizenLus(""+this.currConcernedPerson.id).subscribe(data =>{
+      this.allCitizenLus = data;
+      this.allCitizenStructures = [];
+      data.map(lus => {this.allCitizenStructures.push(lus.structure)})
+    })
+  }
+
+  getAllCitizenUnits(){
+    let acc_code = this.currAddressSelection.accumulated_code;
+    console.log(acc_code);
+
+  }
+
   goBack(){
     this.router.navigate(['/panel-home/requests-add']);
   }
@@ -135,9 +158,28 @@ export class LUSRequestMetaDataComponent implements OnInit {
     this.newRequestInstance.customer = this.currConcernedPerson;
     this.newRequestInstance.structure = this.currAddressSelection;
     this.newTransaction.agency = this.currBondAgency;
+    this.newTransaction.lus = this.currLusSelection;
 
-    this.transactionsService.saveTransaction(this.newRequestInstance, this.newTransaction).subscribe(
-      ()=> this.goBack()
+    console.log(this.newRequestInstance);
+    console.log(this.newTransaction);
+
+    this.transactionsService.saveRequestInstance(this.newRequestInstance).subscribe(
+      response1 => {
+        let rawRequestInstance: RequestInstance = response1.json().request_instance;
+        this.transactionsService.saveTransaction(""+rawRequestInstance.id, this.newTransaction).subscribe(
+          response2 => {
+            let rawTransacion = response2.json().transaction;
+            this.transactionsService.saveLicense(""+rawRequestInstance.id, ""+rawTransacion.id, ""+this.currLusSelection.id).subscribe(
+              response3 => {
+                let rawLicense = response3.json().license;
+                this.transactionsService.saveBuildingLicense(""+rawLicense.id).subscribe(
+                  ()=> this.goBack()
+                )
+              }
+            )
+          }
+        )
+      }
     );
   }
 
