@@ -9,6 +9,7 @@ export class Transaction{
         public request_instance: RequestInstance,
         public agency: Citizen,
         public lus: Lus,
+        public license_id: number =null,
         public new_transaction: boolean = false,
         public deleted: boolean = false
     ){}

@@ -173,7 +173,10 @@ export class LUSRequestMetaDataComponent implements OnInit {
               response3 => {
                 let rawLicense = response3.json().license;
                 this.transactionsService.saveBuildingLicense(""+rawLicense.id).subscribe(
-                  ()=> this.goBack()
+                  respose4 => {
+                    
+                    this.goBack();
+                  }
                 )
               }
             )

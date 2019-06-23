@@ -1,3 +1,4 @@
+import { EngineersService } from './../../../shared/engineers-service/engineers.service';
 import { Form } from './../../../models/forms/form';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -10,6 +11,7 @@ import { AddressStructure } from './../../../models/address-structures/AddressSt
 import { RequestInstance } from 'src/app/models/request-instances/request-instance';
 import { Citizen } from 'src/app/models/citizen/citizen';
 import { Request } from 'src/app/models/requests/request';
+import { Lus } from 'src/app/models/lus/lus';
 
 @Component({
   selector: 'app-request-navigator',
@@ -19,7 +21,7 @@ import { Request } from 'src/app/models/requests/request';
 export class RequestNavigatorComponent implements OnInit {
 
   REQUEST_ID_LENGTH: number = 10;
-  requestInstanceId: string;
+  requestInstanceFormatedID: string;
 
   transactionType: string;
   requestInstanceID: string;
@@ -37,7 +39,7 @@ export class RequestNavigatorComponent implements OnInit {
     this.route.params.subscribe(params =>{
       this.transactionType = params['transaction-type'];
       this.requestInstanceID = params['request-id'];
-      this.requestInstanceId = this.formatID(+this.requestInstanceID);
+      this.requestInstanceFormatedID = this.formatID(+this.requestInstanceID);
       console.log(this.transactionType);
     });
 
@@ -48,10 +50,10 @@ export class RequestNavigatorComponent implements OnInit {
     this.transactionsService.getRequestInstanceResponse(this.requestInstanceID).subscribe(
       responseList =>{
 
-        console.log(responseList);
-
         let rawRequestsInstance = responseList.instance_request;
-        let rawCustomer = responseList.customer;
+        let rawTransaction = responseList.transaction;
+        let rawCustomer = responseList.customer; //returned in the response but i'm not using it
+        let rawCitizen = responseList.citizen;
         let rawRequest = responseList.request;
         let rawStructure = responseList.structure;
         let rawAgency = responseList.agency;
@@ -60,19 +62,21 @@ export class RequestNavigatorComponent implements OnInit {
         this.requestInstance = new RequestInstance( rawRequestsInstance.id,
                                                     new Request(rawRequest.request_name, null, null, null, null),
                                                     new AddressStructure(rawStructure.id, rawStructure.acc_code, rawStructure.acc_address, null, null),
-                                                    new Citizen(null, rawCustomer.customer_name, rawCustomer.citizen_national_id));
+                                                    new Citizen(rawCitizen.id, rawCitizen.citizen_name, rawCitizen.citizen_national_id));
 
-        this.transaction = new Transaction( null,null,
+        this.transaction = new Transaction( rawTransaction.id,
+                                            null,
                                             new Citizen(rawAgency.id, rawAgency.citizen_name, rawAgency.citizen_national_id),
-                                            null);
+                                            new Lus(rawTransaction.LUS_id, null, null, null),
+                                            rawTransaction.License_Id);
 
+
+        this.transactionsService.updateRequestInstanceStream(this.requestInstance);
+        this.transactionsService.updateTransactionStream(this.transaction);
         
         forms.map(item=>{
           this.forms.push(new Form(item.id, item.form_name));
         });
-        console.log(this.requestInstance);
-        console.log(this.transaction);
-        console.log(this.forms);
       }
     )   
 

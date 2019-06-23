@@ -19,7 +19,7 @@ export class LandsService {
   constructor(private http: Http) { }
 
   getCitizenValidityCertificates(citizen_id: string): Observable<ValidityCertificate[]>{
-    return this.http.get(this.webservice+'validity-certificate/get/' + citizen_id).pipe(
+    return this.http.get(this.webservice+'validity-certificates/get/' + citizen_id).pipe(
       map(res => {
 
         let validityCertificates: ValidityCertificate[] = [];
@@ -41,14 +41,40 @@ export class LandsService {
     )
   }
 
+  getCitizenValidityCertificate(citizen_id: string, lus_id: string): Observable<ValidityCertificate>{
+    return this.http.get(this.webservice+'validity-certificate/get/' + citizen_id + '/' + lus_id).pipe(
+      map(res => {
+        let rawCertificate = res.json().citizen_certificate  ;  
+        let rawLus = res.json().citizen_lus;
+        let rawCitizen = res.json().citizen;
+        return new ValidityCertificate( rawCertificate.id,
+                                        rawCertificate.certificate_number,
+                                        new Lus(rawLus.id, null, rawLus.Area, rawLus.Serial),
+                                        new Citizen(rawCitizen.id, rawCitizen.citizen_name, rawCitizen.citizen_national_id));
+
+
+
+      })
+    )
+  }
+
   getCitizenLusDecisions(citizen_id: string): Observable<LusDecision[]>{
     return this.http.get(this.webservice+'lus-decisions/get/' + citizen_id).pipe(
       map(res => {
-        let citizenlusDecisions: LusDecision[];
+        let citizenlusDecisions: LusDecision[]=[];
         res.json().citizen_lus_decisions.map( (item: any) => {
           citizenlusDecisions.push(new LusDecision(item.id, item.decision_number, item.decision_date));
         })
         return citizenlusDecisions;
+      })
+    )
+  }
+
+  getCitizenLusDecision(citizen_id: string, lus_id: string): Observable<LusDecision>{
+    return this.http.get(this.webservice+'citizen-lus-decision/get/' + citizen_id + '/' + lus_id).pipe(
+      map(res => {
+        let rawLusDecision = res.json().citizen_lus_decision;
+        return new LusDecision(rawLusDecision.id, rawLusDecision.Decision_Number, rawLusDecision.Decision_Date);
       })
     )
   }
@@ -70,6 +96,21 @@ export class LandsService {
             })
 
           return allCitizenLus;
+        }
+      )
+    )
+  }
+
+  getCitizenLus(citizen_id: string, lus_id: string): Observable<Lus>{
+    return this.http.get(this.webservice+'citizen-lus/get/' + citizen_id + '/' + lus_id).pipe(
+      map(res => {
+
+        let rawCitizenLus = res.json().citizen_lus;
+        let rawAddressStructure = res.json().structure;
+        return new Lus( rawCitizenLus.id,
+                        new AddressStructure(rawAddressStructure.id, rawAddressStructure.acc_code, rawAddressStructure.acc_address, null, null),
+                        rawCitizenLus.Area,
+                        rawCitizenLus.Serial);
         }
       )
     )

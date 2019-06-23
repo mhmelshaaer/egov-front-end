@@ -1,11 +1,13 @@
-import { UsersService } from './../users-service/users.service';
 import { map } from 'rxjs/operators';
 import { Http } from '@angular/http';
 import { HttpParams } from  "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { RequestInstance } from 'src/app/models/request-instances/request-instance';
-import { Transaction } from 'src/app/models/transactions/transaction';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, Subject } from 'rxjs';
+
+import { UsersService } from './../users-service/users.service';
+
+import { Transaction } from './../../models/transactions/transaction';
+import { RequestInstance } from './../../models/request-instances/request-instance';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,29 @@ export class TransactionsService {
 
   private webservice: String = "http://localhost:8000/api/";
 
+  //a default variables used in components onInit
+  defaultRequestInstance: RequestInstance;
+  defaultTransaction: Transaction;
+
+  // observable source
+  private requestInstance = new Subject<RequestInstance>();
+  private transaction = new Subject<Transaction>();
+
+  // observable stream
+  requestInstance$ = this.requestInstance.asObservable();
+  transaction$ = this.transaction.asObservable();
+
   constructor(private http:Http, private usersService:UsersService) { }
+
+  updateRequestInstanceStream(data: RequestInstance){
+    this.requestInstance.next(data);
+    this.defaultRequestInstance = data;
+  }
+
+  updateTransactionStream(data: Transaction){
+    this.transaction.next(data);
+    this.defaultTransaction = data;
+  }
 
   saveRequestInstance(requestInstance: RequestInstance) {
     console.log("saving requestInstance...");

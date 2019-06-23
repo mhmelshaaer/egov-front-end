@@ -1,3 +1,5 @@
+import { RequestsService } from './../../../shared/requests-service/requests.service';
+import { Request } from './../../../models/requests/request';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,6 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./request-type-selection.component.scss']
 })
 export class RequestTypeSelectionComponent implements OnInit {
+
+  requests: Request[];
 
   currURL: string;
   requestsList: string;
@@ -18,9 +22,18 @@ export class RequestTypeSelectionComponent implements OnInit {
   MOCK_REQUEST_TYPE_LIST_ALL_ROUTE: string;
   
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private requestsService:RequestsService) { }
 
   ngOnInit() {
+
+    this.requests = [];
+
+    this.requestsService.getRequests().subscribe(data =>{
+      this.requests = data;
+      console.log(this.requests);
+    })
 
     this.currURL = this.router.url;
     this.requestsList = "/panel-home/requests-list";
@@ -37,6 +50,18 @@ export class RequestTypeSelectionComponent implements OnInit {
     this.router.navigate([this.targetComponentRoute], {relativeTo: this.route});
     
   }
+
+  getSelectedRequestTypeListAllRoute(){
+
+    /**
+     * TODO: we should set the targetComponentRoute based on the selectedTransactionType to navigate
+     *       to the suitable request type listing component
+     */
+
+    this.targetComponentRoute = this.MOCK_REQUEST_TYPE_LIST_ALL_ROUTE;
+
+  }
+  
   addRequests(){
     this.getSelectedRequestTypeMetadataRoute();
     this.router.navigate([this.targetComponentRoute], {relativeTo: this.route});
@@ -51,17 +76,6 @@ export class RequestTypeSelectionComponent implements OnInit {
 
     this.targetComponentRoute = this.MOCK_REQUEST_TYPE_METADATA_ROUTE;
     
-  }
-
-  getSelectedRequestTypeListAllRoute(){
-
-    /**
-     * TODO: we should set the targetComponentRoute based on the selectedTransactionType to navigate
-     *       to the suitable request type listing component
-     */
-
-    this.targetComponentRoute = this.MOCK_REQUEST_TYPE_LIST_ALL_ROUTE;
-
   }
 
   isParentURL(url: string){

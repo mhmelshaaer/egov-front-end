@@ -5,7 +5,7 @@ export class ValidityCertificate{
 
     constructor(
         public id: number = null,
-        public certificate_id: string,
+        public certificate_number: string,
         public lus: Lus,
         public citizen: Citizen,
     ){}

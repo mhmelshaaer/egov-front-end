@@ -3,7 +3,7 @@
 
 <div class="request-navigator" *ngIf="requestInstance">
 
-  <input type="text" [(ngModel)]="requestInstanceId" name="request_id" id="request-id" placeholder="رقم المعاملة" disabled>
+  <input type="text" [(ngModel)]="requestInstanceFormatedID" name="request_id" id="request-id" placeholder="رقم المعاملة" disabled>
   <input type="text" [(ngModel)]="requestInstance.request.name" name="transaction_type" id="transaction-type" placeholder="الخدمة المطلوبة" disabled>
 
   <span class="v-separator1"></span>
