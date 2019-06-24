@@ -22,17 +22,23 @@ export class DocumentsService {
     console.log("saving documents...");
     console.log(documents);
 
-    // this.headers.append('Content-Type','application/x-www-form-urlencoded');
-    // this.headers.append('Content-Type','application/json');
-
     return this.http.post(this.webservice+'documents/fetch',{data: documents});
   }
 
-  getDocuments(): Observable<Document[]>{ //return type when using http will be Observable<Document[]>
-    // return MOCK_DOCUMENTS;
+  getDocuments(): Observable<Document[]>{
     return this.http.get(this.webservice+'documents/get').pipe(
       map(res=>res.json().documents.map( (item: any)=>{
           return new Document(item.id, item.document_name)
+        })
+      )
+    )
+  }
+
+  getRequestDocuments(request_id: string): Observable<Document[]>{
+    return this.http.get(this.webservice+'documents/get/' + request_id).pipe(
+      map(res=>res.json().documents.map( (item: any)=>{
+          let requestDocument = res.json().request_documents.find(x=>x.document_id==item.id)
+          return new Document(item.id, item.document_name, requestDocument.mandatory);
         })
       )
     )

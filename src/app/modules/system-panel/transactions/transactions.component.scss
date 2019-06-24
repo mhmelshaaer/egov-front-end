@@ -18,8 +18,40 @@
   }
   
     .main-header{
-      justify-self: end;
-      h1{margin: 0;}
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+
+      & > div{
+        position: relative;
+
+
+        & > button:hover{
+          box-shadow: 1px 1px 0px 0px black;
+          font-size: 0.97em;
+        }
+        & > button{
+          justify-self: start;
+
+          border-radius: 10px;
+          border: 0px;
+          box-shadow: 1px 1px 1px 1px black;
+          font-weight: bold;
+          font-size: 1em;
+          cursor: pointer;
+          margin: 0 10px;
+          position: absolute;
+
+          &:nth-child(1){
+            left: 0px;
+          }
+
+          &:nth-child(2), &:nth-child(3){
+            left: 120px;
+          }
+        }
+      }
+
+      h1{margin: 0; justify-self: end;}
     }
     .add-transaction{
       form{
@@ -27,30 +59,15 @@
         grid-template-columns: 1fr 2fr 4fr;
         grid-column-gap: 10px;
       }
-  
-      select{
-        direction: rtl;
-        option{direction: rtl;}
-      }
-  
-      input{
-        direction: rtl;
-      }
-  
-      input[name="transaction_name"]{
-        grid-column: 3 / span 1;
-        grid-row: 1;
-      }
-      select[name="administration"]{
-        grid-column: 2 / span 1;
-        grid-row: 1;
-      }
-      input[type="submit"]{
-        grid-column: 1 / span 1;
-        grid-row: 1;
-        justify-self: center;
-      }
       
+    }
+
+    .edit-transaction{
+      form{
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 2fr 3fr;
+        grid-column-gap: 10px;
+      }
     }
     
     .list-steps{
@@ -63,56 +80,56 @@
       padding: 20px;
     }
   
-    #step-group-management{
-      display: grid;
-      grid-template-columns: 2fr 1fr;
+    // #step-group-management{
+    //   display: grid;
+    //   grid-template-columns: 2fr 1fr;
   
-      h3{
-        grid-column: 1 / span 2;
-        grid-row: 1;
+    //   h3{
+    //     grid-column: 1 / span 2;
+    //     grid-row: 1;
   
-        direction: rtl;
-      }
+    //     direction: rtl;
+    //   }
   
-      #step-group-management-close-btn{
-        grid-column: 1 / span 2;
-        grid-row: 3;
-        justify-self: center;
-        margin-top: 15px;
-      }
-    }
+    //   #step-group-management-close-btn{
+    //     grid-column: 1 / span 2;
+    //     grid-row: 3;
+    //     justify-self: center;
+    //     margin-top: 15px;
+    //   }
+    // }
   
-    #add-new-group{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto minmax(140px, 140px) auto;
-      grid-row-gap: 10px;
+    // #add-new-group{
+    //   display: grid;
+    //   grid-template-columns: 1fr 1fr;
+    //   grid-template-rows: auto auto minmax(140px, 140px) auto;
+    //   grid-row-gap: 10px;
   
-      h3{
-        grid-column: 1 / span 2;
-        grid-row:1;
-      }
-      input[name="search_users"]{
-        grid-column: 1 / span 2;
-        grid-row:2;
-        direction: rtl;
-      }
-      table{
-        grid-column: 1 / span 2;
-        grid-row:3;
-        overflow-y: scroll;
-      }
-      input[name="group_name"]{
-        grid-column: 2 / span 1;
-        grid-row: 4;
-        direction: rtl;
-      }
-      button{
-        grid-column: 1 / span 1;
-        grid-row: 4;
-        direction: rtl;
-      }
-    }
+    //   h3{
+    //     grid-column: 1 / span 2;
+    //     grid-row:1;
+    //   }
+    //   input[name="search_users"]{
+    //     grid-column: 1 / span 2;
+    //     grid-row:2;
+    //     direction: rtl;
+    //   }
+    //   table{
+    //     grid-column: 1 / span 2;
+    //     grid-row:3;
+    //     overflow-y: scroll;
+    //   }
+    //   input[name="group_name"]{
+    //     grid-column: 2 / span 1;
+    //     grid-row: 4;
+    //     direction: rtl;
+    //   }
+    //   button{
+    //     grid-column: 1 / span 1;
+    //     grid-row: 4;
+    //     direction: rtl;
+    //   }
+    // }
   
   #step-order{
   
@@ -302,4 +319,12 @@ table{
     }
   
   }
-  
+
+  select{
+    direction: rtl;
+    option{direction: rtl;}
+  }
+
+  input{
+    direction: rtl;
+  }

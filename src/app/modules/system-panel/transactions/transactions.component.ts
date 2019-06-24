@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChildren, ElementRef, QueryList } from '@angular/core';
 
 import { RequestsService } from '../../../shared/requests-service/requests.service';
 import { DocumentsService } from './../../../shared/documents-service/documents.service';
@@ -26,14 +26,24 @@ import {
 })
 export class TransactionsComponent implements OnInit {
 
+  @ViewChildren('requiredStepsCheckboxs') requiredStepsCheckboxs: QueryList<ElementRef>; 
+  @ViewChildren('requiredDocumentsCheckboxs') requiredDocumentsCheckboxs: QueryList<ElementRef>; 
+  @ViewChildren('mandatoryDocumentsCheckboxs') mandatoryDocumentsCheckboxs: QueryList<ElementRef>; 
+  @ViewChildren('requiredFeesCheckboxs') requiredFeesCheckboxs: QueryList<ElementRef>; 
+
   faUsers = faUsers;
   faListOl = faListOl;
+
+  requests: Request[]
 
   newRequests: Request[];
   newRequest: Request;
 
   currSelectedStep: RequestStep;
-  newGroup: Group;
+  currRequest: Request;
+  currRequestNameEdit: string;
+  currOrganizationName: string;
+  // newGroup: Group;
   
   forms: Form[];
   selectedTransactionSteps: RequestStep[];
@@ -45,6 +55,10 @@ export class TransactionsComponent implements OnInit {
   selectedFees: Fee[];
 
   groups: Group[];
+
+  edit: boolean;
+
+  requestsConfig: any;
 
   /**
    * *** These variales is related to add new group, so it will be removed ***
@@ -68,6 +82,18 @@ export class TransactionsComponent implements OnInit {
     // Defaulte opened tabs
     document.getElementById("requiredStepsDefaultOpen").click();
     // document.getElementById("groupManagementDefaultOpen").click();
+
+    this.edit = false;
+
+    this.requests = [];
+
+    this.requestsService.getRequestsResponse().subscribe(res => {
+      res.requests.map(request => {
+        this.requestsService.getRequestResponseList(""+request.id).subscribe(responseList=>{
+          this.formattingRequestsResponse(responseList);
+        })
+      });
+    });
 
     this.formsService.getForms().subscribe(data => this.forms=data);
     this.selectedTransactionSteps=[];
@@ -93,8 +119,10 @@ export class TransactionsComponent implements OnInit {
 
     this.availableOrders = [];
 
-    // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
-    this.currSelectedStep = new RequestStep(null, new Form(null, null), null);
+    this.currSelectedStep = new RequestStep(null, null, new Form(null, null), null);
+    this.currRequest = null;
+    this.currRequestNameEdit = "";
+    this.currOrganizationName = "";
 
     /**
      * *** This variale is related to add new group, so it will be removed ***
@@ -102,17 +130,70 @@ export class TransactionsComponent implements OnInit {
     // this.newGroup = new Group(null, null, this.groupSelectedUsers);
 
     this.newRequests = [];
-    this.newRequest = new Request("",
+    this.newRequest = new Request(null,
+                                  "",
                                   "",
                                   this.selectedTransactionSteps,
                                   this.selectedDocuments,
                                   this.selectedFees);
 
+    this.requestsConfig = {
+      displayKey:"name", //if objects array passed which key to be displayed defaults to description
+      search:true, //true/false for the search functionlity defaults to false
+      height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
+      placeholder:'اسم الطلب', // text to be displayed when no item is selected defaults to Select
+      customComparator: ()=>{}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
+      limitTo: 10, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
+      moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
+      noResultsFound: 'Can\'t find a citizen with this national id, You can add new citizen below', // text to be displayed when no items are found while searching
+      searchPlaceholder:'بحث', // label thats displayed in search input,
+      searchOnKey: 'name', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+    }
   }
 
   ngOnDestroy(){
     console.log(this.newRequests);
-    this.requestsService.saveRequests(this.newRequests).subscribe();
+    console.log(this.requests);
+
+    // this.requestsService.saveRequests(this.requests).subscribe(
+    //   ()=> {this.newRequests.length > 0? this.requestsService.saveRequests(this.newRequests).subscribe(): null;}
+    // );
+
+  }
+
+  saveChanges(){
+    console.log(this.newRequests);
+    console.log(this.requests);
+
+    this.requestsService.saveRequests(this.requests).subscribe(
+      ()=>{
+        this.requests = [];
+        if(this.newRequests.length > 0){
+          this.requestsService.saveRequests(this.newRequests).subscribe(
+            () =>{
+              this.newRequests = [];
+              this.requestsService.getRequestsResponse().subscribe(res => {
+                res.requests.map(request => {
+                  this.requestsService.getRequestResponseList(""+request.id).subscribe(responseList=>{
+                    this.formattingRequestsResponse(responseList);
+                  })
+                });
+              });
+            }
+          );
+        }else{
+          this.requestsService.getRequestsResponse().subscribe(res => {
+            res.requests.map(request => {
+              this.requestsService.getRequestResponseList(""+request.id).subscribe(responseList=>{
+                this.formattingRequestsResponse(responseList);
+              })
+            });
+          });
+        }
+      }
+    );
+
+    document.getElementById("close-step-order-tab").click();
   }
 
   /*******************************************************************************************************
@@ -120,9 +201,10 @@ export class TransactionsComponent implements OnInit {
   ********************************************************************************************************/
 
   /**
-   * Creating a new Transaction
+   * Creating a new Request
    */
   add(){
+    this.newRequest.new_request = true;
     this.newRequests.push(this.newRequest);
 
     this.selectedTransactionSteps=[];
@@ -131,19 +213,74 @@ export class TransactionsComponent implements OnInit {
     // this.groupSelectedUsers = [];
     this.availableOrders = [];
     // this.currSelectedStep = new TransactionStep(null, new Form(null, null), [], null);
-    this.currSelectedStep = new RequestStep(null, new Form(null, null), null);
+    this.currSelectedStep = new RequestStep(null, null, new Form(null, null), null);
 
-    this.newRequest = new Request(  "",
-                                        "",
-                                        this.selectedTransactionSteps,
-                                        this.selectedDocuments,
-                                        this.selectedFees);
+    this.newRequest = new Request(  null,
+                                    "",
+                                    "",
+                                    this.selectedTransactionSteps,
+                                    this.selectedDocuments,
+                                    this.selectedFees);
 
-    let checkboxes = document.getElementsByTagName('input');
+    this.resetCheckboxes();
+    document.getElementById("close-step-order-tab").click();
+  }
 
-    for(let i=0; i<checkboxes.length; i++){
-      checkboxes[i].checked = false;
+  selectRequest(){
+    if(this.currRequest){
+      // this.selectedTransactionSteps = this.currRequest.steps;
+      this.resetCheckboxes();
+      this.selectedTransactionSteps = Object.assign([], this.currRequest.steps);;
+      this.selectedDocuments = this.currRequest.documents;
+      this.selectedFees = this.currRequest.fees;
+      this.currRequestNameEdit = this.currRequest.name;
+      this.currOrganizationName = this.currRequest.parent;
+
+      this.selectedTransactionSteps.forEach(step=>{
+        this.requiredStepsCheckboxs.find(form=>form.nativeElement.value==step.form.id).nativeElement.checked=true;
+      });
+      
+      this.selectedDocuments.forEach(document=>{
+        this.requiredDocumentsCheckboxs.forEach((x, i)=>{
+          if(x.nativeElement.value==document.id){
+            x.nativeElement.checked=true;
+            document.mandatory? this.mandatoryDocumentsCheckboxs.toArray()[i].nativeElement.checked=true: null;
+          }
+        });
+      });
+
+      this.selectedFees.forEach(fee=>{
+        this.requiredFeesCheckboxs.find(x=>x.nativeElement.value==fee.id).nativeElement.checked=true;
+      });
     }
+  }
+
+  saveEdit(){
+
+    this.currRequest?
+      this.selectedTransactionSteps.forEach(x=>x.new_request_step? this.currRequest.steps.push(x): null)
+      :null;
+
+    this.currRequest.updated = true;
+    this.currRequest.name = this.currRequestNameEdit;
+    this.currRequest.parent = this.currOrganizationName;
+    this.selectedTransactionSteps = [];
+    this.selectedDocuments = [];
+    this.selectedFees = [];
+    this.currRequestNameEdit = "";
+    this.currOrganizationName = "";
+    this.currRequest = null;
+    this.resetCheckboxes();
+    document.getElementById("close-step-order-tab").click();
+  }
+
+  deleteRequest(){
+    this.currRequest.deleted = true;
+    this.selectedTransactionSteps = [];
+    this.selectedDocuments = [];
+    this.selectedFees = [];
+    this.currRequest = new Request(null, "اسم الطلب", null, null, null, null);
+    this.resetCheckboxes();
   }
 
   /*******************************************************************************************************
@@ -161,10 +298,14 @@ export class TransactionsComponent implements OnInit {
     this.selectedFees.forEach( (fee, i) => fee.id == selectedFee.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
+      selectedFee.new_fee = true;
       this.selectedFees.push(selectedFee);
     }else{
-      this.removeSelectedFee(deletionIndex);
+      this.selectedFees[deletionIndex].deleted?
+        this.selectedFees[deletionIndex].deleted=false
+        :this.removeSelectedFee(deletionIndex);
     }
+    console.log(this.selectedFees);
   }
 
   /**
@@ -172,7 +313,24 @@ export class TransactionsComponent implements OnInit {
    * @param index index of fee to be removed from group selectedFees array
    */
   removeSelectedFee(index: number){
-    this.selectedFees.splice(index, 1);
+    let fee = this.selectedFees[index];
+
+    if(fee.new_fee){
+      this.selectedFees.splice(index, 1);
+    }else{
+      fee.deleted=true;
+    }
+  }
+
+  selectedFee(index: number){
+    let fee = this.fees[index];
+    let exists = false;
+
+    if(this.selectedFees.length > 0){
+      let selectedFee = this.selectedFees.find(x => x.id==fee.id);
+      exists= selectedFee? true: false;
+    }
+    return exists;
   }
 
 
@@ -192,11 +350,33 @@ export class TransactionsComponent implements OnInit {
     this.selectedDocuments.forEach( (document, i) => document.id == selectedDocument.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
+      selectedDocument.new_document=true;
       this.selectedDocuments.push(selectedDocument);
     }else{
-      this.removeSelectedDocument(deletionIndex);
+      this.selectedDocuments[deletionIndex].deleted?
+        this.selectedDocuments[deletionIndex].deleted=false
+        :this.removeSelectedDocument(deletionIndex);
+      
     }
     
+    console.log(this.selectedDocuments);
+  }
+
+  /**
+   * 
+   * @param index index of document to be removed from group selectedDocuments array
+   */
+  removeSelectedDocument(index: number){
+    let document = this.selectedDocuments[index];
+
+    if(document.new_document){
+      this.selectedDocuments.splice(index, 1);
+    }else{
+      document.deleted=true;
+      document.mandatory=false;
+    }
+    // this.mandatoryDocumentsCheckboxs.toArray()[index].nativeElement.checked=false;
+    this.mandatoryDocumentsCheckboxs.find(x=>x.nativeElement.value==document.id).nativeElement.checked=false;
   }
 
   mandatoryDocument(index: number){
@@ -206,12 +386,22 @@ export class TransactionsComponent implements OnInit {
 
   }
 
-  /**
-   * 
-   * @param index index of document to be removed from group selectedDocuments array
-   */
-  removeSelectedDocument(index: number){
-    this.selectedDocuments.splice(index, 1);
+  selectedDocument(index: number, el){
+
+    let document = this.documents[index];
+    let exists = false;
+
+    if(this.selectedDocuments.length > 0){
+      let selectedDocument = this.selectedDocuments.find(x => x.id==document.id);
+      exists= selectedDocument? true: false;
+
+      exists?
+        selectedDocument.mandatory?
+          el.checked=true
+          :null
+        :null;
+    }
+    return exists;
   }
 
   /*******************************************************************************************************
@@ -223,6 +413,7 @@ export class TransactionsComponent implements OnInit {
    * Note that if the step is already selected, the step will be removed from selectedTransactionSteps array.
    */
   selectStep(index: number){
+
     let selectedTransactionStep = this.forms[index];
     let deletionIndex: number = -1;
 
@@ -230,10 +421,12 @@ export class TransactionsComponent implements OnInit {
         .forEach((transactionStep, i) => transactionStep.form.id == selectedTransactionStep.id? deletionIndex=i: null);
 
     if(deletionIndex < 0) {
-      // this.selectedTransactionSteps.push(new TransactionStep(null, Object.assign({}, this.forms[index]), [], null));
-      this.selectedTransactionSteps.push(new RequestStep(null, Object.assign({}, this.forms[index]), null));
+      let newTransactionStep = new RequestStep(null, null, Object.assign({}, this.forms[index]), null, true);
+      this.selectedTransactionSteps.push(newTransactionStep);
     }else{
-      this.removeSelectedStep(deletionIndex);
+      this.selectedTransactionSteps[deletionIndex].deleted?
+        this.selectedTransactionSteps[deletionIndex].deleted = false
+        :this.removeSelectedStep(deletionIndex);
     }
     
     //update available step orders
@@ -245,7 +438,25 @@ export class TransactionsComponent implements OnInit {
    * @param index index of step  to be removed from group selectedTransactionSteps array
    */
   removeSelectedStep(index: number){
-    this.selectedTransactionSteps.splice(index, 1);
+    let step = this.selectedTransactionSteps[index];
+    // if(!step.id){
+      // this.selectedTransactionSteps[index].deleted = true;
+      this.currRequest? this.currRequest.steps.find(x=>x.id==step.id).deleted=true: null;
+      this.selectedTransactionSteps.splice(index, 1);
+    // }else{
+      // step.deleted=true;
+    // }
+  }
+
+  selectedStep(index: number){
+    let form = this.forms[index];
+    let exists = false;
+
+    if(this.selectedTransactionSteps.length > 0){
+      let step = this.selectedTransactionSteps.find(step => step.form.id==form.id);
+      exists= step? true: false;
+    }
+    return exists;
   }
 
   /*******************************************************************************************************
@@ -416,6 +627,13 @@ export class TransactionsComponent implements OnInit {
     //Set the step order for the currSelectedStep
     this.currSelectedStep.order = order;
 
+    //check if the current step is not new one to change its order in the original instance
+    if(this.currSelectedStep.id){
+      let updatedOldStep = this.currRequest.steps.find(x=>x.id==this.currSelectedStep.id);
+      updatedOldStep.order = order;
+      updatedOldStep.updated = true;
+    }
+
     //update available step orders
     this.updateAvailableOrders();
 
@@ -430,10 +648,10 @@ export class TransactionsComponent implements OnInit {
     //current selected step or not
     for(let stepOrder=1; stepOrder<=this.selectedTransactionSteps.length; stepOrder++){
 
-      //flag sets to true if the stepOrder is already taken by some TransactionStep instance
+      //flag sets to true if the stepOrder is already taken by some RequestStep instance
       let exists = false;
 
-      //looping through to see if there exist a TransactionStep instance having this stepOrder
+      //looping through to see if there exist a RequestStep instance having this stepOrder
       this.selectedTransactionSteps
           .forEach( (x)=> x.order?
                             x.order==stepOrder && this.currSelectedStep.order!=x.order?
@@ -441,8 +659,8 @@ export class TransactionsComponent implements OnInit {
                               :null
                             :null);
 
-      //add the stepOrder to the availableOrder array if it does not set for any other TransactionStep
-      //instance or if the current TransactionStep instance is the one having this stepOrder                            
+      //add the stepOrder to the availableOrder array if it does not set for any other RequestStep
+      //instance or if the current RequestStep instance is the one having this stepOrder                            
       !exists? this.availableOrders.push(stepOrder): null;
     }
   }
@@ -488,6 +706,51 @@ export class TransactionsComponent implements OnInit {
    */
   closeTab(terget){
       document.getElementById(terget).style.display = "none";
+  }
+
+  toggleEdit(){
+    this.edit = !this.edit;
+    this.selectedTransactionSteps = [];
+    this.selectedDocuments = [];
+    this.selectedFees = [];
+    this.currRequestNameEdit = "";
+    this.updateAvailableOrders();
+    this.resetCheckboxes();
+    document.getElementById("close-step-order-tab").click();
+  }
+
+  resetCheckboxes(){
+    let checkboxes = document.getElementsByTagName('input');
+
+    for(let i=0; i<checkboxes.length; i++){
+      checkboxes[i].checked = false;
+    }
+  }
+
+  formattingRequestsResponse(responseList){
+    
+    let rawRequest = responseList[0].request;
+    let rawSteps = responseList[1].steps;
+    let rawRequestSteps = responseList[1].request_steps;
+    let rawDocuments = responseList[2].documents;
+    let rawRequestDocuments = responseList[2].request_documents;
+    let rawFees = responseList[3].fees;
+    
+    let newRequest = new Request(rawRequest.id, rawRequest.request_name, rawRequest.request_parent, [], [], []);
+
+    rawSteps.map((step, i)=>{
+      newRequest.steps.push(new RequestStep(rawRequestSteps[i].id, rawRequest.id, new Form(step.id, step.form_name), rawRequestSteps[i].order_number));
+    });
+
+    rawDocuments.map((document, i)=>{
+      newRequest.documents.push(new Document(document.id, document.document_name, rawRequestDocuments[i].mandatory));
+    });
+
+    rawFees.map((fee)=>{
+      newRequest.fees.push(new Fee(fee.id, fee.fees_name, fee.default_value));
+    });
+
+    this.requests = this.requests.concat([newRequest]);
   }
 
 }

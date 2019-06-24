@@ -74,6 +74,15 @@ export class TransactionsService {
     });
   }
 
+  updateTransaction(transactionID: string, transactionAttributes){
+    console.log("saving Transaction Attributes...");
+    return this.http.post(this.webservice+'transaction/update',{
+      data: {
+        transaction_id: transactionID, attributes: transactionAttributes
+      }
+    });
+  }
+
   getRequestsInstancesResponse(): Observable<RequestInstance[]>{
     return this.http.get(this.webservice+'requests-instances/get').pipe(
       map(res=>res.json().requests_instances)

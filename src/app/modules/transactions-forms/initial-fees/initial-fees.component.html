@@ -22,6 +22,8 @@
     <div>
       <select name="payment_method" id="payment-method">
         <option value="" selected disabled>طريقة السداد</option>
+        <option value="نقدى">نقدى</option>
+        <option value="">بطاقة ائتمان</option>
         <!-- <option *ngFor="let paymentType of paymentTypes" value="{{paymentType.name}}">{{paymentType.name}}</option> -->
       </select>
       <label for="payment-method">طريقة السداد</label>
@@ -40,31 +42,25 @@
 
     <div>
 
-      <button>إضافة الرسوم</button>
+      <button (click)="addRequestFeeInstance()">إضافة الرسوم</button>
 
-      <select name="fees_selection" id="fees-selection">
-        <option value="" selected disabled>اختيار رسوم</option>
-        <!-- <option *ngFor="let requestFee of requestFees" value="{{requestFee.value}}" >{{requestFee.name}}</option> -->
+      <input type="number" name="fee_value" id="fee-value" placeholder="قيمة الرسم">
+
+      <select [(ngModel)]="currFee" name="fees_selection" id="fees-selection">
+        <option value="null" selected disabled>اختيار رسوم</option>
+        <option *ngFor="let requestFee of requestFees" [ngValue]="requestFee" >{{requestFee.name}}</option>
       </select>
 
     </div>
 
     <div>
       <table>
-          <tr>
-            <td>3</td>
-            <td>رسم فحصرسم فحصرسم فحصرسم فحصرسم فحصرسم فحص</td>
+          <tr *ngFor="let requestFeeInstance of requestFeeInstances">
+            <td>{{requestFeeInstance.value}}</td>
+            <td>{{requestFeeInstance.name}}</td>
           </tr>
-          <!-- <tr *ngFor="let requestFeeInstance of requestFeeInstances">
-            <td>{{requestFeeInestance.value}}</td>
-            <td>{{requestFeeInestance.fee.name}}</td>
-          </tr> -->
-          <!-- <tr>
-            <td>{{requestFeesDetails.Sum}}</td>
-            <td>إجماى الرسوم</td>
-          </tr> -->
           <tr>
-            <td>302.1</td>
+            <td>{{requestInstanceFeesSum}}</td>
             <td>إجماى الرسوم</td>
           </tr>
       </table>

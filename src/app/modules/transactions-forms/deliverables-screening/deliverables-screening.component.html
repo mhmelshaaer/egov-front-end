@@ -1,16 +1,29 @@
 <section>
 
   <article>
-    <textarea name="description" id="description" rows="1" placeholder="التوصيف"></textarea>
+      <!-- [(nModel)]="instanceInspection.Notes" -->
+    <textarea
+              name="notes"
+              id="notes"
+              rows="1"
+              placeholder="التوصيف">
+    </textarea>
+
   </article>
 
   <article>
 
-    <select name="employee_name" id="employee-name">
+    <!-- <select name="employee_name" id="employee-name">
       <option value="" selected disabled>اسم الموظف</option>
-    </select>
+    </select> -->
+    <ngx-select-dropdown  name="employee_name"
+                          [config]="config"
+                          [options]="employees"
+                          [(ngModel)]="currSelectOption">
+    </ngx-select-dropdown>
 
     <div>
+        <!-- [(nModel)]="instanceInspection.Inspection_Date" -->
       <input type="date" name="inspection_date" id="inspection-date">
       <label for="inspection-date">تاريخ الفحص</label>
     </div>
@@ -18,11 +31,21 @@
     <div>
       <div>
         <label for="inspection-status-radio2">غير مستوفى</label>
-        <input type="radio" name="inspection_status" id="inspection-status-radio2" value="غير مستوفى">
+        <input  #inspectionStatus1
+                type="radio"
+                name="inspection_status"
+                id="canceled"
+                value="غير مستوفى"
+                (change)="selectRadio(inspectionStatus1, inspectionStatus1.checked)">
       </div>
       <div>
         <label for="inspection-status-radio1">مستوفى</label>
-        <input type="radio" name="inspection_status" id="inspection-status-radio1" value="مستوفى">
+        <input  #inspectionStatus2
+                type="radio"
+                name="inspection_status"
+                id="accepted"
+                value="مستوفى"
+                (change)="selectRadio(inspectionStatus2, inspectionStatus2.checked)">
       </div>
       <label for="accpeted">نتيجة الفحص</label>
     </div>
@@ -30,5 +53,6 @@
   </article>
 
 </section>
+<a (click)="saveChanges()">حفظ</a>
 
 <!-- canceled or not in transactions table - specify the request Request_Step_id - specify the step name in the Cancel_Type - Stop_Reasons -->

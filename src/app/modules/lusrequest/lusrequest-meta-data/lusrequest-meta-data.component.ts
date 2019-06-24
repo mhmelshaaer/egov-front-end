@@ -93,7 +93,7 @@ export class LUSRequestMetaDataComponent implements OnInit {
 
     this.transactionType = "طلب ترخيص أعمال بناء";
 
-    this.newRequestInstance = new RequestInstance(null,new Request(this.transactionType, null, null, null, null),null,null);
+    this.newRequestInstance = new RequestInstance(null,new Request(null, this.transactionType, null, null, null, null),null,null);
     this.newTransaction = new Transaction(null, null, null, null);
 
     this.concernedPersonConfig = {

@@ -5,23 +5,58 @@
     <div class="breadcrumb">breadcrumb</div>
 </header> -->
 <main>
-    <div class="main-header"><h1>إضافة معاملة</h1></div>
-    <div class="add-transaction">
+    <div class="main-header">
+        <div>
+            <button class="save-changes" (click)="saveChanges()">حفظ التعديلات</button>
+            <button *ngIf="!edit" class="edit-button" (click)="toggleEdit()">تعديل</button>
+            <button *ngIf="edit" class="add-button" (click)="toggleEdit()">إضافة</button>
+        </div>
+        <h1>إضافة معاملة</h1>
+    </div>
+
+    <div *ngIf="!edit" class="add-transaction">
         <form action="" (ngSubmit)="add()">
-            <input  type="text"
-                    [(ngModel)]="newRequest.name"
-                    name="transaction_name"
-                    placeholder="اسم المعاملة">
+
+            <input type="submit" value="إضافة">
 
             <select name="administration" id="" [(ngModel)] = "newRequest.parent">
                 <option value="" selected disabled>الإدارة</option>
                 <option value="الهندسة/ التنظيم">الهندسة/ التنظيم</option>
             </select>
 
-            <input type="submit" value="إضافة">
+            <input  type="text"
+                    [(ngModel)]="newRequest.name"
+                    name="transaction_name"
+                    placeholder="اسم الطلب">
 
         </form>
     </div>
+    <div *ngIf="edit" class="edit-transaction">
+        <form action="" (ngSubmit)="saveEdit()">
+
+            <button (click)="deleteRequest()" [disabled]="!currRequest">حذف</button>
+            <input type="submit" value="حفظ"  [disabled]="!currRequest">
+
+            <select name="administration" id="" [(ngModel)] = "currOrganizationName">
+                <option value="" selected disabled>الإدارة</option>
+                <option value="الهندسة/ التنظيم">الهندسة/ التنظيم</option>
+            </select>
+
+            <input  type="text"
+                    [(ngModel)]="currRequestNameEdit"
+                    name="transaction_name"
+                    placeholder="اسم الطلب">
+
+            <ngx-select-dropdown  name="request_name"
+                                [config]="requestsConfig"
+                                [options]="requests"
+                                [(ngModel)]="currRequest"
+                                (change)="selectRequest()">
+            </ngx-select-dropdown>
+
+        </form>
+    </div>
+
     <div class="list-steps">
         <div class="tab">
             <button class="listStepsTablinks" (click)="openTab($event, 'listStepsTabcontent', 'listStepsTablinks', 'required-steps')" id="requiredStepsDefaultOpen">الإجرائات المطلوبة</button>
@@ -35,8 +70,17 @@
                     <td>{{form.name}}</td>
                     <td>
 
-                        <input class="styled-checkbox" id="required-steps-checkbox-{{form.id}}" type="checkbox" value="{{form.id}}">
-                        <label for="required-steps-checkbox-{{form.id}}" (click)="selectStep(i)" title="تحديد"></label>
+                        <input  #requiredStepsCheckboxs
+                                class="styled-checkbox"
+                                id="required-steps-checkbox-{{form.id}}"
+                                type="checkbox" value="{{form.id}}"
+                                >
+                                <!-- [checked]="selectedStep(i)" -->
+
+                        <label  for="required-steps-checkbox-{{form.id}}"
+                                (click)="selectStep(i)"
+                                title="تحديد">
+                        </label>
 
                         <!-- <a  class="additionalOptionsTablinks"
                             (click)="manageGroups(i,
@@ -76,11 +120,27 @@
                     <tr *ngFor="let document of documents; let i = index">
                         <td>{{document.name}}</td>
                         <td>
-                            <input class="styled-checkbox" id="required-documents-checkbox-{{document.id}}" type="checkbox" value="{{document.id}}">
-                            <label for="required-documents-checkbox-{{document.id}}" (click)="selectDocument(i)" title="تحديد المستند"></label>    
+                            <input  #requiredDocumentsCheckboxs
+                                    class="styled-checkbox"
+                                    id="required-documents-checkbox-{{document.id}}"
+                                    type="checkbox"
+                                    value="{{document.id}}">
 
-                            <input class="styled-checkbox" id="mandatory-documents-checkbox-{{document.id}}" type="checkbox">
-                            <label for="mandatory-documents-checkbox-{{document.id}}" (click)="mandatoryDocument(i)" title="مستند أساسى"></label>    
+                            <label  for="required-documents-checkbox-{{document.id}}"
+                                    (click)="selectDocument(i)"
+                                    title="تحديد المستند">
+                            </label>    
+
+                            <input  #mandatoryDocumentsCheckboxs
+                                    class="styled-checkbox"
+                                    id="mandatory-documents-checkbox-{{document.id}}"
+                                    type="checkbox"
+                                    value="{{document.id}}">
+
+                            <label  for="mandatory-documents-checkbox-{{document.id}}"
+                                    (click)="mandatoryDocument(i)"
+                                    title="مستند أساسى">
+                            </label>    
                         </td>
                     </tr>
                 </tbody>
@@ -92,8 +152,16 @@
                 <tr *ngFor="let fee of fees; let i = index">
                     <td>{{fee.name}}</td>
                     <td>
-                        <input class="styled-checkbox" id="required-fees-checkbox-{{fee.id}}" type="checkbox" value="{{fee.id}}">
-                        <label for="required-fees-checkbox-{{fee.id}}" (click)="selectFee(i)" title="تحديد"></label>    
+                        <input  #requiredFeesCheckboxs
+                                class="styled-checkbox"
+                                id="required-fees-checkbox-{{fee.id}}"
+                                type="checkbox"
+                                value="{{fee.id}}">
+                                
+                        <label  for="required-fees-checkbox-{{fee.id}}"
+                                (click)="selectFee(i)"
+                                title="تحديد">
+                        </label>    
                     </td>
                 </tr>
             </table>
@@ -165,7 +233,7 @@
                 </div>
             </div>
             <button (click)="clearStepOrder()">clear choice</button>
-            <button (click)="closeTab('step-order')">close</button>
+            <button id="close-step-order-tab" (click)="closeTab('step-order')">close</button>
         </div>
     </div>
 </main>

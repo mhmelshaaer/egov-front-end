@@ -6,7 +6,6 @@ import { map, catchError } from 'rxjs/operators';
 
 import { Fee } from './../../models/fees/fee';
 
-import { MOCK_FEES } from 'src/app/models/fees/fees-mockup';
 
 @Injectable({
   providedIn: 'root'

@@ -30,6 +30,29 @@ section{
     }
 }
 
+
+a{
+    justify-self: start;
+
+    text-decoration: none;
+    background: silver;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+    font-size: 0.9em;
+    cursor: pointer;
+
+}
+a:hover{
+    box-shadow: 1px 1px 0px 0px black;
+    font-size: 0.88em;
+}
+
+a:visited{
+    color: black;
+}
+
+
 input, select{
     direction: rtl;
     box-sizing: border-box;

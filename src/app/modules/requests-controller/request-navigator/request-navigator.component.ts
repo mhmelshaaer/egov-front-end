@@ -60,7 +60,7 @@ export class RequestNavigatorComponent implements OnInit {
         let forms = responseList.forms;
 
         this.requestInstance = new RequestInstance( rawRequestsInstance.id,
-                                                    new Request(rawRequest.request_name, null, null, null, null),
+                                                    new Request(rawRequest.id, rawRequest.request_name, null, null, null, null),
                                                     new AddressStructure(rawStructure.id, rawStructure.acc_code, rawStructure.acc_address, null, null),
                                                     new Citizen(rawCitizen.id, rawCitizen.citizen_name, rawCitizen.citizen_national_id));
 

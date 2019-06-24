@@ -1,8 +1,12 @@
+import { RequestsService } from './../../../shared/requests-service/requests.service';
+
+import { Fee } from './../../../models/fees/fee';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { Employee } from './../../../models/employees/employee';
 
 import { EmployeesService } from './../../../shared/employees-service/employees.service';
+import { TransactionsService } from 'src/app/shared/transactions-service/transactions.service';
 
 
 @Component({
@@ -14,26 +18,36 @@ export class InitialFeesComponent implements OnInit {
 
   @Input() step: string;
 
+  requestID: number;
   requestInstanceFeesSum: number;
-
+ 
   // paymentTypes: PaymentType;
-  // requestFees: RequestFee;
-  // requestFeeInstances: RequestFeeInstance;
+  requestFees: Fee[];
+  requestFeeInstances: Fee[];
   employees: Employee[];
 
   currEmployee: Employee;
+  currFee: Fee;
 
   employeesConfig: any;
   
-  constructor(private employeesService: EmployeesService) {}
+  constructor(private employeesService: EmployeesService,
+              private requestsService:RequestsService,
+              private transactionsService:TransactionsService) {}
 
   ngOnInit() {
-
-    this.requestInstanceFeesSum = 320.5;
-
+    this.requestID = this.transactionsService.defaultRequestInstance.request.id;
+    this.requestInstanceFeesSum = 0;
     this.employeesService.getEmployees().subscribe(data=>{this.employees=data; console.log(this.employees)});
+    this.requestFeeInstances = [];
 
     this.currEmployee = null;
+    this.currFee = null;
+
+    this.requestsService.getRequestFees(""+this.requestID).subscribe(data=>{
+      this.requestFees=data
+      console.log(this.requestFees);
+    });
 
     this.employeesConfig = {
       displayKey:"name", //if objects array passed which key to be displayed defaults to description
@@ -54,8 +68,11 @@ export class InitialFeesComponent implements OnInit {
     console.log("initial fees");
   }
 
-  feesAdd(){
-    console.log("fees");
+  addRequestFeeInstance(){
+    console.log(this.currFee);
+    this.requestFeeInstances.push(this.currFee);
+    console.log(this.requestFeeInstances);
+    this.requestInstanceFeesSum += this.currFee.value;
   }
 
   /**

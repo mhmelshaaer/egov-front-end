@@ -7,31 +7,28 @@
     <p>اسم المستند</p>
   </div>
 
-  <div>
+  <div *ngFor="let requestDocument of requestDocuments">
 
-    <input type="checkbox" name="required_document" id="required-document">
-    <input type="checkbox" name="document_delivery" id="document-delivery">
-    <textarea name="deliverable_notes" id="deliverable-notes" rows="1" placeholder="ملاحظات"></textarea>
-    <p>مستند</p>
+    <input  type="checkbox"
+            [checked]="requestDocument.mandatory"
+            name="required_document_{{requestDocument.id}}"
+            id="required-document-{{requestDocument.id}}"
+            disabled>
 
-  </div>
-  <div>
+    <input  type="checkbox"
+            name="document_delivery_{{requestDocument.id}}"
+            id="document-delivery-{{requestDocument.id}}">
 
-    <input type="checkbox" name="required_document" id="required-document">
-    <input type="checkbox" name="document_delivery" id="document-delivery">
-    <textarea name="deliverable_notes" id="deliverable-notes" rows="1" placeholder="ملاحظات"></textarea>
-    <p>مستند</p>
+    <textarea name="deliverable_notes_{{requestDocument.id}}"
+              id="deliverable-notes-{{requestDocument.id}}"
+              rows="1"
+              placeholder="ملاحظات">
+    </textarea>
 
-  </div>
-  <div>
-
-    <input type="checkbox" name="required_document" id="required-document">
-    <input type="checkbox" name="document_delivery" id="document-delivery">
-    <textarea name="deliverable_notes" id="deliverable-notes" rows="1" placeholder="ملاحظات"></textarea>
-    <p>مستند</p>
+    <p>{{requestDocument.name}}</p>
 
   </div>
 
 </section>
-
+<a (click)="saveChanges()">حفظ</a>
 <!-- for each document save it as an instance in Instance_Attachement -->

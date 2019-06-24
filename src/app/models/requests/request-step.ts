@@ -4,17 +4,15 @@ import { Group } from '../groups/group';
 
 export class RequestStep{
 
-    public static prev_id: number = 0;
-
-    public id:number;
 
     constructor(
-        public transaction_id: number = null,
+        public id:number,
+        public request_id: number = null,
         public form: Form = null,
-        // public groups: Group[] = [],
-        public order: number = null
-    ){
-        this.id = ++RequestStep.prev_id;
-    }
+        public order: number = null,
+        public new_request_step: boolean = false,
+        public deleted: boolean = false,
+        public updated: boolean = false
+    ){}
 
 }
