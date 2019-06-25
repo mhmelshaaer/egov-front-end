@@ -13,13 +13,13 @@
 
   <span class="v-separator2"></span>
 
-  <input type="text" [(ngModel)]="requestInstance.structure.accumulated_address" name="address" id="address" placeholder="العنوان" disabled>
+  <input type="text" [(ngModel)]="address" name="address" id="address" placeholder="العنوان" disabled>
 
   <select name="request_steps" id="request-steps" (change)="openSelectedStep($event)">
     <option value="" selected disabled>الإجرائات المطلوبة</option>
-    <!-- <option *ngFor="let form of forms" value="{{transactionType}}-{{form.name}}">{{form.name}}</option> -->
+    <option *ngFor="let step of requestData.steps" value="{{transactionType}}-{{step.form.name}}">{{step.form.name}}</option>
 
-    <option value="{{transactionType}}-data">ملئ النموذج</option>
+    <!-- <option value="{{transactionType}}-data">ملئ النموذج</option>
     <option value="deliverables-checklist">إستلام الطلب</option>
     <option value="deliverables-screening">فحص الطلب</option>
     <option value="initial-fees">تحديد رسوم أولية</option>
@@ -30,7 +30,7 @@
     <option value="building-cost">تسجيل تكلفة المبنى</option>
     <option value="fees">تحديد رسوم</option>
     <option value="fees-procurement">تحصيل رسوم</option>
-    <option value="issuing-license">إصدار ترخيص</option>
+    <option value="issuing-license">إصدار ترخيص</option> -->
   </select>
 
   <a (click)="goBack()" [routerLink]="">العودة لتحديد نوع المعاملة</a>

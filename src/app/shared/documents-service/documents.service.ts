@@ -35,7 +35,7 @@ export class DocumentsService {
   }
 
   getRequestDocuments(request_id: string): Observable<Document[]>{
-    return this.http.get(this.webservice+'documents/get/' + request_id).pipe(
+    return this.http.get(this.webservice+'request-documents/get/' + request_id).pipe(
       map(res=>res.json().documents.map( (item: any)=>{
           let requestDocument = res.json().request_documents.find(x=>x.document_id==item.id)
           return new Document(item.id, item.document_name, requestDocument.mandatory);

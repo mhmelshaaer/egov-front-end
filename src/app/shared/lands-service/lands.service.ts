@@ -89,13 +89,37 @@ export class LandsService {
             .all_citizen_lus
             .map( (item: any)=>{
               let rawAddressStructure = res.json().structures.find(x => x.id == item.Structure_id);
-              allCitizenLus.push(new Lus( item.id,
-                                          new AddressStructure(rawAddressStructure.id, rawAddressStructure.acc_code, rawAddressStructure.acc_address, null, null),
+              let newLus = new Lus( item.id,
+                                    new AddressStructure(rawAddressStructure.id, rawAddressStructure.acc_code, rawAddressStructure.acc_address, null, null),
+                                    item.Area,
+                                    item.Serial);
+
+              let result = allCitizenLus.find(x=>x.structure.accumulated_code == newLus.structure.accumulated_code);
+              !result? allCitizenLus.push(newLus): null;
+            })
+
+          return allCitizenLus;
+        }
+      )
+    )
+  }
+
+  getAllCitizenUnits(citizen_id: string, structure_id:string): Observable<Lus[]>{
+    return this.http.get(this.webservice+'all-citizen-units/get/' + citizen_id + '/' + structure_id).pipe(
+      map(res => {
+        
+        let allCitizenUnits: Lus[] = [];
+
+        res.json()
+            .all_citizen_units
+            .map( (item: any)=>{
+              allCitizenUnits.push(new Lus( item.id,
+                                          null,
                                           item.Area,
                                           item.Serial));
             })
 
-          return allCitizenLus;
+          return allCitizenUnits;
         }
       )
     )

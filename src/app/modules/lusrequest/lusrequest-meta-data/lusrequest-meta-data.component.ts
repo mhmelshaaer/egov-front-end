@@ -23,10 +23,12 @@ export class LUSRequestMetaDataComponent implements OnInit {
 
   citizens: Citizen[];
   allCitizenLus: Lus[];
+  allCitizenStructures: AddressStructure[];
+  allCitizenUnits: Lus[];
+
   addressItems: AddressItem[];
   addressItemsInstances: AddressItemInstance[];
   addressStructures: AddressStructure[];
-  allCitizenStructures: AddressStructure[];
 
   currConcernedPerson: Citizen;
   currBondAgency: Citizen;
@@ -34,7 +36,7 @@ export class LUSRequestMetaDataComponent implements OnInit {
   currAddressSelection: AddressStructure;
   currLusSelection: Lus;
 
-  transactionType: string;
+  requestType: string;
   unitType: string;
   unitNumber: string;
   
@@ -53,6 +55,8 @@ export class LUSRequestMetaDataComponent implements OnInit {
 
   ngOnInit() {
 
+    this.requestType = this.transactionsService.defaultRequestType;
+    console.log(this.requestType);
     this.citizensService.getCitizens().subscribe(data=>{this.citizens=data});
 
     this.addressesService.getAll().subscribe(responseList => {
@@ -91,9 +95,9 @@ export class LUSRequestMetaDataComponent implements OnInit {
     this.currAddressSelection = null;
     this.currLusSelection = null;
 
-    this.transactionType = "طلب ترخيص أعمال بناء";
+    // this.requestType = "طلب ترخيص أعمال بناء";
 
-    this.newRequestInstance = new RequestInstance(null,new Request(null, this.transactionType, null, null, null, null),null,null);
+    this.newRequestInstance = new RequestInstance(null,new Request(null, this.requestType, null, null, null, null),null,null);
     this.newTransaction = new Transaction(null, null, null, null);
 
     this.concernedPersonConfig = {
@@ -137,17 +141,24 @@ export class LUSRequestMetaDataComponent implements OnInit {
   }
 
   getAllCitizenLus(){
-    this.landsService.getAllCitizenLus(""+this.currConcernedPerson.id).subscribe(data =>{
-      this.allCitizenLus = data;
-      this.allCitizenStructures = [];
-      data.map(lus => {this.allCitizenStructures.push(lus.structure)})
-    })
+    this.allCitizenUnits = [];
+    this.currConcernedPerson?
+      this.landsService.getAllCitizenLus(""+this.currConcernedPerson.id).subscribe(data =>{
+        this.allCitizenLus = data;
+        this.allCitizenStructures = [];
+        data.map(lus => {this.allCitizenStructures.push(lus.structure)})
+      })
+      :null;
   }
 
   getAllCitizenUnits(){
-    let acc_code = this.currAddressSelection.accumulated_code;
-    console.log(acc_code);
-
+    this.allCitizenUnits = [];
+    this.currAddressSelection?
+      this.landsService.getAllCitizenUnits(""+this.currConcernedPerson.id, ""+this.currAddressSelection.id)
+          .subscribe(data =>{
+            this.allCitizenUnits = data;
+          })
+      :null;
   }
 
   goBack(){

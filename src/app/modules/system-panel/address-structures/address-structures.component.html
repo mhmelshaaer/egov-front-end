@@ -50,6 +50,7 @@
           <td *ngIf="!addressItemsInstance.deleted">
             <a (click)="deleteAddressItemInstance(i)"><fa-icon [icon]="faTrashAlt"></fa-icon></a>
           </td>
+          <td *ngIf="!addressItemsInstance.deleted">{{addressItemsInstance.address_item.name}}</td>
           <td *ngIf="!addressItemsInstance.deleted">{{addressItemsInstance.name}}</td>
         </tr>
       </tbody>

@@ -20,10 +20,10 @@
     </div>
 
     <div>
-      <select name="payment_method" id="payment-method">
+      <select [(ngModel)]="paymentType" name="payment_method" id="payment-method">
         <option value="" selected disabled>طريقة السداد</option>
         <option value="نقدى">نقدى</option>
-        <option value="">بطاقة ائتمان</option>
+        <option value="بطاقة ائتمان">بطاقة ائتمان</option>
         <!-- <option *ngFor="let paymentType of paymentTypes" value="{{paymentType.name}}">{{paymentType.name}}</option> -->
       </select>
       <label for="payment-method">طريقة السداد</label>
@@ -33,7 +33,7 @@
       <textarea name="notes" id="notes" rows="3" placeholder="ملاحظات"></textarea>
     </div>
 
-    <button *ngIf="step" (click)="feesAdd()">إضافة</button>
+    <!-- <button *ngIf="step" (click)="feesAdd()">إضافة</button> -->
     <button *ngIf="!step" (click)="initialFeesAdd()">إضافة</button>
 
   </article>
@@ -42,9 +42,9 @@
 
     <div>
 
-      <button (click)="addRequestFeeInstance()">إضافة الرسوم</button>
+      <button (click)="addRequestFeeInstance()">إضافة</button>
 
-      <input type="number" name="fee_value" id="fee-value" placeholder="قيمة الرسم">
+      <input type="number" [(ngModel)]="currFeeValue" name="fee_value" id="fee-value" placeholder="قيمة الرسم">
 
       <select [(ngModel)]="currFee" name="fees_selection" id="fees-selection">
         <option value="null" selected disabled>اختيار رسوم</option>

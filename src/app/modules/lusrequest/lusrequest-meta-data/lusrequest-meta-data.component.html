@@ -46,14 +46,14 @@
     </ngx-select-dropdown>
 
     <select [(ngModel)]="currLusSelection" name="unit_number" id="unit-number">
-      <option value="null" selected disabled>رقم الوحدة</option>
-      <option *ngFor="let citizenLus of allCitizenLus" [ngValue]="citizenLus">{{citizenLus.serial}}</option>
+      <option value="null" selected disabled>قطعة أرض</option>
+      <option *ngFor="let citizenUnit of allCitizenUnits" [ngValue]="citizenUnit">{{citizenUnit.serial}}</option>
     </select>
 
-    <select name="unit_type" id="unit-type">
+    <!-- <select name="unit_type" id="unit-type">
       <option value="" selected disabled>الوحدة</option>
       <option value="قطعة أرض">قطعة أرض</option>
-    </select>
+    </select> -->
 
   </div>
 

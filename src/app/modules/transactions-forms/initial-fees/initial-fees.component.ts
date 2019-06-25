@@ -1,3 +1,4 @@
+import { InstanceFees } from './../../../interfaces/instance-fees/instance-fees';
 import { RequestsService } from './../../../shared/requests-service/requests.service';
 
 import { Fee } from './../../../models/fees/fee';
@@ -19,9 +20,14 @@ export class InitialFeesComponent implements OnInit {
   @Input() step: string;
 
   requestID: number;
+  requestInstanceID: number;
+  requestStepID: number;
   requestInstanceFeesSum: number;
+  currFeeValue: number;
  
-  // paymentTypes: PaymentType;
+  instanceFees: InstanceFees;
+
+  paymentType: string;
   requestFees: Fee[];
   requestFeeInstances: Fee[];
   employees: Employee[];
@@ -37,16 +43,20 @@ export class InitialFeesComponent implements OnInit {
 
   ngOnInit() {
     this.requestID = this.transactionsService.defaultRequestInstance.request.id;
+    this.requestInstanceID = this.transactionsService.defaultRequestInstance.id;
+    this.requestStepID = this.transactionsService.currRequest.steps.find(x=>x.form.name=="تحديد الرسوم الأولية").id;
     this.requestInstanceFeesSum = 0;
     this.employeesService.getEmployees().subscribe(data=>{this.employees=data; console.log(this.employees)});
     this.requestFeeInstances = [];
 
+    this.paymentType = "";
+    this.currFeeValue = null;
     this.currEmployee = null;
     this.currFee = null;
 
     this.requestsService.getRequestFees(""+this.requestID).subscribe(data=>{
       this.requestFees=data
-      console.log(this.requestFees);
+      console.log(this.requestFees); 
     });
 
     this.employeesConfig = {
@@ -65,14 +75,31 @@ export class InitialFeesComponent implements OnInit {
   }
 
   initialFeesAdd(){
-    console.log("initial fees");
+    console.log(this.requestFeeInstances);
+    let newInstanceFees: InstanceFees ={
+      total: this.requestInstanceFeesSum,
+      evaluator_empid: this.currEmployee.id
+    }
+
+    this.instanceFees = newInstanceFees;
+    this.transactionsService.updateInstanceFees(""+this.requestInstanceID, this.instanceFees)
+        .subscribe(
+          (response)=> console.log(response.json().instance_fees)
+        );
+
+    this.transactionsService.saveFeesDetails(""+this.requestInstanceID, ""+this.requestStepID, this.requestFeeInstances)
+        .subscribe(
+          response => console.log(response.json().fees_details)
+        )
   }
 
   addRequestFeeInstance(){
-    console.log(this.currFee);
+    this.currFeeValue?
+      (this.requestInstanceFeesSum += this.currFeeValue, this.currFee.value = this.currFeeValue)
+      :this.requestInstanceFeesSum += this.currFee.value;
     this.requestFeeInstances.push(this.currFee);
-    console.log(this.requestFeeInstances);
-    this.requestInstanceFeesSum += this.currFee.value;
+    this.currFeeValue = null;
+    this.currFee = null;
   }
 
   /**

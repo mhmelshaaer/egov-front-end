@@ -100,7 +100,7 @@ export class AddressStructuresComponent implements OnInit {
       moreText: 'more', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
       noResultsFound: 'Can\'t find an address with this name', // text to be displayed when no items are found while searching
       searchPlaceholder:'بحث', // label thats displayed in search input,
-      searchOnKey: 'name', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+      searchOnKey: 'accumulated_address', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
     }
 
   }

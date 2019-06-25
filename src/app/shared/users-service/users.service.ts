@@ -65,7 +65,9 @@ export class UsersService {
   getUsers(): Observable<User[]>{
     return this.http.get(this.webservice+'users/get').pipe(
       map(res=>res.json().users.map( (item: any)=>{
-          return new User(item.id, item.name, item.password)
+          if(item.employee_id){
+            return new User(item.id, item.name, item.password)
+          }
         })
       )
     )

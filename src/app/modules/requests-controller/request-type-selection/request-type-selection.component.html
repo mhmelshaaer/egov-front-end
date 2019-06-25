@@ -1,6 +1,6 @@
 
 <section>
-  <select [(ngModel)]="selectedTransactionType" name="transaction_type" id="transaction-type">
+  <select [(ngModel)]="selectedRequestType" (change)="selectRequestType()" name="transaction_type" id="transaction-type">
     <option value="" selected disabled>نوع المعاملة</option>
     <option *ngFor="let request of requests" value="{{request.name}}">{{request.name}}</option>
   </select>

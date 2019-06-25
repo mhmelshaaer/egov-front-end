@@ -1,3 +1,4 @@
+import { TransactionsService } from './../../../shared/transactions-service/transactions.service';
 import { RequestsService } from './../../../shared/requests-service/requests.service';
 import { Request } from './../../../models/requests/request';
 import { Component, OnInit } from '@angular/core';
@@ -16,7 +17,7 @@ export class RequestTypeSelectionComponent implements OnInit {
   requestsList: string;
   requestsAdd: string;
 
-  selectedTransactionType: string;
+  selectedRequestType: string;
   targetComponentRoute: string;
   MOCK_REQUEST_TYPE_METADATA_ROUTE: string;
   MOCK_REQUEST_TYPE_LIST_ALL_ROUTE: string;
@@ -24,7 +25,8 @@ export class RequestTypeSelectionComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private requestsService:RequestsService) { }
+              private requestsService:RequestsService,
+              private transactionsService:TransactionsService) { }
 
   ngOnInit() {
 
@@ -39,10 +41,14 @@ export class RequestTypeSelectionComponent implements OnInit {
     this.requestsList = "/panel-home/requests-list";
     this.requestsAdd = "/panel-home/requests-add";
 
-    this.selectedTransactionType = "";
+    this.selectedRequestType = "";
     this.MOCK_REQUEST_TYPE_METADATA_ROUTE = 'lusrequest-metadata';
     this.MOCK_REQUEST_TYPE_LIST_ALL_ROUTE = 'lusrequest-list-all';
 
+  }
+
+  selectRequestType(){
+    this.transactionsService.updateRequestTypeStream(this.selectedRequestType);
   }
 
   listRequests(){

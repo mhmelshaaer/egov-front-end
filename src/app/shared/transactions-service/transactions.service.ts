@@ -1,3 +1,4 @@
+import { Request } from './../../models/requests/request';
 import { map } from 'rxjs/operators';
 import { Http } from '@angular/http';
 import { HttpParams } from  "@angular/common/http";
@@ -19,14 +20,18 @@ export class TransactionsService {
   //a default variables used in components onInit
   defaultRequestInstance: RequestInstance;
   defaultTransaction: Transaction;
+  currRequest: Request;
+  defaultRequestType: string;
 
   // observable source
   private requestInstance = new Subject<RequestInstance>();
   private transaction = new Subject<Transaction>();
+  private requestType = new Subject<string>();
 
   // observable stream
   requestInstance$ = this.requestInstance.asObservable();
   transaction$ = this.transaction.asObservable();
+  requestType$ = this.requestType.asObservable();
 
   constructor(private http:Http, private usersService:UsersService) { }
 
@@ -38,6 +43,16 @@ export class TransactionsService {
   updateTransactionStream(data: Transaction){
     this.transaction.next(data);
     this.defaultTransaction = data;
+  }
+
+  updateRequestTypeStream(data: string){
+    this.requestType.next(data);
+    this.defaultRequestType = data;
+  }
+
+  updateRequestStream(data: Request){
+    // this.requestType.next(data);
+    this.currRequest = data;
   }
 
   saveRequestInstance(requestInstance: RequestInstance) {
@@ -74,11 +89,29 @@ export class TransactionsService {
     });
   }
 
+  saveFeesDetails(requestInstanceID: string, requestStepID: string, feeDetails){
+    console.log("saving Build License...");
+    return this.http.post(this.webservice+'instance-fees-details/fetch',{
+      data: {
+        instance_request_id: requestInstanceID, request_step_id: requestStepID, fees_details: feeDetails
+      }
+    });
+  }
+
   updateTransaction(transactionID: string, transactionAttributes){
     console.log("saving Transaction Attributes...");
     return this.http.post(this.webservice+'transaction/update',{
       data: {
         transaction_id: transactionID, attributes: transactionAttributes
+      }
+    });
+  }
+
+  updateInstanceFees(requestInstanceID: string, instanceFees){
+    console.log("saving instance Fees Attributes...");
+    return this.http.post(this.webservice+'instance-fees/update',{
+      data: {
+        instance_request_id: requestInstanceID, attributes: instanceFees
       }
     });
   }

@@ -100,13 +100,13 @@ main{
         }
     }
 
-    #list-address-item-instnaces-table > tbody > tr{
-        & > td{
-            &:nth-child(2){
-                grid-column: 2/ span 2;
-            }
-        }
-    }
+    // #list-address-item-instnaces-table > tbody > tr{
+    //     & > td{
+    //         &:nth-child(2){
+    //             grid-column: 2/ span 2;
+    //         }
+    //     }
+    // }
 }
 .list-address-item-instnaces:hover, .list-address-items:hover{
     overflow-y: scroll;
@@ -142,6 +142,7 @@ article{
         & > thead{
             & > tr:nth-child(1) > th > input{
                 padding: 5px 10px;
+                // font-size: 8px;
             }
             & > tr:nth-child(2) {
                 margin: 10px 0;
@@ -159,7 +160,7 @@ article{
         }
 
         & > tbody{
-            font-size: 10px;
+            font-size: 8px;
             height: 70px;
             overflow-y: hidden;
 

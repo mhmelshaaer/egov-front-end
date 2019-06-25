@@ -28,7 +28,7 @@ export class EmployeesService {
                                       new Citizen(item.citizen.id,
                                                   item.citizen.citizen_name,
                                                   item.citizen.citizen_national_id),
-                                      new Department(item.department.department_name));
+                                      null);
         
         newEmployee.id = item.employee.id;
         return newEmployee;

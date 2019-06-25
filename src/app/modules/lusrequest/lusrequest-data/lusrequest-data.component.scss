@@ -65,12 +65,16 @@ article{
 
         &:nth-child(1){
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr 100px;
             grid-template-rows: 30px 30px;
             grid-row-gap: 5px;
             align-items: center;
             justify-items: end;
 
+            label{
+                font-size: 12px;
+            }
+            
             & select{
                 width: 210px;
             }
