@@ -1,3 +1,3 @@
 # The Angular web application
 
-More detailed readme will be available soon.
+You can read about the project in the [backend repo](https://github.com/MouhammedElshaaer/egov-webservice)
